@@ -1,0 +1,65 @@
+<template>
+  <div>
+    <AlertComponent
+      v-for="(alert, index) in alerts.alerts"
+      :alert="alert"
+      :key="index"
+      @refresh-page="refreshPage"
+      @update-tag="updateTag"
+    ></AlertComponent>
+
+    <nav class="pagination" role="navigation" aria-label="pagination">
+      <ul class="pagination-list">
+        <li v-for="page in totalPageCount" :key="page">
+          <a
+            class="pagination-link"
+            :class="alerts.currentPage === page ? 'is-current' : ''"
+            @click="updatePage(page)"
+          >
+            {{ page }}</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <p>({{ alerts.total }} results in total, {{ alerts.pageSize }} shown)</p>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, PropType } from "vue";
+
+import AlertComponent from "@/components/alert/Alert.vue";
+import { Alerts } from "@/types";
+
+export default defineComponent({
+  name: "Alerts",
+  components: {
+    AlertComponent,
+  },
+  props: {
+    alerts: {
+      type: Object as PropType<Alerts>,
+      required: true,
+    },
+  },
+  setup(props, context) {
+    const totalPageCount = Math.ceil(
+      props.alerts.total / props.alerts.pageSize
+    );
+
+    const updatePage = (page: number) => {
+      context.emit("update-page", page);
+    };
+
+    const refreshPage = () => {
+      context.emit("refresh-page");
+    };
+
+    const updateTag = (tag: string) => {
+      context.emit("update-tag", tag);
+    };
+
+    return { totalPageCount, updatePage, updateTag, refreshPage };
+  },
+});
+</script>
