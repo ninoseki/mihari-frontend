@@ -5,12 +5,12 @@
       v-on:mouseover="showDeleteButton"
       v-on:mouseleave="hideDeleteButton"
     >
-      <span class="tag">{{ artifact.data }}</span>
-      <span
+      <span class="tag is-info" @click="updateTag">{{ tag.name }}</span>
+      <a
         class="tag is-delete"
         v-if="isDeleteButtonEnabled"
-        @click="deleteArtifact"
-      ></span>
+        @click="deleteTag"
+      ></a>
     </div>
   </div>
 </template>
@@ -20,31 +20,31 @@ import { defineComponent, PropType, ref } from "vue";
 import { useAsyncTask } from "vue-concurrency";
 
 import { API } from "@/api";
-import { Artifact } from "@/types";
+import { Tag } from "@/types";
 
 export default defineComponent({
-  name: "Artifact",
+  name: "Tag",
   props: {
-    artifact: {
-      type: Object as PropType<Artifact>,
+    tag: {
+      type: Object as PropType<Tag>,
       required: true,
     },
   },
-  setup(props) {
+  setup(props, context) {
     const isDeleted = ref(false);
     const isDeleteButtonEnabled = ref(false);
 
-    const deleteArtifactTask = useAsyncTask<void, []>(async () => {
-      return await API.deleteArtifact(props.artifact.id);
+    const deleteTagTask = useAsyncTask<void, []>(async () => {
+      return await API.deleteTag(props.tag.name);
     });
 
-    const deleteArtifact = async () => {
+    const deleteTag = async () => {
       const result = window.confirm(
-        `Are you sure you want to delete ${props.artifact.data}?`
+        `Are you sure you want to delete ${props.tag.name}?`
       );
 
       if (result) {
-        await deleteArtifactTask.perform();
+        await deleteTagTask.perform();
         isDeleted.value = true;
       }
     };
@@ -57,9 +57,14 @@ export default defineComponent({
       isDeleteButtonEnabled.value = false;
     };
 
+    const updateTag = () => {
+      context.emit("update-tag", props.tag.name);
+    };
+
     return {
+      updateTag,
       isDeleted,
-      deleteArtifact,
+      deleteTag,
       showDeleteButton,
       hideDeleteButton,
       isDeleteButtonEnabled,

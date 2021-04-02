@@ -6,7 +6,7 @@
         :sources="getSourcesTask.last?.value || []"
         :tags="getTagsTask.last?.value || []"
         :page="page"
-        v-model="tag"
+        :tag="tag"
       ></Form>
 
       <hr />

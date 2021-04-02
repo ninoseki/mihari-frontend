@@ -44,15 +44,7 @@
       <tr>
         <th><strong>Tags</strong></th>
         <td>
-          <div class="tags">
-            <span
-              class="tag is-info"
-              v-for="tag in alert.tags"
-              :key="tag.name"
-              @click="updateTag(tag.name)"
-              >{{ tag.name }}</span
-            >
-          </div>
+          <Tags :tags="alert.tags" @update-tag="updateTag"></Tags>
         </td>
       </tr>
       <tr>
@@ -72,6 +64,7 @@ import { useAsyncTask } from "vue-concurrency";
 
 import { API } from "@/api";
 import Artifacts from "@/components/artifact/Artifacts.vue";
+import Tags from "@/components/tag/Tags.vue";
 import { Alert } from "@/types";
 import { getHumanizedRelativeTime } from "@/utils";
 
@@ -79,6 +72,7 @@ export default defineComponent({
   name: "Alert",
   components: {
     Artifacts,
+    Tags,
   },
   props: {
     alert: {
