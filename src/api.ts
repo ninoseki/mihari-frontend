@@ -39,4 +39,8 @@ export const API = {
   async deleteArtifact(id: number): Promise<void> {
     await client.delete(`/api/artifacts/${id}`);
   },
+
+  async deleteTag(name: string): Promise<void> {
+    await client.delete(`/api/tags/${name}`);
+  },
 };
