@@ -52,3 +52,8 @@ export interface SearchParams {
   fromAt: string | undefined;
   toAt: string | undefined;
 }
+
+export interface CommandOutput {
+  output: string;
+  success: boolean;
+}

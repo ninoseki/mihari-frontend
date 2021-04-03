@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Alerts, Config, SearchParams } from "@/types";
+import { Alerts, CommandOutput, Config, SearchParams } from "@/types";
 
 const client = axios.create({
   headers: {
@@ -42,5 +42,10 @@ export const API = {
 
   async deleteTag(name: string): Promise<void> {
     await client.delete(`/api/tags/${name}`);
+  },
+
+  async runCommand(command: string): Promise<CommandOutput> {
+    const res = await client.post<CommandOutput>("/api/command", { command });
+    return res.data;
   },
 };
