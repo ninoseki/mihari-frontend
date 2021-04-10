@@ -24,6 +24,11 @@
           >Config</router-link
         >
         <a class="navbar-item"
+          ><a href="/redoc-static.html" target="_blank" class="navbar-item"
+            >API</a
+          ></a
+        >
+        <a class="navbar-item"
           ><a
             href="https://github.com/ninoseki/mihari"
             target="_blank"
