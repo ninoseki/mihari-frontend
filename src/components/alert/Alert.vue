@@ -1,61 +1,63 @@
 <template>
-  <table class="table is-bordered is-fullwidth">
-    <tbody>
-      <tr>
-        <th><strong>ID</strong></th>
-        <td>
-          {{ alert.id }}
+  <div class="table-container">
+    <table class="table is-bordered is-fullwidth">
+      <tbody>
+        <tr>
+          <th><strong>ID</strong></th>
+          <td>
+            {{ alert.id }}
 
-          <button
-            class="button is-light is-small is-pulled-right"
-            @click="deleteAlert"
-          >
-            <span>Delete</span>
-            <span class="icon is-small">
-              <i class="fas fa-times"></i>
-            </span>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <th><strong>Title</strong></th>
-        <td>
-          {{ alert.title }}
-        </td>
-      </tr>
-      <tr>
-        <th><strong>Description</strong></th>
-        <td>
-          {{ alert.description }}
-        </td>
-      </tr>
-      <tr>
-        <th><strong>Source</strong></th>
-        <td>
-          {{ alert.source }}
-        </td>
-      </tr>
-      <tr>
-        <th><strong>Artifacts</strong></th>
-        <td>
-          <Artifacts :artifacts="alert.artifacts"></Artifacts>
-        </td>
-      </tr>
-      <tr>
-        <th><strong>Tags</strong></th>
-        <td>
-          <Tags :tags="alert.tags" @update-tag="updateTag"></Tags>
-        </td>
-      </tr>
-      <tr>
-        <th><strong>Created at</strong></th>
-        <td>
-          {{ alert.createdAt }}
-          ({{ getHumanizedRelativeTime(alert.createdAt) }})
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <button
+              class="button is-light is-small is-pulled-right"
+              @click="deleteAlert"
+            >
+              <span>Delete</span>
+              <span class="icon is-small">
+                <i class="fas fa-times"></i>
+              </span>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Title</strong></th>
+          <td>
+            {{ alert.title }}
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Description</strong></th>
+          <td>
+            {{ alert.description }}
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Source</strong></th>
+          <td>
+            {{ alert.source }}
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Artifacts</strong></th>
+          <td>
+            <Artifacts :artifacts="alert.artifacts"></Artifacts>
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Tags</strong></th>
+          <td>
+            <Tags :tags="alert.tags" @update-tag="updateTag"></Tags>
+          </td>
+        </tr>
+        <tr>
+          <th><strong>Created at</strong></th>
+          <td>
+            {{ alert.createdAt }}
+            ({{ getHumanizedRelativeTime(alert.createdAt) }})
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script lang="ts">
