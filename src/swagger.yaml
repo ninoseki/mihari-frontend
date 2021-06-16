@@ -167,6 +167,9 @@ components:
           type: string
         dataType:
           type: string
+        source:
+          type: string
+          nullable: true
     Alert:
       type: object
       properties:
