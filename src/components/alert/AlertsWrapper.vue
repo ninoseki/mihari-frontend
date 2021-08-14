@@ -31,6 +31,11 @@
 
     <Loading v-if="getAlertsTask.isRunning"></Loading>
 
+    <ErrorMessage
+      v-if="getAlertsTask.isError"
+      :error="getAlertsTask.last?.error"
+    ></ErrorMessage>
+
     <AlertsComponent
       :alerts="getAlertsTask.last.value"
       v-if="getAlertsTask.last?.value"
@@ -48,6 +53,7 @@ import { useAsyncTask } from "vue-concurrency";
 import { API } from "@/api";
 import AlertsComponent from "@/components/alert/Alerts.vue";
 import Form from "@/components/alert/Form.vue";
+import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
 import { Alerts, SearchParams } from "@/types";
 
@@ -57,6 +63,7 @@ export default defineComponent({
     AlertsComponent,
     Form,
     Loading,
+    ErrorMessage,
   },
   setup() {
     const page = ref(1);
