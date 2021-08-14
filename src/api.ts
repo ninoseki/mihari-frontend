@@ -1,6 +1,13 @@
 import axios from "axios";
 
-import { Alerts, CommandOutput, Config, SearchParams } from "@/types";
+import {
+  Alerts,
+  Artifact,
+  CommandOutput,
+  Config,
+  IPInfo,
+  SearchParams,
+} from "@/types";
 
 const client = axios.create({
   headers: {
@@ -36,6 +43,11 @@ export const API = {
     await client.delete(`/api/alerts/${id}`);
   },
 
+  async getArtifact(id: number): Promise<Artifact> {
+    const res = await client.get(`/api/artifacts/${id}`);
+    return res.data;
+  },
+
   async deleteArtifact(id: number): Promise<void> {
     await client.delete(`/api/artifacts/${id}`);
   },
@@ -46,6 +58,11 @@ export const API = {
 
   async runCommand(command: string): Promise<CommandOutput> {
     const res = await client.post<CommandOutput>("/api/command", { command });
+    return res.data;
+  },
+
+  async getIPInfo(ipAddress: string): Promise<IPInfo> {
+    const res = await client.get<IPInfo>(`/api/ip_addresses/${ipAddress}`);
     return res.data;
   },
 };

@@ -19,3 +19,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+table.is-fullwidth th {
+  width: 120px;
+}
+</style>

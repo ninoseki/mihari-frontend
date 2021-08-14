@@ -1,45 +1,43 @@
 <template>
-  <div>
-    <div class="box mb-6">
-      <Form
-        ref="form"
-        :sources="getSourcesTask.last?.value || []"
-        :tags="getTagsTask.last?.value || []"
-        :page="page"
-        :tag="tag"
-      ></Form>
+  <div class="box mb-6">
+    <Form
+      ref="form"
+      :sources="getSourcesTask.last?.value || []"
+      :tags="getTagsTask.last?.value || []"
+      :page="page"
+      :tag="tag"
+    ></Form>
 
-      <hr />
+    <hr />
 
-      <div class="columns">
-        <div class="column">
-          <div class="field is-grouped is-grouped-centered">
-            <p class="control">
-              <a class="button is-primary" @click="search">
-                <span class="icon is-small">
-                  <i class="fas fa-search"></i>
-                </span>
-                <span>Search</span>
-              </a>
-            </p>
-          </div>
+    <div class="columns">
+      <div class="column">
+        <div class="field is-grouped is-grouped-centered">
+          <p class="control">
+            <a class="button is-primary" @click="search">
+              <span class="icon is-small">
+                <i class="fas fa-search"></i>
+              </span>
+              <span>Search</span>
+            </a>
+          </p>
         </div>
       </div>
     </div>
+  </div>
 
-    <div v-if="getAlertsTask.performCount > 0">
-      <hr />
+  <div v-if="getAlertsTask.performCount > 0">
+    <hr />
 
-      <Loading v-if="getAlertsTask.isRunning"></Loading>
+    <Loading v-if="getAlertsTask.isRunning"></Loading>
 
-      <AlertsComponent
-        :alerts="getAlertsTask.last.value"
-        v-if="getAlertsTask.last?.value"
-        @refresh-page="refreshPage"
-        @update-page="updatePage"
-        @update-tag="updateTag"
-      ></AlertsComponent>
-    </div>
+    <AlertsComponent
+      :alerts="getAlertsTask.last.value"
+      v-if="getAlertsTask.last?.value"
+      @refresh-page="refreshPage"
+      @update-page="updatePage"
+      @update-tag="updateTag"
+    ></AlertsComponent>
   </div>
 </template>
 

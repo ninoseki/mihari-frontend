@@ -1,0 +1,45 @@
+<template>
+  <Artifact :id="artifactId"></Artifact>
+</template>
+
+<script lang="ts">
+import { useTitle } from "@vueuse/core";
+import { defineComponent, onMounted, ref, watch } from "vue";
+
+import Artifact from "@/components/artifact/ArtifactWrapper.vue";
+
+export default defineComponent({
+  name: "ArtifactView",
+  components: {
+    Artifact,
+  },
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props) {
+    const artifactId = ref<number>(parseInt(props.id));
+
+    const updateTitle = () => {
+      useTitle(`Artifact:${artifactId.value} - Mihari`);
+    };
+
+    onMounted(() => {
+      updateTitle();
+    });
+
+    watch(
+      () => props.id,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      (_current, _prev) => {
+        artifactId.value = parseInt(props.id);
+        updateTitle();
+      }
+    );
+
+    return { artifactId };
+  },
+});
+</script>
