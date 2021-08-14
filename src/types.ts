@@ -57,3 +57,31 @@ export interface CommandOutput {
   output: string;
   success: boolean;
 }
+
+export interface IPInfo {
+  ip: string;
+  hostname: string | null;
+  city: string;
+  region: string;
+  country: string;
+  loc: string;
+  org: string;
+}
+
+export interface Country {
+  name: string;
+  code: string;
+  lat: number;
+  long: number;
+}
+
+export type LinkType = "ip" | "domain";
+
+export interface Link {
+  name: string;
+  type: string;
+  baseURL: string;
+  favicon: string;
+  // eslint-disable-next-line no-unused-vars
+  href(hostname: string): string;
+}

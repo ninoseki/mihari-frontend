@@ -11,11 +11,11 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import ArtifactComponent from "@/components/artifact/Artifact.vue";
+import ArtifactComponent from "@/components/artifact/ArtifactTag.vue";
 import { Artifact } from "@/types";
 
 export default defineComponent({
-  name: "Artifacts",
+  name: "ArtifactTags",
   components: {
     ArtifactComponent,
   },

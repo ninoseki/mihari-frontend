@@ -65,7 +65,7 @@ import { defineComponent, PropType } from "vue";
 import { useAsyncTask } from "vue-concurrency";
 
 import { API } from "@/api";
-import Artifacts from "@/components/artifact/Artifacts.vue";
+import Artifacts from "@/components/artifact/ArtifactTags.vue";
 import Tags from "@/components/tag/Tags.vue";
 import { Alert } from "@/types";
 import { getHumanizedRelativeTime } from "@/utils";
@@ -107,9 +107,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-table.table tbody tr th {
-  width: 120px;
-}
-</style>
