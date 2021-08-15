@@ -28,7 +28,7 @@ export class UrlscanForDomain extends Urlscan implements Link {
 export class UrlscanForIP extends Urlscan implements Link {
   public constructor() {
     super();
-    this.type = "domain";
+    this.type = "ip";
   }
 
   public href(data: string): string {
