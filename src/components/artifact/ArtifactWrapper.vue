@@ -22,7 +22,7 @@ import { API } from "@/api";
 import ArtifactComponent from "@/components/artifact/Artifact.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
-import { Artifact } from "@/types";
+import { ArtifactWithTags } from "@/types";
 
 export default defineComponent({
   name: "ArtifactWrapper",
@@ -38,7 +38,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const getArtifactTask = useAsyncTask<Artifact, []>(async () => {
+    const getArtifactTask = useAsyncTask<ArtifactWithTags, []>(async () => {
       return await API.getArtifact(props.id);
     });
 

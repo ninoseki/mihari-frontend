@@ -59,6 +59,12 @@
               </tr>
             </table>
           </div>
+
+          <div class="tags are-medium">
+            <span class="tag is-info" v-for="tag in artifact.tags" :key="tag">{{
+              tag
+            }}</span>
+          </div>
         </div>
       </div>
 
@@ -102,13 +108,13 @@ import AlertsComponent from "@/components/alert/Alerts.vue";
 import Links from "@/components/link/Links.vue";
 import Loading from "@/components/Loading.vue";
 import { getCountryByCode } from "@/countries";
-import { Alerts, Artifact, IPInfo, SearchParams } from "@/types";
+import { Alerts, ArtifactWithTags, IPInfo, SearchParams } from "@/types";
 
 export default defineComponent({
   name: "Artifact",
   props: {
     artifact: {
-      type: Object as PropType<Artifact>,
+      type: Object as PropType<ArtifactWithTags>,
       required: true,
     },
   },

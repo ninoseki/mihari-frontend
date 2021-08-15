@@ -24,6 +24,10 @@ export interface Artifact {
   createdAt: string;
 }
 
+export interface ArtifactWithTags extends Artifact {
+  tags: string[];
+}
+
 export interface Alert {
   id: number;
   title: string;

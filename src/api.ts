@@ -2,7 +2,7 @@ import axios from "axios";
 
 import {
   Alerts,
-  Artifact,
+  ArtifactWithTags,
   CommandOutput,
   Config,
   IPInfo,
@@ -43,7 +43,7 @@ export const API = {
     await client.delete(`/api/alerts/${id}`);
   },
 
-  async getArtifact(id: number): Promise<Artifact> {
+  async getArtifact(id: number): Promise<ArtifactWithTags> {
     const res = await client.get(`/api/artifacts/${id}`);
     return res.data;
   },
