@@ -26,6 +26,11 @@
 
     <Loading v-if="runCommandTask.isRunning"></Loading>
 
+    <ErrorMessage
+      v-if="runCommandTask.isError"
+      :error="runCommandTask.last?.error"
+    ></ErrorMessage>
+
     <div v-if="runCommandTask.last?.value">
       <div
         class="notification is-success is-light"
@@ -50,6 +55,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import { useAsyncTask } from "vue-concurrency";
 
 import { API } from "@/api";
+import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
 import { CommandOutput } from "@/types";
 
@@ -57,6 +63,7 @@ export default defineComponent({
   name: "Command",
   components: {
     Loading,
+    ErrorMessage,
   },
   setup() {
     const command = ref<string>("help");

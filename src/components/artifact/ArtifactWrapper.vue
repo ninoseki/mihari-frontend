@@ -2,6 +2,11 @@
   <div>
     <Loading v-if="getArtifactTask.isRunning"></Loading>
 
+    <ErrorMessage
+      v-if="getArtifactTask.isError"
+      :error="getArtifactTask.last?.error"
+    ></ErrorMessage>
+
     <ArtifactComponent
       :artifact="getArtifactTask.last.value"
       v-if="getArtifactTask.last?.value"
@@ -15,6 +20,7 @@ import { useAsyncTask } from "vue-concurrency";
 
 import { API } from "@/api";
 import ArtifactComponent from "@/components/artifact/Artifact.vue";
+import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
 import { Artifact } from "@/types";
 
@@ -23,6 +29,7 @@ export default defineComponent({
   components: {
     ArtifactComponent,
     Loading,
+    ErrorMessage,
   },
   props: {
     id: {
