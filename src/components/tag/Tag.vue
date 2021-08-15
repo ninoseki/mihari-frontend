@@ -1,7 +1,7 @@
 <template>
   <div class="control" v-if="!isDeleted">
     <div
-      class="tags has-addons"
+      class="tags has-addons are-medium"
       v-on:mouseover="showDeleteButton"
       v-on:mouseleave="hideDeleteButton"
     >

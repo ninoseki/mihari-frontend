@@ -128,7 +128,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Artifact"
+                $ref: "#/components/schemas/ArtifactWithTags"
     delete:
       summary: Delete an artifact
       tags:
@@ -235,6 +235,15 @@ components:
         source:
           type: string
           nullable: true
+    ArtifactWithTags:
+      allOf: # Combines the BasicErrorModel and the inline model
+        - $ref: "#/components/schemas/Artifact"
+        - type: object
+          properties:
+            tags:
+              type: array
+              items:
+                type: string
     Alert:
       type: object
       properties:
