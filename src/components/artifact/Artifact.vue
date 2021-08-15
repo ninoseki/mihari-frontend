@@ -2,39 +2,64 @@
   <div>
     <div class="column">
       <h2 class="is-size-2 mb-4">Artifact</h2>
-      <iframe
-        :src="googleMapSrc"
-        width="100%"
-        height="240px"
-        v-if="googleMapSrc"
-      ></iframe>
 
-      <div class="table-container">
-        <table class="table is-bordered is-fullwidth">
-          <tr>
-            <th>ID</th>
-            <td>
-              {{ artifact.id }}
-              <button
-                class="button is-light is-small is-pulled-right"
-                @click="deleteArtifact"
-              >
-                <span>Delete</span>
-                <span class="icon is-small">
-                  <i class="fas fa-times"></i>
-                </span>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <th>Data type</th>
-            <td>{{ artifact.dataType }}</td>
-          </tr>
-          <tr>
-            <th>Data</th>
-            <td>{{ artifact.data }}</td>
-          </tr>
-        </table>
+      <div class="columns">
+        <div
+          class="column"
+          v-if="googleMapSrc !== undefined || urlscanLiveshotSrc !== undefined"
+        >
+          <div v-if="googleMapSrc">
+            <h4 class="is-size-4">
+              Geolocation
+              <span class="has-text-grey">{{ countryCode }}</span>
+            </h4>
+            <iframe
+              class="mb-4"
+              :src="googleMapSrc"
+              width="100%"
+              height="240px"
+            ></iframe>
+          </div>
+
+          <div v-if="urlscanLiveshotSrc">
+            <h4 class="is-size-4">
+              Live screenshot
+              <span class="has-text-grey">Hover to expand</span>
+            </h4>
+            <img :src="urlscanLiveshotSrc" class="liveshot" alt="liveshot" />
+          </div>
+        </div>
+
+        <div class="column">
+          <h4 class="is-size-4">Information</h4>
+          <div class="table-container">
+            <table class="table is-bordered is-fullwidth">
+              <tr>
+                <th>ID</th>
+                <td>
+                  {{ artifact.id }}
+                  <button
+                    class="button is-light is-small is-pulled-right"
+                    @click="deleteArtifact"
+                  >
+                    <span>Delete</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-times"></i>
+                    </span>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <th>Data type</th>
+                <td>{{ artifact.dataType }}</td>
+              </tr>
+              <tr>
+                <th>Data</th>
+                <td>{{ artifact.data }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
 
       <Links :data="artifact.data" :type="artifact.dataType"></Links>
@@ -61,6 +86,7 @@
 
 <script lang="ts">
 import {
+  computed,
   defineComponent,
   nextTick,
   onMounted,
@@ -95,11 +121,27 @@ export default defineComponent({
     const page = ref(1);
     const tag = ref<string | undefined>(undefined);
     const googleMapSrc = ref<string | undefined>(undefined);
+    const countryCode = ref<string | undefined>(undefined);
 
     const router = useRouter();
 
-    const getGoogleMapSrc = (countryCode: string) => {
-      const country = getCountryByCode(countryCode);
+    const urlscanLiveshotSrc = computed<string | undefined>(() => {
+      if (props.artifact.dataType === "domain") {
+        const url = `http://${props.artifact.data}`;
+        return `https://urlscan.io/liveshot/?url=${url}`;
+      }
+
+      if (props.artifact.dataType === "url") {
+        return `https://urlscan.io/liveshot/?url=${props.artifact.data}`;
+      }
+
+      return undefined;
+    });
+
+    const getGoogleMapSrc = (
+      twoAlphaCountryCode: string
+    ): string | undefined => {
+      const country = getCountryByCode(twoAlphaCountryCode);
 
       if (country !== undefined) {
         return `https://maps.google.co.jp/maps?output=embed&q=${country.lat},${country.long}&z=3`;
@@ -164,6 +206,7 @@ export default defineComponent({
     onMounted(async () => {
       if (props.artifact.dataType === "ip") {
         const ipinfo = await getIPInfoTask.perform(props.artifact.data);
+        countryCode.value = ipinfo.country;
         googleMapSrc.value = getGoogleMapSrc(ipinfo.country);
       }
       await getAlertsTask.perform();
@@ -178,13 +221,33 @@ export default defineComponent({
     );
 
     return {
-      googleMapSrc,
+      countryCode,
       getAlertsTask,
-      updatePage,
-      refreshPage,
-      updateTag,
+      googleMapSrc,
+      urlscanLiveshotSrc,
       deleteArtifact,
+      refreshPage,
+      updatePage,
+      updateTag,
     };
   },
 });
 </script>
+
+<style scopde>
+img.liveshot {
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  overflow: hidden;
+  transition: max-height 1s, height 1s;
+}
+
+img.liveshot:hover {
+  max-height: none;
+}
+</style>
