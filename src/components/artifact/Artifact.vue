@@ -127,6 +127,7 @@ export default defineComponent({
     const page = ref(1);
     const tag = ref<string | undefined>(undefined);
     const googleMapSrc = ref<string | undefined>(undefined);
+
     const countryCode = ref<string | undefined>(undefined);
 
     const router = useRouter();
@@ -195,7 +196,12 @@ export default defineComponent({
       page.value = newPage;
     };
 
+    const resetPage = () => {
+      page.value = 1;
+    };
+
     const refreshPage = async () => {
+      resetPage();
       await getAlertsTask.perform();
     };
 
@@ -205,8 +211,7 @@ export default defineComponent({
       } else {
         tag.value = newTag;
       }
-
-      nextTick(async () => await getAlertsTask.perform());
+      resetPage();
     };
 
     onMounted(async () => {
