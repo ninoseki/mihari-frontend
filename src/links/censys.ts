@@ -13,7 +13,7 @@ export class Censys implements Link {
     this.type = "ip";
   }
 
-  public href(hostname: string): string {
-    return this.baseURL + `/ipv4/${hostname}`;
+  public href(data: string): string {
+    return this.baseURL + `/ipv4/${data}`;
   }
 }

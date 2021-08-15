@@ -13,7 +13,7 @@ export class Crtsh implements Link {
     this.type = "domain";
   }
 
-  public href(hostname: string): string {
-    return this.baseURL + `/?q=${hostname}`;
+  public href(data: string): string {
+    return this.baseURL + `/?q=${data}`;
   }
 }
