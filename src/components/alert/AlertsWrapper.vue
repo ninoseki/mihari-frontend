@@ -115,7 +115,7 @@ export default defineComponent({
     };
 
     watch(
-      [page],
+      page,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       async (_current, _prev) => {
         nextTick(async () => await getAlertsTask.perform());

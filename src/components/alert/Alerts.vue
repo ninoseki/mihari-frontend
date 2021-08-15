@@ -12,7 +12,7 @@
       <ul class="pagination-list">
         <li v-for="page in totalPageCount" :key="page">
           <a
-            class="pagination-link"
+            class="pagination-link mt-2"
             :class="alerts.currentPage === page ? 'is-current' : ''"
             @click="updatePage(page)"
           >
@@ -47,15 +47,24 @@ export default defineComponent({
       props.alerts.total / props.alerts.pageSize
     );
 
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+      });
+    };
+
     const updatePage = (page: number) => {
+      scrollToTop();
       context.emit("update-page", page);
     };
 
     const refreshPage = () => {
+      scrollToTop();
       context.emit("refresh-page");
     };
 
     const updateTag = (tag: string) => {
+      scrollToTop();
       context.emit("update-tag", tag);
     };
 
