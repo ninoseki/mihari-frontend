@@ -75,7 +75,7 @@ export interface Country {
   long: number;
 }
 
-export type LinkType = "ip" | "domain";
+export type LinkType = "ip" | "domain" | "url";
 
 export interface Link {
   name: string;
@@ -83,5 +83,5 @@ export interface Link {
   baseURL: string;
   favicon: string;
   // eslint-disable-next-line no-unused-vars
-  href(hostname: string): string;
+  href(data: string): string;
 }

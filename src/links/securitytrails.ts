@@ -1,6 +1,6 @@
 import { Link, LinkType } from "@/types";
 
-export class SecurityTrailsForDomain implements Link {
+class SecurityTrails {
   public baseURL: string;
   public favicon: string;
   public name: string;
@@ -13,27 +13,26 @@ export class SecurityTrailsForDomain implements Link {
     this.name = "SecurityTrails";
     this.type = "domain";
   }
+}
 
-  public href(hostname: string): string {
-    return this.baseURL + `/domain/${hostname}/dns`;
+export class SecurityTrailsForDomain extends SecurityTrails implements Link {
+  public constructor() {
+    super();
+    this.type = "domain";
+  }
+
+  public href(data: string): string {
+    return this.baseURL + `/domain/${data}/dns`;
   }
 }
 
-export class SecurityTrailsForIP implements Link {
-  public baseURL: string;
-  public favicon: string;
-  public name: string;
-  public type: LinkType;
-
+export class SecurityTrailsForIP extends SecurityTrails implements Link {
   public constructor() {
-    this.baseURL = "https://securitytrails.com";
-    this.favicon =
-      "https://www.google.com/s2/favicons?domain=securitytrails.com";
-    this.name = "SecurityTrails";
+    super();
     this.type = "ip";
   }
 
-  public href(hostname: string): string {
-    return this.baseURL + `/list/ip/${hostname}`;
+  public href(data: string): string {
+    return this.baseURL + `/list/ip/${data}`;
   }
 }

@@ -1,6 +1,6 @@
 import { Link, LinkType } from "@/types";
 
-export class UrlscanForDomain implements Link {
+class Urlscan {
   public favicon: string;
   public baseURL: string;
   public name: string;
@@ -12,26 +12,38 @@ export class UrlscanForDomain implements Link {
     this.name = "urlscan.io";
     this.type = "domain";
   }
+}
 
-  public href(hostname: string): string {
-    return this.baseURL + `/domain/${hostname}`;
+export class UrlscanForDomain extends Urlscan implements Link {
+  public constructor() {
+    super();
+    this.type = "domain";
+  }
+
+  public href(data: string): string {
+    return this.baseURL + `/domain/${data}`;
   }
 }
 
-export class UrlscanForIP implements Link {
-  public favicon: string;
-  public baseURL: string;
-  public name: string;
-  public type: LinkType;
-
+export class UrlscanForIP extends Urlscan implements Link {
   public constructor() {
-    this.baseURL = "https://urlscan.io";
-    this.favicon = "https://www.google.com/s2/favicons?domain=urlscan.io";
-    this.name = "urlscan.io";
-    this.type = "ip";
+    super();
+    this.type = "domain";
   }
 
-  public href(hostname: string): string {
-    return this.baseURL + `/ip/${hostname}`;
+  public href(data: string): string {
+    return this.baseURL + `/ip/${data}`;
+  }
+}
+
+export class UrlscanForURL extends Urlscan implements Link {
+  public constructor() {
+    super();
+    this.type = "url";
+  }
+
+  public href(url: string): string {
+    const query = encodeURIComponent(`page.url:"${url}" OR task.url:"${url}"`);
+    return this.baseURL + `/search/#${query}`;
   }
 }

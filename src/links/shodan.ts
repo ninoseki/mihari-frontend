@@ -13,7 +13,7 @@ export class Shodan implements Link {
     this.type = "ip";
   }
 
-  public href(hostname: string): string {
-    return this.baseURL + `/host/${hostname}`;
+  public href(data: string): string {
+    return this.baseURL + `/host/${data}`;
   }
 }
