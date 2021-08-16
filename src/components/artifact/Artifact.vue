@@ -107,8 +107,14 @@ import { API } from "@/api";
 import AlertsComponent from "@/components/alert/Alerts.vue";
 import Links from "@/components/link/Links.vue";
 import Loading from "@/components/Loading.vue";
-import { getCountryByCode } from "@/countries";
-import { Alerts, ArtifactWithTags, IPInfo, SearchParams } from "@/types";
+import {
+  Alerts,
+  ArtifactWithTags,
+  Geolocation,
+  IPInfo,
+  SearchParams,
+} from "@/types";
+import { getGeolocation } from "@/utils";
 
 export default defineComponent({
   name: "Artifact",
@@ -127,7 +133,6 @@ export default defineComponent({
     const page = ref(1);
     const tag = ref<string | undefined>(undefined);
     const googleMapSrc = ref<string | undefined>(undefined);
-
     const countryCode = ref<string | undefined>(undefined);
 
     const router = useRouter();
@@ -146,12 +151,10 @@ export default defineComponent({
     });
 
     const getGoogleMapSrc = (
-      twoAlphaCountryCode: string
+      geolocation: Geolocation | undefined
     ): string | undefined => {
-      const country = getCountryByCode(twoAlphaCountryCode);
-
-      if (country !== undefined) {
-        return `https://maps.google.co.jp/maps?output=embed&q=${country.lat},${country.long}&z=3`;
+      if (geolocation !== undefined) {
+        return `https://maps.google.co.jp/maps?output=embed&q=${geolocation.lat},${geolocation.long}&z=3`;
       }
 
       return undefined;
@@ -217,8 +220,10 @@ export default defineComponent({
     onMounted(async () => {
       if (props.artifact.dataType === "ip") {
         const ipinfo = await getIPInfoTask.perform(props.artifact.data);
+        const geolocation = getGeolocation(ipinfo);
+
         countryCode.value = ipinfo.country;
-        googleMapSrc.value = getGoogleMapSrc(ipinfo.country);
+        googleMapSrc.value = getGoogleMapSrc(geolocation);
       }
       await getAlertsTask.perform();
     });
