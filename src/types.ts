@@ -72,6 +72,11 @@ export interface IPInfo {
   org: string;
 }
 
+export interface Geolocation {
+  lat: number;
+  long: number;
+}
+
 export interface Country {
   name: string;
   code: string;
