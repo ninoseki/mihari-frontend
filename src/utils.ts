@@ -4,7 +4,7 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 
 import { getCountryByCode } from "@/countries";
-import { Geolocation, IPInfo } from "@/types";
+import { GCS, IPInfo } from "@/types";
 
 dayjs.extend(relativeTime);
 dayjs.extend(timezone);
@@ -14,7 +14,14 @@ export function getHumanizedRelativeTime(datetime: string): string {
   return dayjs(datetime).local().fromNow();
 }
 
-export function getGeolocation(ipinfo: IPInfo): Geolocation | undefined {
+export function getGCSByCountryCode(countryCode: string): GCS | undefined {
+  const country = getCountryByCode(countryCode);
+  if (country !== undefined) {
+    return { lat: country.lat, long: country.long };
+  }
+}
+
+export function getGCSByIPInfo(ipinfo: IPInfo): GCS | undefined {
   if (ipinfo.loc !== undefined) {
     const numbers = ipinfo.loc.split(",");
     if (numbers.length === 2) {
@@ -24,9 +31,5 @@ export function getGeolocation(ipinfo: IPInfo): Geolocation | undefined {
       return { lat: parseFloat(lat), long: parseFloat(long) };
     }
   }
-
-  const country = getCountryByCode(ipinfo.country);
-  if (country !== undefined) {
-    return { lat: country.lat, long: country.long };
-  }
+  return getGCSByCountryCode(ipinfo.country);
 }
