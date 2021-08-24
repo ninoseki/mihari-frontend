@@ -5,13 +5,15 @@
 
       <div class="columns">
         <div
-          class="column"
+          class="column is-half"
           v-if="googleMapSrc !== undefined || urlscanLiveshotSrc !== undefined"
         >
           <div v-if="googleMapSrc">
             <h4 class="is-size-4">
               Geolocation
-              <span class="has-text-grey">{{ countryCode }}</span>
+              <span class="has-text-grey">{{
+                countryCode || artifact.geolocation?.countryCode
+              }}</span>
             </h4>
             <iframe
               class="mb-4"
@@ -31,44 +33,69 @@
         </div>
 
         <div class="column">
-          <h4 class="is-size-4">Information</h4>
-          <div class="table-container">
-            <table class="table is-bordered is-fullwidth">
-              <tr>
-                <th>ID</th>
-                <td>
-                  {{ artifact.id }}
-                  <button
-                    class="button is-light is-small is-pulled-right"
-                    @click="deleteArtifact"
-                  >
-                    <span>Delete</span>
-                    <span class="icon is-small">
-                      <i class="fas fa-times"></i>
-                    </span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <th>Data type</th>
-                <td>{{ artifact.dataType }}</td>
-              </tr>
-              <tr>
-                <th>Data</th>
-                <td>{{ artifact.data }}</td>
-              </tr>
-            </table>
+          <div class="block">
+            <h4 class="is-size-4">Information</h4>
+            <div class="table-container">
+              <table class="table is-bordered is-fullwidth">
+                <tr>
+                  <th>ID</th>
+                  <td>
+                    {{ artifact.id }}
+                    <button
+                      class="button is-light is-small is-pulled-right"
+                      @click="deleteArtifact"
+                    >
+                      <span>Delete</span>
+                      <span class="icon is-small">
+                        <i class="fas fa-times"></i>
+                      </span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Data type</th>
+                  <td>{{ artifact.dataType }}</td>
+                </tr>
+                <tr>
+                  <th>Data</th>
+                  <td>{{ artifact.data }}</td>
+                </tr>
+              </table>
+            </div>
           </div>
 
-          <div class="tags are-medium">
-            <span class="tag is-info" v-for="tag in artifact.tags" :key="tag">{{
-              tag
-            }}</span>
+          <div class="block" v-if="artifact.tags.length > 0">
+            <h4 class="is-size-4">Tags</h4>
+            <Tags :tags="artifact.tags"></Tags>
+          </div>
+
+          <div class="block" v-if="artifact.autonomousSystem">
+            <h4 class="is-size-4">AS</h4>
+            <AS :autonomousSystem="artifact.autonomousSystem"></AS>
+          </div>
+
+          <div class="block" v-if="artifact.reverseDnsNames">
+            <h4 class="is-size-4">Reverse DNS</h4>
+            <ReverseDnsNames
+              :reverseDnsNames="artifact.reverseDnsNames"
+            ></ReverseDnsNames>
+          </div>
+
+          <div class="block" v-if="artifact.dnsRecords">
+            <h4 class="is-size-4">DNS records</h4>
+            <DnsRecords :dnsRecords="artifact.dnsRecords"></DnsRecords>
+          </div>
+
+          <div class="block" v-if="artifact.whoisRecord">
+            <h4 class="is-size-4">Whois record</h4>
+            <WhoisRecord :whoisRecord="artifact.whoisRecord"></WhoisRecord>
           </div>
         </div>
       </div>
 
-      <Links :data="artifact.data" :type="artifact.dataType"></Links>
+      <div class="block">
+        <Links :data="artifact.data" :type="artifact.dataType"></Links>
+      </div>
     </div>
 
     <hr />
@@ -105,16 +132,15 @@ import { useRouter } from "vue-router";
 
 import { API } from "@/api";
 import AlertsComponent from "@/components/alert/Alerts.vue";
+import AS from "@/components/artifact/AS.vue";
+import DnsRecords from "@/components/artifact/DnsRecords.vue";
+import ReverseDnsNames from "@/components/artifact/ReverseDnsNames.vue";
+import Tags from "@/components/artifact/Tags.vue";
+import WhoisRecord from "@/components/artifact/WhoisRecord.vue";
 import Links from "@/components/link/Links.vue";
 import Loading from "@/components/Loading.vue";
-import {
-  Alerts,
-  ArtifactWithTags,
-  Geolocation,
-  IPInfo,
-  SearchParams,
-} from "@/types";
-import { getGeolocation } from "@/utils";
+import { Alerts, ArtifactWithTags, GCS, IPInfo, SearchParams } from "@/types";
+import { getGCSByCountryCode, getGCSByIPInfo } from "@/utils";
 
 export default defineComponent({
   name: "Artifact",
@@ -126,8 +152,13 @@ export default defineComponent({
   },
   components: {
     AlertsComponent,
+    DnsRecords,
     Loading,
     Links,
+    WhoisRecord,
+    Tags,
+    ReverseDnsNames,
+    AS,
   },
   setup(props) {
     const page = ref(1);
@@ -150,11 +181,9 @@ export default defineComponent({
       return undefined;
     });
 
-    const getGoogleMapSrc = (
-      geolocation: Geolocation | undefined
-    ): string | undefined => {
-      if (geolocation !== undefined) {
-        return `https://maps.google.co.jp/maps?output=embed&q=${geolocation.lat},${geolocation.long}&z=3`;
+    const getGoogleMapSrc = (gcs: GCS | undefined): string | undefined => {
+      if (gcs !== undefined) {
+        return `https://maps.google.co.jp/maps?output=embed&q=${gcs.lat},${gcs.long}&z=3`;
       }
 
       return undefined;
@@ -219,11 +248,18 @@ export default defineComponent({
 
     onMounted(async () => {
       if (props.artifact.dataType === "ip") {
-        const ipinfo = await getIPInfoTask.perform(props.artifact.data);
-        const geolocation = getGeolocation(ipinfo);
+        let gcs: GCS | undefined = undefined;
 
-        countryCode.value = ipinfo.country;
-        googleMapSrc.value = getGoogleMapSrc(geolocation);
+        if (props.artifact.geolocation === null) {
+          // Use IPInfo if an artifact does not have geolocation
+          const ipinfo = await getIPInfoTask.perform(props.artifact.data);
+          gcs = getGCSByIPInfo(ipinfo);
+          countryCode.value = ipinfo.country;
+        } else {
+          gcs = getGCSByCountryCode(props.artifact.geolocation.countryCode);
+        }
+
+        googleMapSrc.value = getGoogleMapSrc(gcs);
       }
       await getAlertsTask.perform();
     });
@@ -267,3 +303,7 @@ img.liveshot:hover {
   max-height: none;
 }
 </style>
+
+function getGCSByIPInfo(ipinfo: IPInfo): GCS|undefined { throw new
+Error("Function not implemented."); } function getGCSByIPInfo(ipinfo: IPInfo):
+GCS|undefined { throw new Error("Function not implemented."); }

@@ -17,11 +17,50 @@ export interface Tag {
   name: string;
 }
 
+export interface DnsRecord {
+  resource: string;
+  value: string;
+}
+
+export interface Contact {
+  name: string | null;
+  organization: string | null;
+}
+
+export interface Registrar {
+  name: string | null;
+  organization: string | null;
+}
+
+export interface WhoisRecord {
+  createdOn: Date | null;
+  updatedOn: Date | null;
+  expiresOn: Date | null;
+  registrar: Registrar | null;
+  contacts: Contact[];
+}
+
+export interface AutonomousSystem {
+  asn: number;
+}
+
+export interface Geolocation {
+  country: string;
+  countryCode: string;
+}
+
 export interface Artifact {
   id: number;
   data: string;
   dataType: string;
   createdAt: string;
+
+  autonomousSystem: AutonomousSystem | null;
+  whoisRecord: WhoisRecord | null;
+  geolocation: Geolocation | null;
+
+  dnsRecords: DnsRecord[] | null;
+  reverseDnsNames: string[] | null;
 }
 
 export interface ArtifactWithTags extends Artifact {
@@ -72,7 +111,7 @@ export interface IPInfo {
   org: string;
 }
 
-export interface Geolocation {
+export interface GCS {
   lat: number;
   long: number;
 }

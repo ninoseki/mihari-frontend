@@ -128,7 +128,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ArtifactWithTags"
+                $ref: "#/components/schemas/ArtifactWithRelations"
     delete:
       summary: Delete an artifact
       tags:
@@ -223,6 +223,47 @@ components:
       items:
         allOf:
           - type: string
+    DnsRecord:
+      type: object
+      properties:
+        resource:
+          type: string
+        value:
+          type: string
+    WhoisRecord:
+      type: object
+      properties:
+        domain:
+          type: string
+        createdOn:
+          type: string
+          nullable: true
+        updatedOn:
+          type: string
+          nullable: true
+        expiresOn:
+          type: string
+          nullable: true
+        registrar:
+          type: object
+          nullable: true
+        contacts:
+          type: array
+          items:
+            type: object
+    Geolocation:
+      type: object
+      properties:
+        country:
+          type: string
+        countryCode:
+          type: string
+          nullable: true
+    AutonomousSystem:
+      type: object
+      properties:
+        asn:
+          type: integer
     Artifact:
       type: object
       properties:
@@ -235,8 +276,8 @@ components:
         source:
           type: string
           nullable: true
-    ArtifactWithTags:
-      allOf: # Combines the BasicErrorModel and the inline model
+    ArtifactWithRelations:
+      allOf:
         - $ref: "#/components/schemas/Artifact"
         - type: object
           properties:
@@ -244,6 +285,26 @@ components:
               type: array
               items:
                 type: string
+            reverseDnsNames:
+              type: array
+              items:
+                type: string
+              nullable: true
+            autonomousSystem:
+              $ref: "#/components/schemas/AutonomousSystem"
+              nullable: true
+            geolocation:
+              $ref: "#/components/schemas/Geolocation"
+              nullable: true
+            whoisRecord:
+              $ref: "#/components/schemas/WhoisRecord"
+              nullable: true
+            dnsRecords:
+              type: array
+              items:
+                allOf:
+                  - $ref: "#/components/schemas/DnsRecord"
+              nullable: true
     Alert:
       type: object
       properties:
