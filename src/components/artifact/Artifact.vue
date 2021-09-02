@@ -254,7 +254,7 @@ export default defineComponent({
           // Use IPInfo if an artifact does not have geolocation
           const ipinfo = await getIPInfoTask.perform(props.artifact.data);
           gcs = getGCSByIPInfo(ipinfo);
-          countryCode.value = ipinfo.country;
+          countryCode.value = ipinfo.countryCode;
         } else {
           gcs = getGCSByCountryCode(props.artifact.geolocation.countryCode);
         }
@@ -303,7 +303,3 @@ img.liveshot:hover {
   max-height: none;
 }
 </style>
-
-function getGCSByIPInfo(ipinfo: IPInfo): GCS|undefined { throw new
-Error("Function not implemented."); } function getGCSByIPInfo(ipinfo: IPInfo):
-GCS|undefined { throw new Error("Function not implemented."); }

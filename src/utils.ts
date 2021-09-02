@@ -31,5 +31,5 @@ export function getGCSByIPInfo(ipinfo: IPInfo): GCS | undefined {
       return { lat: parseFloat(lat), long: parseFloat(long) };
     }
   }
-  return getGCSByCountryCode(ipinfo.country);
+  return getGCSByCountryCode(ipinfo.countryCode);
 }

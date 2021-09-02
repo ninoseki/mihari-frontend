@@ -104,11 +104,9 @@ export interface CommandOutput {
 export interface IPInfo {
   ip: string;
   hostname: string | null;
-  city: string;
-  region: string;
-  country: string;
   loc: string;
-  org: string;
+  countryCode: string;
+  asn: string;
 }
 
 export interface GCS {
