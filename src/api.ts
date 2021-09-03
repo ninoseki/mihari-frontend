@@ -48,6 +48,11 @@ export const API = {
     return res.data;
   },
 
+  async enrichArtifact(id: number): Promise<void> {
+    await client.get(`/api/artifacts/${id}/enrich`);
+    return;
+  },
+
   async deleteArtifact(id: number): Promise<void> {
     await client.delete(`/api/artifacts/${id}`);
   },

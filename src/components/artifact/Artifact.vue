@@ -41,15 +41,27 @@
                   <th>ID</th>
                   <td>
                     {{ artifact.id }}
-                    <button
-                      class="button is-light is-small is-pulled-right"
-                      @click="deleteArtifact"
-                    >
-                      <span>Delete</span>
-                      <span class="icon is-small">
-                        <i class="fas fa-times"></i>
-                      </span>
-                    </button>
+                    <span class="buttons is-pulled-right">
+                      <button
+                        class="button is-primary is-light is-small"
+                        @click="enrichArtifact"
+                      >
+                        <span>Enrich</span>
+                        <span class="icon is-small">
+                          <i class="fas fa-lightbulb"></i>
+                        </span>
+                      </button>
+
+                      <button
+                        class="button is-light is-small"
+                        @click="deleteArtifact"
+                      >
+                        <span>Delete</span>
+                        <span class="icon is-small">
+                          <i class="fas fa-times"></i>
+                        </span>
+                      </button>
+                    </span>
                   </td>
                 </tr>
                 <tr>
@@ -224,6 +236,15 @@ export default defineComponent({
       }
     };
 
+    const enrichArtifactTask = useAsyncTask<void, []>(async () => {
+      return await API.enrichArtifact(props.artifact.id);
+    });
+
+    const enrichArtifact = async () => {
+      await enrichArtifactTask.perform();
+      router.go(0);
+    };
+
     const updatePage = (newPage: number) => {
       page.value = newPage;
     };
@@ -281,6 +302,7 @@ export default defineComponent({
       refreshPage,
       updatePage,
       updateTag,
+      enrichArtifact,
     };
   },
 });
