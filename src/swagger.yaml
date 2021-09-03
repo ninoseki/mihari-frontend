@@ -72,7 +72,7 @@ paths:
           required: true
       responses:
         "204":
-          description: Delete an alert
+          description: An alert is deleted
   /api/tags/:
     get:
       summary: Get tags
@@ -98,7 +98,7 @@ paths:
           required: true
       responses:
         "204":
-          description: Delete a tag
+          description: A tag is deleted
   /api/sources:
     get:
       summary: Get sources
@@ -141,7 +141,21 @@ paths:
           required: true
       responses:
         "204":
-          description: Delete an artifact
+          description: An artifact is deleted
+  /api/artifacts/{id}/enrich:
+    get:
+      summary: Enrich an artifact
+      tags:
+        - artifacts
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "201":
+          description: An artifact is enriched
   /api/config:
     get:
       summary: Get a config
