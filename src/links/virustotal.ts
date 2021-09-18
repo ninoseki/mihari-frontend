@@ -58,3 +58,14 @@ export class VirusTotalForURL extends VirusTotal implements Link {
     return uri;
   }
 }
+
+export class VirusTotalForHash extends VirusTotal implements Link {
+  public constructor() {
+    super();
+    this.type = "hash";
+  }
+
+  public href(data: string): string {
+    return this.baseURL + `/gui/file/${data}/details`;
+  }
+}
