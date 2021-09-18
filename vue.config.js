@@ -14,6 +14,15 @@ module.exports = {
     optimization: {
       splitChunks: false,
     },
+    module: {
+      rules: [
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: "javascript/auto",
+        },
+      ],
+    },
   },
   css: {
     extract: false,
