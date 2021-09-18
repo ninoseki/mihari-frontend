@@ -121,7 +121,7 @@ export interface Country {
   long: number;
 }
 
-export type LinkType = "ip" | "domain" | "url";
+export type LinkType = "ip" | "domain" | "url" | "hash";
 
 export interface Link {
   name: string;
