@@ -94,6 +94,9 @@ export interface SearchParams {
   title: string | undefined;
   fromAt: string | undefined;
   toAt: string | undefined;
+  asn: number | undefined;
+  dnsRecord: string | undefined;
+  reverseDnsName: string | undefined;
 }
 
 export interface CommandOutput {

@@ -217,6 +217,9 @@ export default defineComponent({
         title: undefined,
         toAt: undefined,
         fromAt: undefined,
+        asn: undefined,
+        dnsRecord: undefined,
+        reverseDnsName: undefined,
       };
       return await API.getAlerts(params);
     });

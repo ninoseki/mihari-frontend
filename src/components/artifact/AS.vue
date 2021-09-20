@@ -3,7 +3,15 @@
     <div class="control">
       <div class="tags has-addons are-medium">
         <span class="tag is-dark">ASN</span>
-        <span class="tag is-light">{{ autonomousSystem.asn }}</span>
+        <router-link
+          class="tag"
+          :to="{
+            name: 'Alerts',
+            query: { asn: autonomousSystem.asn },
+          }"
+        >
+          {{ autonomousSystem.asn }}
+        </router-link>
       </div>
     </div>
   </div>

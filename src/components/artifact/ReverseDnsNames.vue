@@ -1,8 +1,16 @@
 <template>
   <div class="tags are-medium">
-    <span class="tag is-light" v-for="name in reverseDnsNames" :key="name">{{
-      name
-    }}</span>
+    <router-link
+      class="tag"
+      v-for="name in reverseDnsNames"
+      :key="name"
+      :to="{
+        name: 'Alerts',
+        query: { reverseDnsName: name },
+      }"
+    >
+      {{ name }}
+    </router-link>
   </div>
 </template>
 
