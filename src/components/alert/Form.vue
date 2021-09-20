@@ -129,8 +129,10 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
 import { SearchParams } from "@/types";
+import { normalizeQueryParam } from "@/utils";
 
 export default defineComponent({
   name: "AlertsForm",
@@ -153,6 +155,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const route = useRoute();
+
     const artifact = ref<string | undefined>(undefined);
     const description = ref<string | undefined>(undefined);
     const fromAt = ref<string | undefined>(undefined);
@@ -160,8 +164,25 @@ export default defineComponent({
     const source = ref<string | undefined>(undefined);
     const title = ref<string | undefined>(undefined);
     const toAt = ref<string | undefined>(undefined);
+    const asn = ref<number | undefined>(undefined);
+    const dnsRecord = ref<string | undefined>(undefined);
+    const reverseDnsName = ref<string | undefined>(undefined);
+
+    const updateByQueryParams = () => {
+      const asn_ = route.query["asn"];
+      const dnsRecord_ = route.query["dnsRecord"];
+      const reverseDnsName_ = route.query["reverseDnsName"];
+
+      const normalizedAsn = normalizeQueryParam(asn_);
+      asn.value =
+        normalizedAsn === undefined ? undefined : parseInt(normalizedAsn);
+      dnsRecord.value = normalizeQueryParam(dnsRecord_);
+      reverseDnsName.value = normalizeQueryParam(reverseDnsName_);
+    };
 
     const getSearchParams = (): SearchParams => {
+      updateByQueryParams();
+
       const params: SearchParams = {
         artifact: artifact.value === "" ? undefined : artifact.value,
         description: description.value === "" ? undefined : description.value,
@@ -171,6 +192,10 @@ export default defineComponent({
         title: title.value === "" ? undefined : title.value,
         toAt: toAt.value === "" ? undefined : toAt.value,
         fromAt: fromAt.value === "" ? undefined : fromAt.value,
+        asn: asn.value,
+        reverseDnsName:
+          reverseDnsName.value === "" ? undefined : reverseDnsName.value,
+        dnsRecord: dnsRecord.value === "" ? undefined : dnsRecord.value,
       };
       return params;
     };

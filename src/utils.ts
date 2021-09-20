@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { LocationQueryValue } from "vue-router";
 
 import { getCountryByCode } from "@/countries";
 import { GCS, IPInfo } from "@/types";
@@ -32,4 +33,24 @@ export function getGCSByIPInfo(ipinfo: IPInfo): GCS | undefined {
     }
   }
   return getGCSByCountryCode(ipinfo.countryCode);
+}
+
+export function normalizeQueryParam(
+  param:
+    | undefined
+    | null
+    | string
+    | string[]
+    | LocationQueryValue
+    | LocationQueryValue[]
+): string | undefined {
+  if (param === undefined || param === null) {
+    return undefined;
+  }
+
+  if (typeof param === "string") {
+    return param;
+  }
+
+  return param.toString();
 }

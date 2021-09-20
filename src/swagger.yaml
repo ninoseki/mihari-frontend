@@ -52,6 +52,21 @@ paths:
           schema:
             type: string
           required: false
+        - in: query
+          name: asn
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: dnsRecord
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: reverseDnsName
+          schema:
+            type: string
+          required: false
       responses:
         "200":
           description: A list of matched alerts
