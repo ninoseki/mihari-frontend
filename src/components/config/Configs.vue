@@ -11,17 +11,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, key) in config" :key="key">
+          <tr v-for="config in configs" :key="config.name">
             <td>
-              {{ key }}
+              {{ config.name }}
             </td>
             <td>
-              {{ item.type }}
+              {{ config.status.type }}
             </td>
             <td>
               <button
                 class="button is-success is-small ml-1"
-                v-if="item.isConfigured"
+                v-if="config.status.isConfigured"
               >
                 <span class="icon is-small">
                   <i class="fas fa-check"></i>
@@ -37,7 +37,7 @@
             </td>
             <td>
               <ul>
-                <li v-for="(kv, index) in item.values" :key="index">
+                <li v-for="(kv, index) in config.status.values" :key="index">
                   <strong> {{ kv.key }} </strong>: {{ kv.value || "N/A" }}
                 </li>
               </ul>
@@ -55,10 +55,10 @@ import { defineComponent, PropType } from "vue";
 import { Config } from "@/types";
 
 export default defineComponent({
-  name: "Config",
+  name: "Configs",
   props: {
-    config: {
-      type: Object as PropType<Config>,
+    configs: {
+      type: Array as PropType<Config[]>,
       required: true,
     },
   },

@@ -1,20 +1,29 @@
-export interface ConfigItemValue {
+export interface ConfigStatusValue {
   key: string;
   value: string | null;
 }
 
-export interface ConfigItem {
+export interface ConfigStatus {
   isConfigured: boolean;
-  values: ConfigItemValue[];
+  values: ConfigStatusValue[];
   type: string;
 }
 
 export interface Config {
-  [key: string]: ConfigItem;
+  name: string;
+  status: ConfigStatus;
 }
 
 export interface Tag {
   name: string;
+}
+
+export interface Tags {
+  tags: string[];
+}
+
+export interface Sources {
+  sources: string[];
 }
 
 export interface DnsRecord {

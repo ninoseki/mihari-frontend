@@ -1,16 +1,16 @@
 <template>
   <div>
-    <Loading v-if="getConfigTask.isRunning"></Loading>
+    <Loading v-if="getConfigsTask.isRunning"></Loading>
 
     <ErrorMessage
-      v-if="getConfigTask.isError"
-      :error="getConfigTask.last?.error"
+      v-if="getConfigsTask.isError"
+      :error="getConfigsTask.last?.error"
     ></ErrorMessage>
 
-    <ConfigComponent
-      :config="getConfigTask.last.value"
-      v-if="getConfigTask.last?.value"
-    ></ConfigComponent>
+    <Configs
+      :configs="getConfigsTask.last.value"
+      v-if="getConfigsTask.last?.value"
+    ></Configs>
   </div>
 </template>
 
@@ -19,28 +19,28 @@ import { defineComponent, onMounted } from "vue";
 import { useAsyncTask } from "vue-concurrency";
 
 import { API } from "@/api";
-import ConfigComponent from "@/components/config/Config.vue";
+import Configs from "@/components/config/Configs.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
 import { Config } from "@/types";
 
 export default defineComponent({
-  name: "ConfigWrapper",
+  name: "ConfigsWrapper",
   components: {
-    ConfigComponent,
+    Configs,
     Loading,
     ErrorMessage,
   },
   setup() {
-    const getConfigTask = useAsyncTask<Config, []>(async () => {
-      return await API.getConfig();
+    const getConfigsTask = useAsyncTask<Config[], []>(async () => {
+      return await API.getConfigs();
     });
 
     onMounted(async () => {
-      await getConfigTask.perform();
+      await getConfigsTask.perform();
     });
 
-    return { getConfigTask };
+    return { getConfigsTask };
   },
 });
 </script>
