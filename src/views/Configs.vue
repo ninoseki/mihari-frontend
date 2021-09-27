@@ -1,17 +1,17 @@
 <template>
-  <Config></Config>
+  <Configs></Configs>
 </template>
 
 <script lang="ts">
 import { useTitle } from "@vueuse/core";
 import { defineComponent } from "vue";
 
-import Config from "@/components/config/ConfigWrapper.vue";
+import Configs from "@/components/config/ConfigsWrapper.vue";
 
 export default defineComponent({
   name: "ConfigView",
   components: {
-    Config,
+    Configs,
   },
   setup() {
     useTitle("Config - Mihari");

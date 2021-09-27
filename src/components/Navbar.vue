@@ -20,8 +20,8 @@
         <router-link class="navbar-item" :to="{ name: 'Command' }"
           >Command</router-link
         >
-        <router-link class="navbar-item" :to="{ name: 'Config' }"
-          >Config</router-link
+        <router-link class="navbar-item" :to="{ name: 'Configs' }"
+          >Configs</router-link
         >
         <a class="navbar-item"
           ><a href="/redoc-static.html" target="_blank" class="navbar-item"

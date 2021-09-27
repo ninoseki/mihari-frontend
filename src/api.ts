@@ -7,6 +7,8 @@ import {
   Config,
   IPInfo,
   SearchParams,
+  Sources,
+  Tags,
 } from "@/types";
 
 const client = axios.create({
@@ -16,8 +18,8 @@ const client = axios.create({
 });
 
 export const API = {
-  async getConfig(): Promise<Config> {
-    const res = await client.get<Config>("/api/config");
+  async getConfigs(): Promise<Config[]> {
+    const res = await client.get<Config[]>("/api/configs");
     return res.data;
   },
 
@@ -30,13 +32,13 @@ export const API = {
   },
 
   async getTags(): Promise<string[]> {
-    const res = await client.get<string[]>("/api/tags");
-    return res.data;
+    const res = await client.get<Tags>("/api/tags");
+    return res.data.tags;
   },
 
   async getSources(): Promise<string[]> {
-    const res = await client.get<string[]>("/api/sources");
-    return res.data;
+    const res = await client.get<Sources>("/api/sources");
+    return res.data.sources;
   },
 
   async deleteAlert(id: number): Promise<void> {

@@ -1,455 +1,516 @@
 info:
   title: Mihari API
-  version: "1.0"
-
-openapi: 3.0.0
-
+  version: 0.0.1
+swagger: "2.0"
+produces:
+  - application/json
+tags:
+  - name: alerts
+    description: Operations about alerts
+  - name: artifacts
+    description: Operations about artifacts
+  - name: command
+    description: Operations about commands
+  - name: configs
+    description: Operations about configs
+  - name: ip_addresses
+    description: Operations about ip_addresses
+  - name: sources
+    description: Operations about sources
+  - name: tags
+    description: Operations about tags
 paths:
-  /api/alerts:
-    get:
-      summary: Get alerts
+  /api/alerts/{id}:
+    delete:
+      description: Delete an alert
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int32
+          required: true
+      responses:
+        "200":
+          description: Delete an alert
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
+        "404":
+          description: Not found
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
       tags:
         - alerts
+  /api/alerts:
+    get:
+      description: Search alerts
+      produces:
+        - application/json
       parameters:
         - in: query
           name: page
-          schema:
-            type: integer
-            default: 0
+          type: integer
+          format: int32
           required: false
         - in: query
           name: artifact
-          schema:
-            type: string
+          type: string
           required: false
         - in: query
           name: description
-          schema:
-            type: string
+          type: string
           required: false
         - in: query
           name: source
-          schema:
-            type: string
+          type: string
           required: false
         - in: query
           name: tag
-          schema:
-            type: string
+          type: string
           required: false
         - in: query
-          name: title
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: toAt
-          schema:
-            type: string
+          name: from_at
+          type: string
+          format: date-time
           required: false
         - in: query
           name: fromAt
-          schema:
-            type: string
+          type: string
+          format: date-time
+          required: false
+        - in: query
+          name: to_at
+          type: string
+          format: date-time
+          required: false
+        - in: query
+          name: toAt
+          type: string
+          format: date-time
           required: false
         - in: query
           name: asn
-          schema:
-            type: integer
+          type: integer
+          format: int32
+          required: false
+        - in: query
+          name: dns_record
+          type: string
           required: false
         - in: query
           name: dnsRecord
-          schema:
-            type: string
+          type: string
+          required: false
+        - in: query
+          name: reverse_dns_name
+          type: string
           required: false
         - in: query
           name: reverseDnsName
-          schema:
-            type: string
+          type: string
           required: false
       responses:
         "200":
-          description: A list of matched alerts
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AlertSearchResults"
-  /api/alerts/{id}:
-    delete:
-      summary: Delete an alert
+          description: Search alerts
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Mihari_Entities_Alert"
+        "404":
+          description: Not found
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
       tags:
         - alerts
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-      responses:
-        "204":
-          description: An alert is deleted
-  /api/tags/:
-    get:
-      summary: Get tags
-      tags:
-        - tags
-      responses:
-        "200":
-          description: A list of tags
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Tags"
-  /api/tags/{name}:
-    delete:
-      summary: Delete a tag
-      tags:
-        - tags
-      parameters:
-        - in: path
-          name: name
-          schema:
-            type: string
-          required: true
-      responses:
-        "204":
-          description: A tag is deleted
-  /api/sources:
-    get:
-      summary: Get sources
-      tags:
-        - sources
-      responses:
-        "200":
-          description: A list of sources
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Sources"
   /api/artifacts/{id}:
-    get:
-      summary: Get an artifact
-      tags:
-        - artifacts
+    delete:
+      description: Delete an artifact
+      produces:
+        - application/json
       parameters:
         - in: path
           name: id
-          schema:
-            type: integer
+          type: integer
+          format: int32
           required: true
       responses:
         "200":
-          description: An artifact
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ArtifactWithRelations"
-    delete:
-      summary: Delete an artifact
+          description: Delete an artifact
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
+        "404":
+          description: Not found
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
       tags:
         - artifacts
+    get:
+      description: Get an artifact
+      produces:
+        - application/json
       parameters:
         - in: path
           name: id
-          schema:
-            type: integer
+          type: integer
+          format: int32
           required: true
       responses:
-        "204":
-          description: An artifact is deleted
+        "200":
+          description: Get an artifact
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Artifact"
+        "404":
+          description: Not found
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
+      tags:
+        - artifacts
   /api/artifacts/{id}/enrich:
     get:
-      summary: Enrich an artifact
-      tags:
-        - artifacts
+      description: Enrich an artifact
+      produces:
+        - application/json
       parameters:
         - in: path
           name: id
-          schema:
-            type: integer
+          type: integer
+          format: int32
           required: true
       responses:
-        "201":
-          description: An artifact is enriched
-  /api/config:
-    get:
-      summary: Get a config
-      tags:
-        - config
-      responses:
         "200":
-          description: A dictionary of configuration items
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Config"
+          description: Enrich an artifact
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
+        "404":
+          description: Not found
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
+      tags:
+        - artifacts
   /api/command:
     post:
-      summary: Run a command
-      tags:
-        - command
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CommandRequest"
-      responses:
-        "200":
-          description: A result of a command
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CommandResult"
-  /api/analyzer:
-    post:
-      summary: Run an analyzer
-      tags:
-        - analyzers
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AnalyzerRequest"
+      description: Run a command
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: ApiCommand
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/postApiCommand"
       responses:
         "201":
-          description: OK
+          description: Run a command
+          schema:
+            $ref: "#/definitions/Mihari_Entities_CommandResult"
+        "400":
+          description: Bad request
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
+      tags:
+        - command
+  /api/configs:
+    get:
+      description: Get configs
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Get configs
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Mihari_Entities_Config"
+      tags:
+        - configs
   /api/ip_addresses/{ip}:
     get:
-      summary: Get an IP address information
-      tags:
-        - ip addresses
+      description: Get an IP address
+      produces:
+        - application/json
       parameters:
         - in: path
           name: ip
-          schema:
-            type: string
+          type: string
           required: true
       responses:
         "200":
-          description: An IP address information
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/IPInfo"
-components:
-  schemas:
-    Tag:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
+          description: Get an IP address
+          schema:
+            $ref: "#/definitions/Mihari_Entities_IPAddress"
+        "404":
+          description: Not found
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
+      tags:
+        - ip_addresses
+  /api/sources:
+    get:
+      description: Get sources
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Get sources
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Mihari_Entities_Sources"
+      tags:
+        - sources
+  /api/tags/{name}:
+    delete:
+      description: Delete a tag
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: name
           type: string
-    Tags:
-      type: array
-      items:
-        allOf:
-          - $ref: "#/components/schemas/Tag"
-    Sources:
-      type: array
-      items:
-        allOf:
-          - type: string
-    DnsRecord:
-      type: object
-      properties:
-        resource:
+          required: true
+      responses:
+        "200":
+          description: Delete a tag
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
+        "404":
+          description: Not found
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Message"
+      tags:
+        - tags
+  /api/tags:
+    get:
+      description: Get tags
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Get tags
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Mihari_Entities_Tags"
+      tags:
+        - tags
+definitions:
+  Mihari_Entities_Message:
+    type: object
+    properties:
+      message:
+        type: string
+    description: Mihari_Entities_Message model
+  Mihari_Entities_Alert:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      title:
+        type: string
+      description:
+        type: string
+      source:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      artifacts:
+        type: array
+        items:
+          $ref: "#/definitions/Mihari_Entities_Artifact"
+      tags:
+        type: array
+        items:
+          $ref: "#/definitions/Mihari_Entities_Tag"
+    required:
+      - id
+      - title
+      - description
+      - source
+      - createdAt
+    description: Mihari_Entities_Alert model
+  Mihari_Entities_Artifact:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      data:
+        type: string
+      dataType:
+        type: string
+      source:
+        type: string
+      tags:
+        type: array
+        items:
           type: string
-        value:
-          type: string
-    WhoisRecord:
-      type: object
-      properties:
-        domain:
-          type: string
-        createdOn:
-          type: string
-          nullable: true
-        updatedOn:
-          type: string
-          nullable: true
-        expiresOn:
-          type: string
-          nullable: true
-        registrar:
+      autonomousSystem:
+        $ref: "#/definitions/Mihari_Entities_AutonomousSystem"
+      geolocation:
+        $ref: "#/definitions/Mihari_Entities_Geolocation"
+      whoisRecord:
+        $ref: "#/definitions/Mihari_Entities_WhoisRecord"
+      reverseDnsNames:
+        type: array
+        items:
+          $ref: "#/definitions/Mihari_Entities_ReverseDnsName"
+      dnsRecord:
+        type: array
+        items:
+          $ref: "#/definitions/Mihari_Entities_DnsRecord"
+    required:
+      - id
+      - data
+      - dataType
+      - source
+    description: Mihari_Entities_Artifact model
+  Mihari_Entities_AutonomousSystem:
+    type: object
+    properties:
+      asn:
+        type: integer
+        format: int32
+    required:
+      - asn
+  Mihari_Entities_Geolocation:
+    type: object
+    properties:
+      country:
+        type: string
+      countryCode:
+        type: string
+    required:
+      - country
+      - countryCode
+  Mihari_Entities_WhoisRecord:
+    type: object
+    properties:
+      domain:
+        type: string
+      createdOn:
+        type: string
+        format: date
+      updatedOn:
+        type: string
+        format: date
+      expiresOn:
+        type: string
+        format: date
+      registrar:
+        type: object
+      contacts:
+        type: array
+        items:
           type: object
-          nullable: true
-        contacts:
-          type: array
-          items:
-            type: object
-    Geolocation:
-      type: object
-      properties:
-        country:
+    required:
+      - domain
+      - contacts
+  Mihari_Entities_ReverseDnsName:
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+      - name
+  Mihari_Entities_DnsRecord:
+    type: object
+    properties:
+      resource:
+        type: string
+      value:
+        type: string
+    required:
+      - resource
+      - value
+  Mihari_Entities_Tag:
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+      - name
+  postApiCommand:
+    type: object
+    properties:
+      command:
+        type: string
+    required:
+      - command
+    description: Run a command
+  Mihari_Entities_CommandResult:
+    type: object
+    properties:
+      output:
+        type: string
+      success:
+        type: boolean
+    required:
+      - output
+      - success
+    description: Mihari_Entities_CommandResult model
+  Mihari_Entities_Config:
+    type: object
+    properties:
+      name:
+        type: string
+      status:
+        $ref: "#/definitions/Mihari_Entities_ConfigStatus"
+    required:
+      - name
+      - status
+    description: Mihari_Entities_Config model
+  Mihari_Entities_ConfigStatus:
+    type: object
+    properties:
+      type:
+        type: string
+      values:
+        type: array
+        items:
           type: string
-        countryCode:
-          type: string
-          nullable: true
-    AutonomousSystem:
-      type: object
-      properties:
-        asn:
-          type: integer
-    Artifact:
-      type: object
-      properties:
-        id:
-          type: integer
-        data:
-          type: string
-        dataType:
-          type: string
-        source:
-          type: string
-          nullable: true
-    ArtifactWithRelations:
-      allOf:
-        - $ref: "#/components/schemas/Artifact"
-        - type: object
-          properties:
-            tags:
-              type: array
-              items:
-                type: string
-            reverseDnsNames:
-              type: array
-              items:
-                type: string
-              nullable: true
-            autonomousSystem:
-              $ref: "#/components/schemas/AutonomousSystem"
-              nullable: true
-            geolocation:
-              $ref: "#/components/schemas/Geolocation"
-              nullable: true
-            whoisRecord:
-              $ref: "#/components/schemas/WhoisRecord"
-              nullable: true
-            dnsRecords:
-              type: array
-              items:
-                allOf:
-                  - $ref: "#/components/schemas/DnsRecord"
-              nullable: true
-    Alert:
-      type: object
-      properties:
-        id:
-          type: integer
-        title:
-          type: string
-        description:
-          type: string
-        source:
-          type: string
-        createdAt:
-          type: string
-        tags:
-          type: array
-          items:
-            allOf:
-              - $ref: "#/components/schemas/Tag"
-        artifacts:
-          type: array
-          items:
-            allOf:
-              - $ref: "#/components/schemas/Artifact"
-    AlertSearchResults:
-      type: object
-      properties:
-        alerts:
-          type: array
-          items:
-            allOf:
-              - $ref: "#/components/schemas/Alert"
-        currentPage:
-          type: integer
-        pageSize:
-          type: integer
-        total:
-          type: integer
-    ConfigItemValue:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-    ConfigItem:
-      type: object
-      properties:
-        isConfigured:
-          type: boolean
-        type:
-          type: string
-        values:
-          type: array
-          items:
-            allOf:
-              - $ref: "#/components/schemas/ConfigItemValue"
-    Config:
-      type: object
-      additionalProperties:
-        $ref: "#/components/schemas/ConfigItem"
-    CommandRequest:
-      type: object
-      properties:
-        command:
-          type: string
-    CommandResult:
-      type: object
-      properties:
-        output:
-          type: string
-        success:
-          type: boolean
-    AnalyzerRequest:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        source:
-          type: string
-        artifacts:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        ignoreOldArtifacts:
-          type: boolean
-          default: false
-        ignoreThreshold:
-          type: integer
-          default: 0
-      required:
-        - title
-        - description
-        - source
-        - artifacts
-    IPInfo:
-      type: object
-      properties:
-        ip:
-          type: string
-        country:
-          type: string
-        city:
-          type: string
-        postal:
-          type: string
-        region:
-          type: string
-        timezone:
-          type: string
-        hostname:
-          type: string
-        loc:
-          type: string
-        org:
-          type: string
+      isConfigured:
+        type: boolean
+    required:
+      - type
+      - values
+      - isConfigured
+  Mihari_Entities_IPAddress:
+    type: object
+    properties:
+      ip:
+        type: string
+      countryCode:
+        type: string
+      hostname:
+        type: string
+      loc:
+        type: string
+      asn:
+        type: integer
+        format: int32
+    required:
+      - ip
+      - countryCode
+      - loc
+    description: Mihari_Entities_IPAddress model
+  Mihari_Entities_Sources:
+    type: object
+    properties:
+      sources:
+        type: string
+    required:
+      - sources
+    description: Mihari_Entities_Sources model
+  Mihari_Entities_Tags:
+    type: object
+    properties:
+      tags:
+        type: string
+    required:
+      - tags
+    description: Mihari_Entities_Tags model

@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Alerts from "@/views/Alerts.vue";
 import Artifact from "@/views/Artifact.vue";
 import Command from "@/views/Command.vue";
-import Config from "@/views/Config.vue";
+import Configs from "@/views/Configs.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -17,9 +17,9 @@ const routes: Array<RouteRecordRaw> = [
     component: Command,
   },
   {
-    path: "/config",
-    name: "Config",
-    component: Config,
+    path: "/configs",
+    name: "Configs",
+    component: Configs,
   },
   {
     path: "/artifacts/:id",
