@@ -1,3 +1,4 @@
+---
 info:
   title: Mihari API
   version: 0.0.1
@@ -20,7 +21,7 @@ tags:
   - name: tags
     description: Operations about tags
 paths:
-  /api/alerts/{id}:
+  "/api/alerts/{id}":
     delete:
       description: Delete an alert
       produces:
@@ -35,14 +36,14 @@ paths:
         "200":
           description: Delete an alert
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
         "404":
           description: Not found
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
       tags:
         - alerts
-  /api/alerts:
+  "/api/alerts":
     get:
       description: Search alerts
       produces:
@@ -116,14 +117,14 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Mihari_Entities_Alert"
+              "$ref": "#/definitions/Mihari_Entities_Alert"
         "404":
           description: Not found
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
       tags:
         - alerts
-  /api/artifacts/{id}:
+  "/api/artifacts/{id}":
     delete:
       description: Delete an artifact
       produces:
@@ -138,11 +139,11 @@ paths:
         "200":
           description: Delete an artifact
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
         "404":
           description: Not found
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
       tags:
         - artifacts
     get:
@@ -159,14 +160,14 @@ paths:
         "200":
           description: Get an artifact
           schema:
-            $ref: "#/definitions/Mihari_Entities_Artifact"
+            "$ref": "#/definitions/Mihari_Entities_Artifact"
         "404":
           description: Not found
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
       tags:
         - artifacts
-  /api/artifacts/{id}/enrich:
+  "/api/artifacts/{id}/enrich":
     get:
       description: Enrich an artifact
       produces:
@@ -181,14 +182,14 @@ paths:
         "200":
           description: Enrich an artifact
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
         "404":
           description: Not found
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
       tags:
         - artifacts
-  /api/command:
+  "/api/command":
     post:
       description: Run a command
       produces:
@@ -200,19 +201,19 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/postApiCommand"
+            "$ref": "#/definitions/postApiCommand"
       responses:
         "201":
           description: Run a command
           schema:
-            $ref: "#/definitions/Mihari_Entities_CommandResult"
+            "$ref": "#/definitions/Mihari_Entities_CommandResult"
         "400":
           description: Bad request
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
       tags:
         - command
-  /api/configs:
+  "/api/configs":
     get:
       description: Get configs
       produces:
@@ -223,10 +224,10 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Mihari_Entities_Config"
+              "$ref": "#/definitions/Mihari_Entities_Config"
       tags:
         - configs
-  /api/ip_addresses/{ip}:
+  "/api/ip_addresses/{ip}":
     get:
       description: Get an IP address
       produces:
@@ -240,14 +241,14 @@ paths:
         "200":
           description: Get an IP address
           schema:
-            $ref: "#/definitions/Mihari_Entities_IPAddress"
+            "$ref": "#/definitions/Mihari_Entities_IPAddress"
         "404":
           description: Not found
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
       tags:
         - ip_addresses
-  /api/sources:
+  "/api/sources":
     get:
       description: Get sources
       produces:
@@ -258,10 +259,10 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Mihari_Entities_Sources"
+              "$ref": "#/definitions/Mihari_Entities_Sources"
       tags:
         - sources
-  /api/tags/{name}:
+  "/api/tags/{name}":
     delete:
       description: Delete a tag
       produces:
@@ -275,14 +276,14 @@ paths:
         "200":
           description: Delete a tag
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
         "404":
           description: Not found
           schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
+            "$ref": "#/definitions/Mihari_Entities_Message"
       tags:
         - tags
-  /api/tags:
+  "/api/tags":
     get:
       description: Get tags
       produces:
@@ -293,7 +294,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Mihari_Entities_Tags"
+              "$ref": "#/definitions/Mihari_Entities_Tags"
       tags:
         - tags
 definitions:
@@ -302,6 +303,8 @@ definitions:
     properties:
       message:
         type: string
+    required:
+      - message
     description: Mihari_Entities_Message model
   Mihari_Entities_Alert:
     type: object
@@ -321,17 +324,18 @@ definitions:
       artifacts:
         type: array
         items:
-          $ref: "#/definitions/Mihari_Entities_Artifact"
+          "$ref": "#/definitions/Mihari_Entities_Artifact"
       tags:
         type: array
         items:
-          $ref: "#/definitions/Mihari_Entities_Tag"
+          "$ref": "#/definitions/Mihari_Entities_Tag"
     required:
       - id
       - title
       - description
       - source
       - createdAt
+      - tags
     description: Mihari_Entities_Alert model
   Mihari_Entities_Artifact:
     type: object
@@ -350,19 +354,19 @@ definitions:
         items:
           type: string
       autonomousSystem:
-        $ref: "#/definitions/Mihari_Entities_AutonomousSystem"
+        "$ref": "#/definitions/Mihari_Entities_AutonomousSystem"
       geolocation:
-        $ref: "#/definitions/Mihari_Entities_Geolocation"
+        "$ref": "#/definitions/Mihari_Entities_Geolocation"
       whoisRecord:
-        $ref: "#/definitions/Mihari_Entities_WhoisRecord"
+        "$ref": "#/definitions/Mihari_Entities_WhoisRecord"
       reverseDnsNames:
         type: array
         items:
-          $ref: "#/definitions/Mihari_Entities_ReverseDnsName"
-      dnsRecord:
+          "$ref": "#/definitions/Mihari_Entities_ReverseDnsName"
+      dnsRecords:
         type: array
         items:
-          $ref: "#/definitions/Mihari_Entities_DnsRecord"
+          "$ref": "#/definitions/Mihari_Entities_DnsRecord"
     required:
       - id
       - data
@@ -459,7 +463,7 @@ definitions:
       name:
         type: string
       status:
-        $ref: "#/definitions/Mihari_Entities_ConfigStatus"
+        "$ref": "#/definitions/Mihari_Entities_ConfigStatus"
     required:
       - name
       - status
