@@ -2,14 +2,14 @@
   <div class="tags are-medium">
     <router-link
       class="tag"
-      v-for="name in reverseDnsNames"
-      :key="name"
+      v-for="reverseDnsName in reverseDnsNames"
+      :key="reverseDnsName.name"
       :to="{
         name: 'Alerts',
-        query: { reverseDnsName: name },
+        query: { reverseDnsName: reverseDnsName.name },
       }"
     >
-      {{ name }}
+      {{ reverseDnsName.name }}
     </router-link>
   </div>
 </template>
@@ -17,11 +17,13 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
+import { ReverseDnsName } from "@/types";
+
 export default defineComponent({
   name: "ReverseDnsNames",
   props: {
     reverseDnsNames: {
-      type: Array as PropType<string[]>,
+      type: Array as PropType<ReverseDnsName[]>,
       required: true,
     },
   },

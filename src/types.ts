@@ -58,6 +58,10 @@ export interface Geolocation {
   countryCode: string;
 }
 
+export interface ReverseDnsName {
+  name: string;
+}
+
 export interface Artifact {
   id: number;
   data: string;
@@ -69,7 +73,7 @@ export interface Artifact {
   geolocation: Geolocation | null;
 
   dnsRecords: DnsRecord[] | null;
-  reverseDnsNames: string[] | null;
+  reverseDnsNames: ReverseDnsName[] | null;
 }
 
 export interface ArtifactWithTags extends Artifact {

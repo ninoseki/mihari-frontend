@@ -170,14 +170,20 @@ export default defineComponent({
 
     const updateByQueryParams = () => {
       const asn_ = route.query["asn"];
-      const dnsRecord_ = route.query["dnsRecord"];
-      const reverseDnsName_ = route.query["reverseDnsName"];
-
       const normalizedAsn = normalizeQueryParam(asn_);
       asn.value =
         normalizedAsn === undefined ? undefined : parseInt(normalizedAsn);
+
+      const dnsRecord_ = route.query["dnsRecord"];
       dnsRecord.value = normalizeQueryParam(dnsRecord_);
+
+      const reverseDnsName_ = route.query["reverseDnsName"];
       reverseDnsName.value = normalizeQueryParam(reverseDnsName_);
+
+      const tag_ = route.query["tag"];
+      if (tagInput.value === undefined) {
+        tagInput.value = normalizeQueryParam(tag_);
+      }
     };
 
     const getSearchParams = (): SearchParams => {

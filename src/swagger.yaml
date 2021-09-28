@@ -1,3 +1,4 @@
+---
 info:
   title: Mihari API
   version: 0.0.1
@@ -302,6 +303,8 @@ definitions:
     properties:
       message:
         type: string
+    required:
+      - message
     description: Mihari_Entities_Message model
   Mihari_Entities_Alert:
     type: object
@@ -332,6 +335,7 @@ definitions:
       - description
       - source
       - createdAt
+      - tags
     description: Mihari_Entities_Alert model
   Mihari_Entities_Artifact:
     type: object
@@ -359,7 +363,7 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/Mihari_Entities_ReverseDnsName"
-      dnsRecord:
+      dnsRecords:
         type: array
         items:
           "$ref": "#/definitions/Mihari_Entities_DnsRecord"

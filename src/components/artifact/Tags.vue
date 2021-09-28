@@ -1,6 +1,16 @@
 <template>
   <div class="tags are-medium">
-    <span class="tag is-info" v-for="tag in tags" :key="tag">{{ tag }}</span>
+    <router-link
+      class="tag is-info"
+      v-for="tag in tags"
+      :key="tag"
+      :to="{
+        name: 'Alerts',
+        query: { tag: tag },
+      }"
+    >
+      {{ tag }}
+    </router-link>
   </div>
 </template>
 
