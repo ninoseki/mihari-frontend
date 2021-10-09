@@ -1,8 +1,9 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 import {
   Alerts,
   ArtifactWithTags,
+  CommandInput,
   CommandOutput,
   Config,
   IPInfo,
@@ -64,7 +65,12 @@ export const API = {
   },
 
   async runCommand(command: string): Promise<CommandOutput> {
-    const res = await client.post<CommandOutput>("/api/command", { command });
+    const res = await client.post<CommandInput, AxiosResponse<CommandOutput>>(
+      "/api/command",
+      {
+        command: command,
+      }
+    );
     return res.data;
   },
 
