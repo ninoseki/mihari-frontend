@@ -112,6 +112,10 @@ export interface SearchParams {
   reverseDnsName: string | undefined;
 }
 
+export interface CommandInput {
+  command: string;
+}
+
 export interface CommandOutput {
   output: string;
   success: boolean;
