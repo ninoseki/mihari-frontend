@@ -3,6 +3,7 @@ import { Link } from "@/types";
 import { AnyRun } from "./anyrun";
 import { Censys } from "./censys";
 import { Crtsh } from "./crtsh";
+import { GreyNoise } from "./greynoise";
 import { Intezer } from "./intezer";
 import { SecurityTrailsForDomain, SecurityTrailsForIP } from "./securitytrails";
 import { Shodan } from "./shodan";
@@ -19,6 +20,7 @@ export const Links: Link[] = [
   new AnyRun(),
   new Censys(),
   new Crtsh(),
+  new GreyNoise(),
   new SecurityTrailsForDomain(),
   new SecurityTrailsForIP(),
   new Shodan(),
