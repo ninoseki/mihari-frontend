@@ -48,14 +48,17 @@
 
 <script lang="ts">
 import { defineComponent, nextTick, onMounted, ref, watch } from "vue";
-import { useAsyncTask } from "vue-concurrency";
 
-import { API } from "@/api";
+import {
+  generateGetAlertsTask,
+  generateGetSourcesTask,
+  generateGetTagsTask,
+} from "@/api-helper";
 import AlertsComponent from "@/components/alert/Alerts.vue";
 import Form from "@/components/alert/Form.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
-import { Alerts, SearchParams } from "@/types";
+import { SearchParams } from "@/types";
 
 export default defineComponent({
   name: "AlertsWrapper",
@@ -70,18 +73,14 @@ export default defineComponent({
     const tag = ref<string | undefined>(undefined);
     const form = ref<InstanceType<typeof Form>>();
 
-    const getAlertsTask = useAsyncTask<Alerts, []>(async () => {
+    const getAlertsTask = generateGetAlertsTask();
+    const getTagsTask = generateGetTagsTask();
+    const getSourcesTask = generateGetSourcesTask();
+
+    const getAlerts = async () => {
       const params = form.value?.getSearchParams() as SearchParams;
-      return await API.getAlerts(params);
-    });
-
-    const getTagsTask = useAsyncTask<string[], []>(async () => {
-      return await API.getTags();
-    });
-
-    const getSourcesTask = useAsyncTask<string[], []>(async () => {
-      return await API.getSources();
-    });
+      return await getAlertsTask.perform(params);
+    };
 
     const updatePage = (newPage: number) => {
       page.value = newPage;
@@ -95,7 +94,7 @@ export default defineComponent({
       // reset page
       resetPage();
 
-      await getAlertsTask.perform();
+      await getAlerts();
     };
 
     const updateTag = (newTag: string | undefined) => {
@@ -114,19 +113,15 @@ export default defineComponent({
       await search();
     };
 
-    watch(
-      page,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      async (_current, _prev) => {
-        nextTick(async () => await getAlertsTask.perform());
-      }
-    );
+    watch(page, async () => {
+      nextTick(async () => await getAlerts());
+    });
 
     onMounted(async () => {
       await getTagsTask.perform();
       await getSourcesTask.perform();
 
-      await getAlertsTask.perform();
+      await getAlerts();
     });
 
     return {

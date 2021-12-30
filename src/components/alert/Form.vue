@@ -208,8 +208,7 @@ export default defineComponent({
 
     watch(
       () => props.tag,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      (_new, _prev) => {
+      () => {
         tagInput.value = props.tag;
       }
     );

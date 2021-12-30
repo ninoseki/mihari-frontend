@@ -16,13 +16,11 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, watch } from "vue";
-import { useAsyncTask } from "vue-concurrency";
 
-import { API } from "@/api";
+import { generateGetArtifactTask } from "@/api-helper";
 import ArtifactComponent from "@/components/artifact/Artifact.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
-import { ArtifactWithTags } from "@/types";
 
 export default defineComponent({
   name: "ArtifactWrapper",
@@ -38,21 +36,19 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const getArtifactTask = useAsyncTask<ArtifactWithTags, []>(async () => {
-      return await API.getArtifact(props.id);
-    });
+    const getArtifactTask = generateGetArtifactTask();
+
+    const getArtifact = async () => {
+      await getArtifactTask.perform(props.id);
+    };
 
     onMounted(async () => {
-      await getArtifactTask.perform();
+      await getArtifact();
     });
 
-    watch(
-      props,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      async (_current, _prev) => {
-        await getArtifactTask.perform();
-      }
-    );
+    watch(props, async () => {
+      await getArtifact();
+    });
 
     return {
       getArtifactTask,

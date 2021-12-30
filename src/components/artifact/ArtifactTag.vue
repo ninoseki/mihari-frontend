@@ -21,9 +21,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
-import { useAsyncTask } from "vue-concurrency";
 
-import { API } from "@/api";
+import { generateDeleteArtifactTask } from "@/api-helper";
 import { Artifact } from "@/types";
 
 export default defineComponent({
@@ -38,9 +37,7 @@ export default defineComponent({
     const isDeleted = ref(false);
     const isDeleteButtonEnabled = ref(false);
 
-    const deleteArtifactTask = useAsyncTask<void, []>(async () => {
-      return await API.deleteArtifact(props.artifact.id);
-    });
+    const deleteArtifactTask = generateDeleteArtifactTask();
 
     const deleteArtifact = async () => {
       const result = window.confirm(
@@ -48,7 +45,7 @@ export default defineComponent({
       );
 
       if (result) {
-        await deleteArtifactTask.perform();
+        await deleteArtifactTask.perform(props.artifact.id);
         isDeleted.value = true;
       }
     };

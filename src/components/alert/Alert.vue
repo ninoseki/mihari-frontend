@@ -62,9 +62,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { useAsyncTask } from "vue-concurrency";
 
-import { API } from "@/api";
+import { generateDeleteAlertTask } from "@/api-helper";
 import Artifacts from "@/components/artifact/ArtifactTags.vue";
 import Tags from "@/components/tag/Tags.vue";
 import { Alert } from "@/types";
@@ -87,9 +86,7 @@ export default defineComponent({
       context.emit("update-tag", tag);
     };
 
-    const deleteAlertTask = useAsyncTask<void, []>(async () => {
-      return await API.deleteAlert(props.alert.id);
-    });
+    const deleteAlertTask = generateDeleteAlertTask();
 
     const deleteAlert = async () => {
       const result = window.confirm(
@@ -97,7 +94,7 @@ export default defineComponent({
       );
 
       if (result) {
-        await deleteAlertTask.perform();
+        await deleteAlertTask.perform(props.alert.id);
         // refresh the page
         context.emit("refresh-page");
       }

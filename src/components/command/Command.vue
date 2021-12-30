@@ -39,7 +39,7 @@
         Command ran successfully
       </div>
       <div class="notification is-danger is-light" v-else>
-        Someting went wrong...
+        Something went wrong...
       </div>
 
       <div class="content is-normal">
@@ -52,12 +52,10 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import { useAsyncTask } from "vue-concurrency";
 
-import { API } from "@/api";
+import { generateRunCommandTask } from "@/api-helper";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
-import { CommandOutput } from "@/types";
 
 export default defineComponent({
   name: "Command",
@@ -68,16 +66,13 @@ export default defineComponent({
   setup() {
     const command = ref<string>("help");
 
-    const runCommandTask = useAsyncTask<CommandOutput, []>(async () => {
-      return await API.runCommand(command.value);
-    });
-
+    const runCommandTask = generateRunCommandTask();
     const runCommand = async () => {
-      await runCommandTask.perform();
+      return await runCommandTask.perform(command.value);
     };
 
     onMounted(async () => {
-      await runCommandTask.perform();
+      await runCommand();
     });
 
     return {

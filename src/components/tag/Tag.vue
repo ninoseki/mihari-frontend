@@ -17,9 +17,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
-import { useAsyncTask } from "vue-concurrency";
 
-import { API } from "@/api";
+import { generateDeleteTagTask } from "@/api-helper";
 import { Tag } from "@/types";
 
 export default defineComponent({
@@ -34,9 +33,7 @@ export default defineComponent({
     const isDeleted = ref(false);
     const isDeleteButtonEnabled = ref(false);
 
-    const deleteTagTask = useAsyncTask<void, []>(async () => {
-      return await API.deleteTag(props.tag.name);
-    });
+    const deleteTagTask = generateDeleteTagTask();
 
     const deleteTag = async () => {
       const result = window.confirm(
@@ -44,7 +41,7 @@ export default defineComponent({
       );
 
       if (result) {
-        await deleteTagTask.perform();
+        await deleteTagTask.perform(props.tag.name);
         isDeleted.value = true;
       }
     };
