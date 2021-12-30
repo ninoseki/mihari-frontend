@@ -139,10 +139,14 @@ import {
   ref,
   watch,
 } from "vue";
-import { useAsyncTask } from "vue-concurrency";
 import { useRouter } from "vue-router";
 
-import { API } from "@/api";
+import {
+  generateDeleteArtifactTask,
+  generateEnrichArtifactTask,
+  generateGetAlertsTask,
+  generateGetIPTask,
+} from "@/api-helper";
 import AlertsComponent from "@/components/alert/Alerts.vue";
 import AS from "@/components/artifact/AS.vue";
 import DnsRecords from "@/components/artifact/DnsRecords.vue";
@@ -151,7 +155,7 @@ import Tags from "@/components/artifact/Tags.vue";
 import WhoisRecord from "@/components/artifact/WhoisRecord.vue";
 import Links from "@/components/link/Links.vue";
 import Loading from "@/components/Loading.vue";
-import { Alerts, ArtifactWithTags, GCS, IPInfo, SearchParams } from "@/types";
+import { ArtifactWithTags, GCS, SearchParams } from "@/types";
 import { getGCSByCountryCode, getGCSByIPInfo } from "@/utils";
 
 export default defineComponent({
@@ -201,13 +205,12 @@ export default defineComponent({
       return undefined;
     };
 
-    const getIPInfoTask = useAsyncTask<IPInfo, [string]>(
-      async (_signal, ipAddress: string) => {
-        return await API.getIPInfo(ipAddress);
-      }
-    );
+    const getIPInfoTask = generateGetIPTask();
+    const getAlertsTask = generateGetAlertsTask();
+    const deleteArtifactTask = generateDeleteArtifactTask();
+    const enrichArtifactTask = generateEnrichArtifactTask();
 
-    const getAlertsTask = useAsyncTask<Alerts, []>(async () => {
+    const getAlerts = async () => {
       const params: SearchParams = {
         artifact: props.artifact.data,
         description: undefined,
@@ -221,12 +224,8 @@ export default defineComponent({
         dnsRecord: undefined,
         reverseDnsName: undefined,
       };
-      return await API.getAlerts(params);
-    });
-
-    const deleteArtifactTask = useAsyncTask<void, []>(async () => {
-      return await API.deleteArtifact(props.artifact.id);
-    });
+      return await getAlertsTask.perform(params);
+    };
 
     const deleteArtifact = async () => {
       const result = window.confirm(
@@ -234,17 +233,13 @@ export default defineComponent({
       );
 
       if (result) {
-        await deleteArtifactTask.perform();
+        await deleteArtifactTask.perform(props.artifact.id);
         router.push("/");
       }
     };
 
-    const enrichArtifactTask = useAsyncTask<void, []>(async () => {
-      return await API.enrichArtifact(props.artifact.id);
-    });
-
     const enrichArtifact = async () => {
-      await enrichArtifactTask.perform();
+      await enrichArtifactTask.perform(props.artifact.id);
       router.go(0);
     };
 
@@ -258,7 +253,7 @@ export default defineComponent({
 
     const refreshPage = async () => {
       resetPage();
-      await getAlertsTask.perform();
+      await getAlerts();
     };
 
     const updateTag = (newTag: string | undefined) => {
@@ -285,16 +280,12 @@ export default defineComponent({
 
         googleMapSrc.value = getGoogleMapSrc(gcs);
       }
-      await getAlertsTask.perform();
+      await getAlerts();
     });
 
-    watch(
-      page,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      async (_current, _prev) => {
-        nextTick(async () => await getAlertsTask.perform());
-      }
-    );
+    watch(page, async () => {
+      nextTick(async () => await getAlerts());
+    });
 
     return {
       countryCode,

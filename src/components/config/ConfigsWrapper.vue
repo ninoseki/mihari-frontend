@@ -16,13 +16,11 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from "vue";
-import { useAsyncTask } from "vue-concurrency";
 
-import { API } from "@/api";
+import { generateGetConfigsTask } from "@/api-helper";
 import Configs from "@/components/config/Configs.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
-import { Config } from "@/types";
 
 export default defineComponent({
   name: "ConfigsWrapper",
@@ -32,9 +30,7 @@ export default defineComponent({
     ErrorMessage,
   },
   setup() {
-    const getConfigsTask = useAsyncTask<Config[], []>(async () => {
-      return await API.getConfigs();
-    });
+    const getConfigsTask = generateGetConfigsTask();
 
     onMounted(async () => {
       await getConfigsTask.perform();
