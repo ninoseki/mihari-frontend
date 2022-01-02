@@ -11,6 +11,10 @@ dayjs.extend(relativeTime);
 dayjs.extend(timezone);
 dayjs.extend(utc);
 
+export function getLocalDatetime(datetime: string): string {
+  return dayjs(datetime).local().format("YYYY-MM-DD HH:mm:ss");
+}
+
 export function getHumanizedRelativeTime(datetime: string): string {
   return dayjs(datetime).local().fromNow();
 }

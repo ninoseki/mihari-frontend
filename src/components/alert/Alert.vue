@@ -51,7 +51,7 @@
         <tr>
           <th><strong>Created at</strong></th>
           <td>
-            {{ alert.createdAt }}
+            {{ getLocalDatetime(alert.createdAt) }}
             ({{ getHumanizedRelativeTime(alert.createdAt) }})
           </td>
         </tr>
@@ -67,7 +67,7 @@ import { generateDeleteAlertTask } from "@/api-helper";
 import Artifacts from "@/components/artifact/ArtifactTags.vue";
 import Tags from "@/components/tag/Tags.vue";
 import { Alert } from "@/types";
-import { getHumanizedRelativeTime } from "@/utils";
+import { getHumanizedRelativeTime, getLocalDatetime } from "@/utils";
 
 export default defineComponent({
   name: "Alert",
@@ -100,7 +100,12 @@ export default defineComponent({
       }
     };
 
-    return { updateTag, deleteAlert, getHumanizedRelativeTime };
+    return {
+      updateTag,
+      deleteAlert,
+      getLocalDatetime,
+      getHumanizedRelativeTime,
+    };
   },
 });
 </script>
