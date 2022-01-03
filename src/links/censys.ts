@@ -7,13 +7,13 @@ export class Censys implements Link {
   public type: LinkType;
 
   public constructor() {
-    this.baseURL = "https://censys.io";
+    this.baseURL = "https://search.censys.io";
     this.favicon = "https://www.google.com/s2/favicons?domain=censys.io";
     this.name = "Censys";
     this.type = "ip";
   }
 
   public href(data: string): string {
-    return this.baseURL + `/ipv4/${data}`;
+    return this.baseURL + `/hosts/${data}`;
   }
 }
