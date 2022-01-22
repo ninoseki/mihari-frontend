@@ -4,6 +4,8 @@ import Alerts from "@/views/Alerts.vue";
 import Artifact from "@/views/Artifact.vue";
 import Command from "@/views/Command.vue";
 import Configs from "@/views/Configs.vue";
+import Rule from "@/views/Rule.vue";
+import Rules from "@/views/Rules.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,6 +27,17 @@ const routes: Array<RouteRecordRaw> = [
     path: "/artifacts/:id",
     name: "Artifact",
     component: Artifact,
+    props: true,
+  },
+  {
+    path: "/rules",
+    name: "Rules",
+    component: Rules,
+  },
+  {
+    path: "/rules/:id",
+    name: "Rule",
+    component: Rule,
     props: true,
   },
 ];

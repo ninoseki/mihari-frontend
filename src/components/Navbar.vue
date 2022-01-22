@@ -17,6 +17,9 @@
         <router-link class="navbar-item" :to="{ name: 'Alerts' }"
           >Alerts</router-link
         >
+        <router-link class="navbar-item" :to="{ name: 'Rules' }"
+          >Rules</router-link
+        >
         <router-link class="navbar-item" :to="{ name: 'Command' }"
           >Command</router-link
         >

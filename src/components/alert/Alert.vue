@@ -33,7 +33,9 @@
         <tr>
           <th><strong>Source</strong></th>
           <td>
-            {{ alert.source }}
+            <router-link :to="{ name: 'Rule', params: { id: alert.source } }">{{
+              alert.source
+            }}</router-link>
           </td>
         </tr>
         <tr>

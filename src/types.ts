@@ -1,3 +1,9 @@
+export interface Pagination {
+  total: number;
+  currentPage: number;
+  pageSize: number;
+}
+
 export interface ConfigStatusValue {
   key: string;
   value: string | null;
@@ -66,6 +72,8 @@ export interface Artifact {
   id: number;
   data: string;
   dataType: string;
+  source: string;
+  metadata: unknown | null;
   createdAt: string;
 
   autonomousSystem: AutonomousSystem | null;
@@ -91,17 +99,17 @@ export interface Alert {
   artifacts: Artifact[];
 }
 
-export interface Alerts {
+export interface Alerts extends Pagination {
   alerts: Alert[];
-  total: number;
-  currentPage: number;
-  pageSize: number;
 }
 
-export interface SearchParams {
+export interface PaginationParams {
+  page: number | undefined;
+}
+
+export interface SearchParams extends PaginationParams {
   artifact: string | undefined;
   description: string | undefined;
-  page: number | undefined;
   source: string | undefined;
   tag: string | undefined;
   title: string | undefined;
@@ -150,4 +158,35 @@ export interface Link {
   favicon: string;
   // eslint-disable-next-line no-unused-vars
   href(data: string): string;
+}
+
+export interface Rule {
+  id: string;
+  yaml: string;
+  title: string;
+  description: string;
+  queries: Query[];
+  tags: string[];
+  allowed_data_types: string[];
+  disallowed_data_values: string[];
+  ignore_old_artifacts: boolean;
+  ignore_threshold: number;
+}
+
+export interface Query {
+  analyzer: string;
+  query: string;
+  interval: null;
+}
+
+export interface Rules extends Pagination {
+  rules: Rule[];
+}
+
+export interface RuleSearchParams extends PaginationParams {
+  description: string | undefined;
+  tag: string | undefined;
+  title: string | undefined;
+  fromAt: string | undefined;
+  toAt: string | undefined;
 }

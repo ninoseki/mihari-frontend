@@ -1,12 +1,12 @@
 <template>
   <div>
-    <AlertComponent
+    <Alert
       v-for="(alert, index) in alerts.alerts"
       :alert="alert"
       :key="index"
       @refresh-page="refreshPage"
       @update-tag="updateTag"
-    ></AlertComponent>
+    ></Alert>
 
     <nav class="pagination" role="navigation" aria-label="pagination">
       <ul class="pagination-list">
@@ -28,13 +28,13 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import AlertComponent from "@/components/alert/Alert.vue";
+import Alert from "@/components/alert/Alert.vue";
 import { Alerts } from "@/types";
 
 export default defineComponent({
   name: "Alerts",
   components: {
-    AlertComponent,
+    Alert,
   },
   props: {
     alerts: {

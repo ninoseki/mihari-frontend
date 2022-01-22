@@ -1,0 +1,85 @@
+<template>
+  <Loading v-if="getAlertsTask.isRunning"></Loading>
+
+  <Alerts
+    :alerts="getAlertsTask.last.value"
+    v-if="getAlertsTask.last?.value"
+    @refresh-page="refreshPage"
+    @update-page="updatePage"
+  >
+  </Alerts>
+</template>
+
+<script lang="ts">
+import { defineComponent, nextTick, onMounted, ref, watch } from "vue";
+
+import { generateGetAlertsTask } from "@/api-helper";
+import Alerts from "@/components/alert/Alerts.vue";
+import Loading from "@/components/Loading.vue";
+import { SearchParams } from "@/types";
+
+export default defineComponent({
+  name: "AlertsWithPagination",
+  props: {
+    source: {
+      type: String,
+    },
+    artifact: {
+      type: String,
+    },
+  },
+  components: {
+    Alerts,
+    Loading,
+  },
+  setup(props) {
+    const page = ref(1);
+
+    const getAlertsTask = generateGetAlertsTask();
+
+    const getAlerts = async () => {
+      const params: SearchParams = {
+        artifact: props.artifact,
+        description: undefined,
+        page: page.value,
+        source: props.source,
+        tag: undefined,
+        title: undefined,
+        toAt: undefined,
+        fromAt: undefined,
+        asn: undefined,
+        dnsRecord: undefined,
+        reverseDnsName: undefined,
+      };
+      return await getAlertsTask.perform(params);
+    };
+
+    const updatePage = (newPage: number) => {
+      page.value = newPage;
+    };
+
+    const resetPage = () => {
+      page.value = 1;
+    };
+
+    const refreshPage = async () => {
+      resetPage();
+      await getAlerts();
+    };
+
+    onMounted(async () => {
+      await getAlerts();
+    });
+
+    watch([page, props.source, props.artifact], async () => {
+      nextTick(async () => await getAlerts());
+    });
+
+    return {
+      getAlertsTask,
+      refreshPage,
+      updatePage,
+    };
+  },
+});
+</script>
