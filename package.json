@@ -18,12 +18,15 @@
     "bulma-helpers": "^0.4.2",
     "core-js": "^3.20.1",
     "dayjs": "^1.10.7",
+    "highlight.js": "^11.4.0",
     "js-sha256": "^0.9.0",
     "truncate": "^3.0.0",
     "url-parse": "^1.5.3",
     "vue": "^3.2.26",
     "vue-concurrency": "^2.2.1",
-    "vue-router": "^4.0.0-rc.6"
+    "vue-json-pretty": "^2.0.6",
+    "vue-router": "^4.0.0-rc.6",
+    "yaml": "^1.10.2"
   },
   "devDependencies": {
     "@types/jest": "27.0.3",

@@ -1,144 +1,161 @@
 <template>
-  <div>
-    <div class="column">
-      <h2 class="is-size-2 mb-4">Artifact</h2>
+  <div class="column">
+    <h2 class="is-size-2 mb-4">Artifact</h2>
 
-      <div class="columns">
-        <div
-          class="column is-half"
-          v-if="googleMapSrc !== undefined || urlscanLiveshotSrc !== undefined"
-        >
-          <div v-if="googleMapSrc">
-            <h4 class="is-size-4">
-              Geolocation
-              <span class="has-text-grey">{{
-                countryCode || artifact.geolocation?.countryCode
-              }}</span>
-            </h4>
-            <iframe
-              class="mb-4"
-              :src="googleMapSrc"
-              width="100%"
-              height="240px"
-            ></iframe>
-          </div>
+    <div class="columns">
+      <div
+        class="column is-half"
+        v-if="googleMapSrc !== undefined || urlscanLiveshotSrc !== undefined"
+      >
+        <div v-if="googleMapSrc">
+          <h4 class="is-size-4">
+            Geolocation
+            <span class="has-text-grey">{{
+              countryCode || artifact.geolocation?.countryCode
+            }}</span>
+          </h4>
+          <iframe
+            class="mb-4"
+            :src="googleMapSrc"
+            width="100%"
+            height="240px"
+          ></iframe>
+        </div>
 
-          <div v-if="urlscanLiveshotSrc">
-            <h4 class="is-size-4">
-              Live screenshot
-              <span class="has-text-grey">Hover to expand</span>
-            </h4>
-            <img :src="urlscanLiveshotSrc" class="liveshot" alt="liveshot" />
+        <div v-if="urlscanLiveshotSrc">
+          <h4 class="is-size-4">
+            Live screenshot
+            <span class="has-text-grey">Hover to expand</span>
+          </h4>
+          <img :src="urlscanLiveshotSrc" class="liveshot" alt="liveshot" />
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="block">
+          <h4 class="is-size-4">Information</h4>
+          <div class="table-container">
+            <table class="table is-bordered is-fullwidth">
+              <tr>
+                <th>ID</th>
+                <td>
+                  {{ artifact.id }}
+                  <span class="buttons is-pulled-right">
+                    <button
+                      class="button is-primary is-light is-small"
+                      @click="enrichArtifact"
+                    >
+                      <span>Enrich</span>
+                      <span class="icon is-small">
+                        <i class="fas fa-lightbulb"></i>
+                      </span>
+                    </button>
+
+                    <button
+                      class="button is-info is-light is-small"
+                      @click="flipShowMetadata"
+                      v-if="artifact.metadata"
+                    >
+                      <span>Metadata</span>
+                      <span class="icon is-small">
+                        <i class="fas fa-info-circle"></i>
+                      </span>
+                    </button>
+
+                    <button
+                      class="button is-light is-small"
+                      @click="deleteArtifact"
+                    >
+                      <span>Delete</span>
+                      <span class="icon is-small">
+                        <i class="fas fa-times"></i>
+                      </span>
+                    </button>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <th>Data type</th>
+                <td>{{ artifact.dataType }}</td>
+              </tr>
+              <tr>
+                <th>Data</th>
+                <td>{{ artifact.data }}</td>
+              </tr>
+              <tr>
+                <th>Source</th>
+                <td>{{ artifact.source }}</td>
+              </tr>
+            </table>
           </div>
         </div>
 
-        <div class="column">
-          <div class="block">
-            <h4 class="is-size-4">Information</h4>
-            <div class="table-container">
-              <table class="table is-bordered is-fullwidth">
-                <tr>
-                  <th>ID</th>
-                  <td>
-                    {{ artifact.id }}
-                    <span class="buttons is-pulled-right">
-                      <button
-                        class="button is-primary is-light is-small"
-                        @click="enrichArtifact"
-                      >
-                        <span>Enrich</span>
-                        <span class="icon is-small">
-                          <i class="fas fa-lightbulb"></i>
-                        </span>
-                      </button>
-
-                      <button
-                        class="button is-light is-small"
-                        @click="deleteArtifact"
-                      >
-                        <span>Delete</span>
-                        <span class="icon is-small">
-                          <i class="fas fa-times"></i>
-                        </span>
-                      </button>
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Data type</th>
-                  <td>{{ artifact.dataType }}</td>
-                </tr>
-                <tr>
-                  <th>Data</th>
-                  <td>{{ artifact.data }}</td>
-                </tr>
-              </table>
+        <div v-if="artifact.metadata && showMetadata">
+          <div class="modal is-active">
+            <div class="modal-background" @click="flipShowMetadata"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Meta</p>
+                <button
+                  class="delete"
+                  aria-label="close"
+                  @click="flipShowMetadata"
+                ></button>
+              </header>
+              <section class="modal-card-body">
+                <VueJsonPretty :data="artifact.metadata"></VueJsonPretty>
+              </section>
             </div>
           </div>
+        </div>
 
-          <div class="block" v-if="artifact.tags.length > 0">
-            <h4 class="is-size-4">Tags</h4>
-            <Tags :tags="artifact.tags"></Tags>
-          </div>
+        <div class="block" v-if="artifact.tags.length > 0">
+          <h4 class="is-size-4">Tags</h4>
+          <Tags :tags="artifact.tags"></Tags>
+        </div>
 
-          <div class="block" v-if="artifact.autonomousSystem">
-            <h4 class="is-size-4">AS</h4>
-            <AS :autonomousSystem="artifact.autonomousSystem"></AS>
-          </div>
+        <div class="block" v-if="artifact.autonomousSystem">
+          <h4 class="is-size-4">AS</h4>
+          <AS :autonomousSystem="artifact.autonomousSystem"></AS>
+        </div>
 
-          <div class="block" v-if="artifact.reverseDnsNames">
-            <h4 class="is-size-4">Reverse DNS</h4>
-            <ReverseDnsNames
-              :reverseDnsNames="artifact.reverseDnsNames"
-            ></ReverseDnsNames>
-          </div>
+        <div class="block" v-if="artifact.reverseDnsNames">
+          <h4 class="is-size-4">Reverse DNS</h4>
+          <ReverseDnsNames
+            :reverseDnsNames="artifact.reverseDnsNames"
+          ></ReverseDnsNames>
+        </div>
 
-          <div class="block" v-if="artifact.dnsRecords">
-            <h4 class="is-size-4">DNS records</h4>
-            <DnsRecords :dnsRecords="artifact.dnsRecords"></DnsRecords>
-          </div>
+        <div class="block" v-if="artifact.dnsRecords">
+          <h4 class="is-size-4">DNS records</h4>
+          <DnsRecords :dnsRecords="artifact.dnsRecords"></DnsRecords>
+        </div>
 
-          <div class="block" v-if="artifact.whoisRecord">
-            <h4 class="is-size-4">Whois record</h4>
-            <WhoisRecord :whoisRecord="artifact.whoisRecord"></WhoisRecord>
-          </div>
+        <div class="block" v-if="artifact.whoisRecord">
+          <h4 class="is-size-4">Whois record</h4>
+          <WhoisRecord :whoisRecord="artifact.whoisRecord"></WhoisRecord>
         </div>
       </div>
-
-      <div class="block">
-        <Links :data="artifact.data" :type="artifact.dataType"></Links>
-      </div>
     </div>
 
-    <hr />
-
-    <div class="column">
-      <h2 class="is-size-2 mb-4">Related alerts</h2>
-
-      <Loading v-if="getAlertsTask.isRunning"></Loading>
-
-      <AlertsComponent
-        :alerts="getAlertsTask.last.value"
-        v-if="getAlertsTask.last?.value"
-        @refresh-page="refreshPage"
-        @update-page="updatePage"
-        @update-tag="updateTag"
-      >
-      </AlertsComponent>
+    <div class="block">
+      <Links :data="artifact.data" :type="artifact.dataType"></Links>
     </div>
+  </div>
+
+  <hr />
+
+  <div class="column">
+    <h2 class="is-size-2 mb-4">Related alerts</h2>
+    <Alerts :artifact="artifact.data"></Alerts>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  nextTick,
-  onMounted,
-  PropType,
-  ref,
-  watch,
-} from "vue";
+import "vue-json-pretty/lib/styles.css";
+
+import { computed, defineComponent, onMounted, PropType, ref } from "vue";
+import VueJsonPretty from "vue-json-pretty";
 import { useRouter } from "vue-router";
 
 import {
@@ -147,15 +164,14 @@ import {
   generateGetAlertsTask,
   generateGetIPTask,
 } from "@/api-helper";
-import AlertsComponent from "@/components/alert/Alerts.vue";
+import Alerts from "@/components/alert/AlertsWithPagination.vue";
 import AS from "@/components/artifact/AS.vue";
 import DnsRecords from "@/components/artifact/DnsRecords.vue";
 import ReverseDnsNames from "@/components/artifact/ReverseDnsNames.vue";
 import Tags from "@/components/artifact/Tags.vue";
 import WhoisRecord from "@/components/artifact/WhoisRecord.vue";
 import Links from "@/components/link/Links.vue";
-import Loading from "@/components/Loading.vue";
-import { ArtifactWithTags, GCS, SearchParams } from "@/types";
+import { ArtifactWithTags, GCS } from "@/types";
 import { getGCSByCountryCode, getGCSByIPInfo } from "@/utils";
 
 export default defineComponent({
@@ -167,20 +183,19 @@ export default defineComponent({
     },
   },
   components: {
-    AlertsComponent,
+    Alerts,
     DnsRecords,
-    Loading,
     Links,
     WhoisRecord,
     Tags,
     ReverseDnsNames,
     AS,
+    VueJsonPretty,
   },
   setup(props) {
-    const page = ref(1);
-    const tag = ref<string | undefined>(undefined);
     const googleMapSrc = ref<string | undefined>(undefined);
     const countryCode = ref<string | undefined>(undefined);
+    const showMetadata = ref(false);
 
     const router = useRouter();
 
@@ -210,23 +225,6 @@ export default defineComponent({
     const deleteArtifactTask = generateDeleteArtifactTask();
     const enrichArtifactTask = generateEnrichArtifactTask();
 
-    const getAlerts = async () => {
-      const params: SearchParams = {
-        artifact: props.artifact.data,
-        description: undefined,
-        page: page.value,
-        source: undefined,
-        tag: tag.value,
-        title: undefined,
-        toAt: undefined,
-        fromAt: undefined,
-        asn: undefined,
-        dnsRecord: undefined,
-        reverseDnsName: undefined,
-      };
-      return await getAlertsTask.perform(params);
-    };
-
     const deleteArtifact = async () => {
       const result = window.confirm(
         `Are you sure you want to delete ${props.artifact.data}?`
@@ -241,28 +239,6 @@ export default defineComponent({
     const enrichArtifact = async () => {
       await enrichArtifactTask.perform(props.artifact.id);
       router.go(0);
-    };
-
-    const updatePage = (newPage: number) => {
-      page.value = newPage;
-    };
-
-    const resetPage = () => {
-      page.value = 1;
-    };
-
-    const refreshPage = async () => {
-      resetPage();
-      await getAlerts();
-    };
-
-    const updateTag = (newTag: string | undefined) => {
-      if (tag.value === newTag) {
-        tag.value = undefined;
-      } else {
-        tag.value = newTag;
-      }
-      resetPage();
     };
 
     onMounted(async () => {
@@ -280,29 +256,27 @@ export default defineComponent({
 
         googleMapSrc.value = getGoogleMapSrc(gcs);
       }
-      await getAlerts();
     });
 
-    watch(page, async () => {
-      nextTick(async () => await getAlerts());
-    });
+    const flipShowMetadata = () => {
+      showMetadata.value = !showMetadata.value;
+    };
 
     return {
       countryCode,
       getAlertsTask,
       googleMapSrc,
+      showMetadata,
       urlscanLiveshotSrc,
       deleteArtifact,
-      refreshPage,
-      updatePage,
-      updateTag,
       enrichArtifact,
+      flipShowMetadata,
     };
   },
 });
 </script>
 
-<style scopde>
+<style scoped>
 img.liveshot {
   border: 1px solid #aaa;
   border-radius: 5px;
@@ -317,5 +291,9 @@ img.liveshot {
 
 img.liveshot:hover {
   max-height: none;
+}
+
+.modal-card {
+  width: 960px;
 }
 </style>

@@ -7,6 +7,9 @@ import {
   CommandOutput,
   Config,
   IPInfo,
+  Rule,
+  Rules,
+  RuleSearchParams,
   SearchParams,
   Sources,
   Tags,
@@ -58,6 +61,27 @@ export const API = {
 
   async deleteArtifact(id: number): Promise<void> {
     await client.delete(`/api/artifacts/${id}`);
+  },
+
+  async getRules(params: RuleSearchParams): Promise<Rules> {
+    params.page = params.page || 1;
+    const res = await client.get<Rules>("/api/rules", {
+      params: params,
+    });
+    return res.data;
+  },
+
+  async getRule(id: string): Promise<Rule> {
+    const res = await client.get<Rule>(`/api/rules/${id}`);
+    return res.data;
+  },
+
+  async runRule(id: string): Promise<void> {
+    await client.get<void>(`/api/rules/${id}/run`);
+  },
+
+  async deleteRule(id: string): Promise<void> {
+    await client.delete<void>(`/api/rules/${id}`);
   },
 
   async deleteTag(name: string): Promise<void> {

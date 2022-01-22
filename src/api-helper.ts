@@ -7,6 +7,9 @@ import {
   CommandOutput,
   Config,
   IPInfo,
+  Rule,
+  Rules,
+  RuleSearchParams,
   SearchParams,
 } from "@/types";
 
@@ -73,5 +76,31 @@ export function generateGetConfigsTask(): Task<Config[], []> {
 export function generateGetIPTask(): Task<IPInfo, [string]> {
   return useAsyncTask<IPInfo, [string]>(async (_signal, ipAddress: string) => {
     return await API.getIPInfo(ipAddress);
+  });
+}
+
+export function generateGetRulesTask(): Task<Rules, [RuleSearchParams]> {
+  return useAsyncTask<Rules, [RuleSearchParams]>(
+    async (_signal, params: RuleSearchParams) => {
+      return await API.getRules(params);
+    }
+  );
+}
+
+export function generateGetRuleTask(): Task<Rule, [string]> {
+  return useAsyncTask<Rule, [string]>(async (_signal, id: string) => {
+    return await API.getRule(id);
+  });
+}
+
+export function generateDeleteRuleTask(): Task<void, [string]> {
+  return useAsyncTask<void, [string]>(async (_signal, id: string) => {
+    return await API.deleteRule(id);
+  });
+}
+
+export function generateRunRuleTask(): Task<void, [string]> {
+  return useAsyncTask<void, [string]>(async (_signal, id) => {
+    return await API.runRule(id);
   });
 }

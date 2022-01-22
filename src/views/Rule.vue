@@ -1,17 +1,17 @@
 <template>
-  <Artifact :id="artifactId"></Artifact>
+  <Rule :id="ruleId"></Rule>
 </template>
 
 <script lang="ts">
 import { useTitle } from "@vueuse/core";
 import { defineComponent, onMounted, ref, watch } from "vue";
 
-import Artifact from "@/components/artifact/ArtifactWrapper.vue";
+import Rule from "@/components/rule/RuleWrapper.vue";
 
 export default defineComponent({
-  name: "ArtifactView",
+  name: "RuleView",
   components: {
-    Artifact,
+    Rule,
   },
   props: {
     id: {
@@ -20,10 +20,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const artifactId = ref<number>(parseInt(props.id));
+    const ruleId = ref<string>(props.id);
 
     const updateTitle = () => {
-      useTitle(`Artifact:${artifactId.value} - Mihari`);
+      useTitle(`Rule:${ruleId.value} - Mihari`);
     };
 
     onMounted(() => {
@@ -33,12 +33,12 @@ export default defineComponent({
     watch(
       () => props.id,
       () => {
-        artifactId.value = parseInt(props.id);
+        ruleId.value = props.id;
         updateTitle();
       }
     );
 
-    return { artifactId };
+    return { ruleId };
   },
 });
 </script>
