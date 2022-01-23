@@ -1,6 +1,7 @@
 <template>
   <div class="notification is-danger is-light">
-    {{ error }}
+    <p v-if="error.response.data?.message">{{ error.response.data.message }}</p>
+    <p v-else>{{ error }}</p>
   </div>
 </template>
 

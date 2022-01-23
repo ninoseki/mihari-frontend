@@ -80,6 +80,16 @@ export const API = {
     await client.get<void>(`/api/rules/${id}/run`);
   },
 
+  async createRule(payload: unknown): Promise<Rule> {
+    const res = await client.post<Rule>("/api/rules/", payload);
+    return res.data;
+  },
+
+  async updateRule(payload: unknown): Promise<Rule> {
+    const res = await client.put<Rule>("/api/rules/", payload);
+    return res.data;
+  },
+
   async deleteRule(id: string): Promise<void> {
     await client.delete<void>(`/api/rules/${id}`);
   },

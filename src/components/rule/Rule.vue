@@ -19,6 +19,15 @@
                   <i class="fas fa-arrow-right"></i>
                 </span>
               </button>
+              <router-link
+                class="button is-info is-light is-small"
+                :to="{ name: 'EditRule', params: { id: rule.id } }"
+              >
+                <span>Edit</span>
+                <span class="icon is-small">
+                  <i class="fas fa-edit"></i>
+                </span>
+              </router-link>
               <button class="button is-light is-small" @click="deleteRule">
                 <span>Delete</span>
                 <span class="icon is-small">
