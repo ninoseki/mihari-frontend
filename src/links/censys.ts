@@ -1,15 +1,15 @@
+import { BaseLink } from "@/links/base";
 import { Link, LinkType } from "@/types";
 
-export class Censys implements Link {
+export class Censys extends BaseLink implements Link {
   public baseURL: string;
-  public favicon: string;
   public name: string;
   public type: LinkType;
 
   public constructor() {
+    super();
+
     this.baseURL = "https://search.censys.io";
-    this.favicon =
-      "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://search.censys.io";
     this.name = "Censys";
     this.type = "ip";
   }

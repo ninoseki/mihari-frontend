@@ -155,9 +155,9 @@ export interface Link {
   name: string;
   type: string;
   baseURL: string;
-  favicon: string;
   // eslint-disable-next-line no-unused-vars
   href(data: string): string;
+  favicon(): string;
 }
 
 export interface Rule {

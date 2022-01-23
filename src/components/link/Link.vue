@@ -1,6 +1,6 @@
 <template>
   <a :href="link.href(data)" class="tag is-white" target="_blank">
-    <img :src="link.favicon" alt="favicon" />
+    <img :src="link.favicon()" alt="favicon" />
     <span>{{ link.name }}</span>
   </a>
 </template>
