@@ -12,7 +12,8 @@ class VirusTotal {
   public constructor() {
     this.name = "VirusTotal";
     this.baseURL = "https://www.virustotal.com";
-    this.favicon = "https://www.google.com/s2/favicons?domain=virustotal.com";
+    this.favicon =
+      "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.virustotal.com";
     this.type = "domain";
   }
 }
