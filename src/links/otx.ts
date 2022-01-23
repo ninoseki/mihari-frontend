@@ -9,7 +9,7 @@ export class OtxForIP implements Link {
   public constructor() {
     this.baseURL = "https://otx.alienvault.com";
     this.favicon =
-      "https://www.google.com/s2/favicons?domain=otx.alienvault.com";
+      "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://otx.alienvault.com";
     this.name = "OTX";
     this.type = "ip";
   }
@@ -19,17 +19,11 @@ export class OtxForIP implements Link {
   }
 }
 
-export class OtxForDomain implements Link {
-  public baseURL: string;
-  public favicon: string;
-  public name: string;
+export class OtxForDomain extends OtxForIP implements Link {
   public type: LinkType;
 
   public constructor() {
-    this.baseURL = "https://otx.alienvault.com";
-    this.favicon =
-      "https://www.google.com/s2/favicons?domain=otx.alienvault.com";
-    this.name = "OTX";
+    super();
     this.type = "domain";
   }
 

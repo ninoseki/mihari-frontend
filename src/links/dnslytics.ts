@@ -26,7 +26,8 @@ export class DNSlyticsForDomain implements Link {
 
   public constructor() {
     this.baseURL = "https://dnslytics.com";
-    this.favicon = "https://www.google.com/s2/favicons?domain=dnslytics.com";
+    this.favicon =
+      "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dnslytics.com";
     this.name = "DNSlytics";
     this.type = "domain";
   }

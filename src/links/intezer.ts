@@ -8,7 +8,8 @@ export class Intezer implements Link {
 
   public constructor() {
     this.baseURL = "https://analyze.intezer.com";
-    this.favicon = "https://www.google.com/s2/favicons?domain=intezer.com";
+    this.favicon =
+      "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://analyze.intezer.com";
     this.name = "Intezer";
     this.type = "hash";
   }

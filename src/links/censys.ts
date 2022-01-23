@@ -8,7 +8,8 @@ export class Censys implements Link {
 
   public constructor() {
     this.baseURL = "https://search.censys.io";
-    this.favicon = "https://www.google.com/s2/favicons?domain=censys.io";
+    this.favicon =
+      "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://search.censys.io";
     this.name = "Censys";
     this.type = "ip";
   }
