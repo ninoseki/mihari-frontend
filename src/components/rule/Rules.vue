@@ -54,6 +54,7 @@ export default defineComponent({
   components: {
     YAML,
   },
+  emits: ["update-page", "refresh-page"],
   setup(props, context) {
     const totalPageCount = Math.ceil(props.rules.total / props.rules.pageSize);
 

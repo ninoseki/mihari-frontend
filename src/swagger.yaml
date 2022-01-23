@@ -298,6 +298,21 @@ paths:
         - rules
       operationId: getApiRulesId
   /api/rules:
+    put:
+      summary: Update a rule
+      description: Update a rule
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      responses:
+        "200":
+          description: Update a rule
+          schema:
+            $ref: "#/definitions/Mihari_Entities_Rule"
+      tags:
+        - rules
+      operationId: putApiRules
     post:
       summary: Create a rule
       description: Create a rule

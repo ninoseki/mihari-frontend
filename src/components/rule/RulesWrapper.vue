@@ -9,18 +9,16 @@
 
     <hr />
 
-    <div class="columns">
-      <div class="column">
-        <div class="field is-grouped is-grouped-centered">
-          <p class="control">
-            <a class="button is-primary" @click="search">
-              <span class="icon is-small">
-                <i class="fas fa-search"></i>
-              </span>
-              <span>Search</span>
-            </a>
-          </p>
-        </div>
+    <div class="column">
+      <div class="field is-grouped is-grouped-centered">
+        <p class="control">
+          <a class="button is-primary" @click="search">
+            <span class="icon is-small">
+              <i class="fas fa-search"></i>
+            </span>
+            <span>Search</span>
+          </a>
+        </p>
       </div>
     </div>
   </div>

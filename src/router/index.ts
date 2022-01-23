@@ -4,6 +4,8 @@ import Alerts from "@/views/Alerts.vue";
 import Artifact from "@/views/Artifact.vue";
 import Command from "@/views/Command.vue";
 import Configs from "@/views/Configs.vue";
+import EditRule from "@/views/EditRule.vue";
+import NewRule from "@/views/NewRule.vue";
 import Rule from "@/views/Rule.vue";
 import Rules from "@/views/Rules.vue";
 
@@ -35,9 +37,20 @@ const routes: Array<RouteRecordRaw> = [
     component: Rules,
   },
   {
+    path: "/rules/new",
+    name: "NewRule",
+    component: NewRule,
+  },
+  {
     path: "/rules/:id",
     name: "Rule",
     component: Rule,
+    props: true,
+  },
+  {
+    path: "/rules/:id/edit",
+    name: "EditRule",
+    component: EditRule,
     props: true,
   },
 ];

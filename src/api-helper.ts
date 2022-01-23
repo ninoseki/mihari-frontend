@@ -104,3 +104,15 @@ export function generateRunRuleTask(): Task<void, [string]> {
     return await API.runRule(id);
   });
 }
+
+export function generateCreateRuleTask(): Task<Rule, [unknown]> {
+  return useAsyncTask<Rule, [unknown]>(async (_signal, payload) => {
+    return await API.createRule(payload);
+  });
+}
+
+export function generateUpdateRuleTask(): Task<Rule, [unknown]> {
+  return useAsyncTask<Rule, [unknown]>(async (_signal, payload) => {
+    return await API.updateRule(payload);
+  });
+}
