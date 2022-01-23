@@ -1,15 +1,15 @@
+import { BaseLink } from "@/links/base";
 import { Link, LinkType } from "@/types";
 
-class Urlscan {
-  public favicon: string;
+class Urlscan extends BaseLink {
   public baseURL: string;
   public name: string;
   public type: LinkType;
 
   public constructor() {
+    super();
+
     this.baseURL = "https://urlscan.io";
-    this.favicon =
-      "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://urlscan.io";
     this.name = "urlscan.io";
     this.type = "domain";
   }

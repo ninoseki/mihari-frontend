@@ -1,19 +1,19 @@
 import { sha256 } from "js-sha256";
 import URL from "url-parse";
 
+import { BaseLink } from "@/links/base";
 import { Link, LinkType } from "@/types";
 
-class VirusTotal {
-  public favicon: string;
+class VirusTotal extends BaseLink {
   public baseURL: string;
   public name: string;
   public type: LinkType;
 
   public constructor() {
+    super();
+
     this.name = "VirusTotal";
     this.baseURL = "https://www.virustotal.com";
-    this.favicon =
-      "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.virustotal.com";
     this.type = "domain";
   }
 }
