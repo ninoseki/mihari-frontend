@@ -21,25 +21,18 @@
       </tbody>
     </table>
   </div>
-  <nav class="pagination" role="navigation" aria-label="pagination">
-    <ul class="pagination-list">
-      <li v-for="page in totalPageCount" :key="page">
-        <a
-          class="pagination-link mt-2"
-          :class="rules.currentPage === page ? 'is-current' : ''"
-          @click="updatePage(page)"
-        >
-          {{ page }}</a
-        >
-      </li>
-    </ul>
-  </nav>
+  <Pagination
+    :currentPage="rules.currentPage"
+    :total="rules.total"
+    :pageSize="rules.pageSize"
+  ></Pagination>
   <p>({{ rules.total }} results in total, {{ rules.pageSize }} shown)</p>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
+import Pagination from "@/components/Pagination.vue";
 import YAML from "@/components/rule/YAML.vue";
 import { Rules } from "@/types";
 
@@ -53,11 +46,10 @@ export default defineComponent({
   },
   components: {
     YAML,
+    Pagination,
   },
   emits: ["update-page", "refresh-page"],
-  setup(props, context) {
-    const totalPageCount = Math.ceil(props.rules.total / props.rules.pageSize);
-
+  setup(_, context) {
     const scrollToTop = () => {
       window.scrollTo({
         top: 0,
@@ -74,7 +66,7 @@ export default defineComponent({
       context.emit("refresh-page");
     };
 
-    return { totalPageCount, updatePage, refreshPage };
+    return { updatePage, refreshPage };
   },
 });
 </script>
