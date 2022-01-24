@@ -6,6 +6,7 @@
     v-if="getAlertsTask.last?.value"
     @refresh-page="refreshPage"
     @update-page="updatePage"
+    @update-tag="updateTag"
   >
   </Alerts>
 </template>
@@ -34,6 +35,7 @@ export default defineComponent({
   },
   setup(props) {
     const page = ref(1);
+    const tag = ref<string | undefined>(undefined);
 
     const getAlertsTask = generateGetAlertsTask();
 
@@ -67,6 +69,14 @@ export default defineComponent({
       await getAlerts();
     };
 
+    const updateTag = (newTag: string | undefined) => {
+      if (tag.value === newTag) {
+        tag.value = undefined;
+      } else {
+        tag.value = newTag;
+      }
+    };
+
     onMounted(async () => {
       await getAlerts();
     });
@@ -79,6 +89,7 @@ export default defineComponent({
       getAlertsTask,
       refreshPage,
       updatePage,
+      updateTag,
     };
   },
 });
