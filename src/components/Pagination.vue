@@ -43,7 +43,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { useRouteQuery } from "@vueuse/router";
+import { computed, defineComponent, onMounted, Ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   name: "AlertsPagination",
@@ -63,6 +65,10 @@ export default defineComponent({
   },
   emits: ["update-page"],
   setup(props, context) {
+    const route = useRoute();
+    const router = useRouter();
+    const options = { route, router };
+
     const totalPageCount = computed(() => {
       return Math.ceil(props.total / props.pageSize);
     });
@@ -88,8 +94,20 @@ export default defineComponent({
     });
 
     const updatePage = (page: number) => {
+      const pageQuery = useRouteQuery("page", page.toString(), options);
+      pageQuery.value = page.toString();
+
       context.emit("update-page", page);
     };
+
+    onMounted(() => {
+      const pageQuery = useRouteQuery("page", null, options) as Ref<
+        string | null
+      >;
+      if (pageQuery.value && parseInt(pageQuery.value) !== props.currentPage) {
+        updatePage(parseInt(pageQuery.value));
+      }
+    });
 
     return {
       updatePage,
