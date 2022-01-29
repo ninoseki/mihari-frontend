@@ -117,11 +117,11 @@ export default defineComponent({
       nextTick(async () => await getAlerts());
     });
 
-    onMounted(async () => {
-      await getTagsTask.perform();
-      await getSourcesTask.perform();
+    onMounted(() => {
+      getTagsTask.perform();
+      getSourcesTask.perform();
 
-      await getAlerts();
+      getAlerts();
     });
 
     return {
