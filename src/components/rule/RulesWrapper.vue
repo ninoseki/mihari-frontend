@@ -98,9 +98,9 @@ export default defineComponent({
       nextTick(async () => await getRules());
     });
 
-    onMounted(async () => {
-      await getTagsTask.perform();
-      await getRules();
+    onMounted(() => {
+      getTagsTask.perform();
+      getRules();
     });
 
     return {
