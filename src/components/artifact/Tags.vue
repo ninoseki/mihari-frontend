@@ -18,7 +18,7 @@
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
-  name: "Tags",
+  name: "TagsItem",
   props: {
     tags: {
       type: Array as PropType<string[]>,

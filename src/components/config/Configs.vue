@@ -55,7 +55,7 @@ import { defineComponent, PropType } from "vue";
 import { Config } from "@/types";
 
 export default defineComponent({
-  name: "Configs",
+  name: "ConfigsItem",
   props: {
     configs: {
       type: Array as PropType<Config[]>,

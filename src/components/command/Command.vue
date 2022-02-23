@@ -58,7 +58,7 @@ import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
 
 export default defineComponent({
-  name: "Command",
+  name: "CommandItem",
   components: {
     Loading,
     ErrorMessage,

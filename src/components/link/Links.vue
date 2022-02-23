@@ -17,7 +17,7 @@ import { Links } from "@/links";
 import { Link } from "@/types";
 
 export default defineComponent({
-  name: "Links",
+  name: "LinksItem",
   components: {
     LinkComponent,
   },

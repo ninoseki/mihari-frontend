@@ -16,7 +16,7 @@ import TagComponent from "@/components/tag/Tag.vue";
 import { Tag } from "@/types";
 
 export default defineComponent({
-  name: "Tags",
+  name: "TagsItem",
   components: {
     TagComponent,
   },
