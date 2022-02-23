@@ -3,6 +3,9 @@ import "bulma-helpers/css/bulma-helpers.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "highlight.js/styles/androidstudio.css";
+// Polyfill
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 import { createApp } from "vue";
 

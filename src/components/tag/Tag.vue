@@ -22,7 +22,7 @@ import { generateDeleteTagTask } from "@/api-helper";
 import { Tag } from "@/types";
 
 export default defineComponent({
-  name: "Tag",
+  name: "TagItem",
   props: {
     tag: {
       type: Object as PropType<Tag>,

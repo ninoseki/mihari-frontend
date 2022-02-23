@@ -47,6 +47,14 @@
   </nav>
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "NavbarItem",
+});
+</script>
+
 <style scoped>
 .navbar {
   border-bottom: 1px solid lightgray;

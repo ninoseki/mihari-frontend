@@ -9,7 +9,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "Error",
+  name: "ErrorItem",
   props: {
     error: {
       type: Object,

@@ -1,6 +1,9 @@
+const { defineConfig } = require("@vue/cli-service");
+
 const target = process.env.BACKEND_URL || "http://localhost:9292/";
 
-module.exports = {
+module.exports = defineConfig({
+  transpileDependencies: true,
   outputDir: "dist",
   assetsDir: "static",
   devServer: {
@@ -10,21 +13,4 @@ module.exports = {
       },
     },
   },
-  configureWebpack: {
-    optimization: {
-      splitChunks: false,
-    },
-    module: {
-      rules: [
-        {
-          test: /\.mjs$/,
-          include: /node_modules/,
-          type: "javascript/auto",
-        },
-      ],
-    },
-  },
-  css: {
-    extract: false,
-  },
-};
+});

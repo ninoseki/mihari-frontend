@@ -66,7 +66,7 @@ import YAML from "@/components/rule/YAML.vue";
 import { Rule } from "@/types";
 
 export default defineComponent({
-  name: "Rule",
+  name: "RuleItem",
   props: {
     rule: {
       type: Object as PropType<Rule>,

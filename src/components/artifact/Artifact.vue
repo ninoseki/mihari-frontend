@@ -175,7 +175,7 @@ import { ArtifactWithTags, GCS } from "@/types";
 import { getGCSByCountryCode, getGCSByIPInfo } from "@/utils";
 
 export default defineComponent({
-  name: "Artifact",
+  name: "ArtifactItem",
   props: {
     artifact: {
       type: Object as PropType<ArtifactWithTags>,

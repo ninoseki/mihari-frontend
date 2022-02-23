@@ -24,7 +24,7 @@ import Pagination from "@/components/Pagination.vue";
 import { Alerts } from "@/types";
 
 export default defineComponent({
-  name: "Alerts",
+  name: "AlertsItem",
   components: {
     Alert,
     Pagination,

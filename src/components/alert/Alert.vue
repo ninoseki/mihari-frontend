@@ -72,7 +72,7 @@ import { Alert } from "@/types";
 import { getHumanizedRelativeTime, getLocalDatetime } from "@/utils";
 
 export default defineComponent({
-  name: "Alert",
+  name: "AlertItem",
   components: {
     Artifacts,
     Tags,
