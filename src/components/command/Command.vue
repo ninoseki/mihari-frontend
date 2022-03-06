@@ -1,51 +1,49 @@
 <template>
-  <div>
-    <div class="box mb-6">
-      <div class="field has-addons">
-        <p class="control">
-          <a class="button is-static">mihari</a>
-        </p>
-        <p class="control is-expanded">
-          <input class="input" type="text" v-model="command" />
-        </p>
-      </div>
-
-      <div class="field is-grouped is-grouped-centered">
-        <p class="control">
-          <a class="button is-primary" @click="runCommand">
-            <span class="icon is-small">
-              <i class="fas fa-play"></i>
-            </span>
-            <span>Run</span>
-          </a>
-        </p>
-      </div>
+  <div class="box mb-6">
+    <div class="field has-addons">
+      <p class="control">
+        <a class="button is-static">mihari</a>
+      </p>
+      <p class="control is-expanded">
+        <input class="input" type="text" v-model="command" />
+      </p>
     </div>
 
-    <hr />
+    <div class="field is-grouped is-grouped-centered">
+      <p class="control">
+        <a class="button is-primary" @click="runCommand">
+          <span class="icon is-small">
+            <i class="fas fa-play"></i>
+          </span>
+          <span>Run</span>
+        </a>
+      </p>
+    </div>
+  </div>
 
-    <Loading v-if="runCommandTask.isRunning"></Loading>
+  <hr />
 
-    <ErrorMessage
-      v-if="runCommandTask.isError"
-      :error="runCommandTask.last?.error"
-    ></ErrorMessage>
+  <Loading v-if="runCommandTask.isRunning"></Loading>
 
-    <div v-if="runCommandTask.last?.value">
-      <div
-        class="notification is-success is-light"
-        v-if="runCommandTask.last.value.success"
-      >
-        Command ran successfully
-      </div>
-      <div class="notification is-danger is-light" v-else>
-        Something went wrong...
-      </div>
+  <ErrorMessage
+    v-if="runCommandTask.isError"
+    :error="runCommandTask.last?.error"
+  ></ErrorMessage>
 
-      <div class="content is-normal">
-        <h4 class="is-size-4">Output</h4>
-        <pre>{{ runCommandTask.last.value.output }}</pre>
-      </div>
+  <div v-if="runCommandTask.last?.value">
+    <div
+      class="notification is-success is-light"
+      v-if="runCommandTask.last.value.success"
+    >
+      Command ran successfully
+    </div>
+    <div class="notification is-danger is-light" v-else>
+      Something went wrong...
+    </div>
+
+    <div class="content is-normal">
+      <h4 class="is-size-4">Output</h4>
+      <pre>{{ runCommandTask.last.value.output }}</pre>
     </div>
   </div>
 </template>
