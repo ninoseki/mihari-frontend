@@ -1,17 +1,15 @@
 <template>
-  <div>
-    <Loading v-if="getConfigsTask.isRunning"></Loading>
+  <Loading v-if="getConfigsTask.isRunning"></Loading>
 
-    <ErrorMessage
-      v-if="getConfigsTask.isError"
-      :error="getConfigsTask.last?.error"
-    ></ErrorMessage>
+  <ErrorMessage
+    v-if="getConfigsTask.isError"
+    :error="getConfigsTask.last?.error"
+  ></ErrorMessage>
 
-    <Configs
-      :configs="getConfigsTask.last.value"
-      v-if="getConfigsTask.last?.value"
-    ></Configs>
-  </div>
+  <Configs
+    :configs="getConfigsTask.last.value"
+    v-if="getConfigsTask.last?.value"
+  ></Configs>
 </template>
 
 <script lang="ts">

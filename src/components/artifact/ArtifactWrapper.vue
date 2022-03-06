@@ -1,17 +1,15 @@
 <template>
-  <div>
-    <Loading v-if="getArtifactTask.isRunning"></Loading>
+  <Loading v-if="getArtifactTask.isRunning"></Loading>
 
-    <ErrorMessage
-      v-if="getArtifactTask.isError"
-      :error="getArtifactTask.last?.error"
-    ></ErrorMessage>
+  <ErrorMessage
+    v-if="getArtifactTask.isError"
+    :error="getArtifactTask.last?.error"
+  ></ErrorMessage>
 
-    <ArtifactComponent
-      :artifact="getArtifactTask.last.value"
-      v-if="getArtifactTask.last?.value"
-    ></ArtifactComponent>
-  </div>
+  <ArtifactComponent
+    :artifact="getArtifactTask.last.value"
+    v-if="getArtifactTask.last?.value"
+  ></ArtifactComponent>
 </template>
 
 <script lang="ts">

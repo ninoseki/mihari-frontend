@@ -1,125 +1,123 @@
 <template>
-  <div>
-    <div class="columns">
-      <div class="column">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Title</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
-                <input class="input" type="text" v-model="title" />
-              </p>
-            </div>
-          </div>
+  <div class="columns">
+    <div class="column">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Title</label>
         </div>
-      </div>
-      <div class="column">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Description</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
-                <input class="input" type="text" v-model="description" />
-              </p>
-            </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input class="input" type="text" v-model="title" />
+            </p>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="columns">
-      <div class="column">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Source</label>
+    <div class="column">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Description</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input class="input" type="text" v-model="description" />
+            </p>
           </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <div class="select">
-                  <select v-model="source">
-                    <option></option>
-                    <option v-for="source_ in sources" :key="source_">
-                      {{ source_ }}
-                    </option>
-                  </select>
-                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Source</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <div class="select">
+                <select v-model="source">
+                  <option></option>
+                  <option v-for="source_ in sources" :key="source_">
+                    {{ source_ }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="column">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Artifact</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
-                <input class="input" type="text" v-model="artifact" />
-              </p>
-            </div>
+    </div>
+    <div class="column">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Artifact</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input class="input" type="text" v-model="artifact" />
+            </p>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="columns">
-      <div class="column">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Tag</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <div class="select">
-                  <select v-model="tagInput">
-                    <option></option>
-                    <option v-for="tag_ in tags" :key="tag_">
-                      {{ tag_ }}
-                    </option>
-                  </select>
-                </div>
+  <div class="columns">
+    <div class="column">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Tag</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <div class="select">
+                <select v-model="tagInput">
+                  <option></option>
+                  <option v-for="tag_ in tags" :key="tag_">
+                    {{ tag_ }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="column"></div>
     </div>
+    <div class="column"></div>
+  </div>
 
-    <div class="columns">
-      <div class="column">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">From</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
-                <input class="input" type="date" v-model="fromAt" />
-              </p>
-            </div>
+  <div class="columns">
+    <div class="column">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">From</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input class="input" type="date" v-model="fromAt" />
+            </p>
           </div>
         </div>
       </div>
-      <div class="column">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">To</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
-                <input class="input" type="date" v-model="toAt" />
-              </p>
-            </div>
+    </div>
+    <div class="column">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">To</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control">
+              <input class="input" type="date" v-model="toAt" />
+            </p>
           </div>
         </div>
       </div>
