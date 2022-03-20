@@ -1,5 +1,5 @@
 <template>
-  <div class="block my-editor-wrapper">
+  <div class="block my-editor-wrapper" ref="wrapper">
     <PrismEditor
       class="my-editor"
       v-model="yamlInput"
@@ -9,15 +9,17 @@
 </template>
 
 <script lang="ts">
+// eslint-disable-next-line simple-import-sort/imports
 import "vue-prism-editor/dist/prismeditor.min.css";
-import "prismjs/themes/prism-tomorrow.css";
 
-import hljs from "highlight.js/lib/core";
-import yaml from "highlight.js/lib/languages/yaml";
 import { defineComponent, ref, watchEffect } from "vue";
 import { PrismEditor } from "vue-prism-editor";
 
-hljs.registerLanguage("yaml", yaml);
+import Prism from "prismjs";
+
+import "prismjs/components/prism-yaml";
+import "prismjs/themes/prism-twilight.css";
+import "prismjs/plugins/custom-class/prism-custom-class";
 
 export default defineComponent({
   name: "RuleInputForm",
@@ -33,33 +35,45 @@ export default defineComponent({
   emits: ["update-yaml"],
   setup(props, context) {
     const yamlInput = ref(props.yaml);
+    const wrapper = ref<HTMLElement | undefined>(undefined);
+
+    Prism.plugins.customClass.map({
+      number: "prism-number",
+      tag: "prism-tag",
+    });
 
     const highlighter = (code: string) => {
-      return hljs.highlight(code, { language: "yaml" }).value;
+      return Prism.highlight(code, Prism.languages.yaml, "yaml");
     };
 
     watchEffect(() => {
       context.emit("update-yaml", yamlInput.value);
+
+      // TODO: a dirty hack to change the default text color
+      if (wrapper.value) {
+        const strings = wrapper.value.querySelectorAll(":not(span.token)");
+        strings.forEach((string) => {
+          (string as HTMLElement).style.color = "white";
+        });
+      }
     });
 
-    return { yamlInput, highlighter };
+    return { yamlInput, highlighter, wrapper };
   },
 });
 </script>
 
 <style scoped>
 .my-editor {
-  background: #282b2e;
-  color: #ccc;
-
+  background: hsl(0, 0%, 8%);
   font-family: Fira code, Fira Mono, Consolas, Menlo, Courier, monospace;
-  font-size: 14px;
+  font-size: 1em;
   line-height: 1.5;
   padding: 5px;
 }
 
 .my-editor-wrapper {
-  background: #282b2e;
+  background: hsl(0, 0%, 8%);
   padding: 10px;
 }
 </style>
