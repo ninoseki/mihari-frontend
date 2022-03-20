@@ -3,11 +3,14 @@
 </template>
 
 <script lang="ts">
-import hljs from "highlight.js/lib/core";
-import yaml from "highlight.js/lib/languages/yaml";
+// eslint-disable-next-line simple-import-sort/imports
 import { defineComponent, onMounted, ref } from "vue";
 
-hljs.registerLanguage("yaml", yaml);
+import Prism from "prismjs";
+
+import "prismjs/components/prism-yaml";
+import "prismjs/themes/prism-twilight.css";
+import "prismjs/plugins/custom-class/prism-custom-class";
 
 export default defineComponent({
   name: "YAML",
@@ -20,10 +23,15 @@ export default defineComponent({
   setup() {
     const pre = ref<HTMLElement | undefined>(undefined);
 
+    Prism.plugins.customClass.map({
+      number: "prism-number",
+      tag: "prism-tag",
+    });
+
     onMounted(() => {
       if (pre.value) {
         pre.value.querySelectorAll("code").forEach((elem) => {
-          hljs.highlightElement(elem);
+          Prism.highlightElement(elem);
         });
       }
     });
@@ -32,9 +40,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-pre {
-  background-color: #282b2e;
-}
-</style>
