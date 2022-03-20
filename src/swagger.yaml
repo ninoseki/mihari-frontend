@@ -671,6 +671,10 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Mihari_Entities_Query"
+      emitters:
+        type: array
+        items:
+          $ref: "#/definitions/Mihari_Entities_Emitter"
       tags:
         type: array
         items:
@@ -714,6 +718,13 @@ definitions:
     required:
       - analyzer
       - query
+  Mihari_Entities_Emitter:
+    type: object
+    properties:
+      emitter:
+        type: string
+    required:
+      - emitter
   Mihari_Entities_Sources:
     type: object
     properties:
