@@ -6,6 +6,7 @@ import {
   CommandInput,
   CommandOutput,
   Config,
+  CreateRule,
   IPInfo,
   Rule,
   Rules,
@@ -13,6 +14,7 @@ import {
   SearchParams,
   Sources,
   Tags,
+  UpdateRule,
 } from "@/types";
 
 const client = axios.create({
@@ -80,12 +82,12 @@ export const API = {
     await client.get<void>(`/api/rules/${id}/run`);
   },
 
-  async createRule(payload: unknown): Promise<Rule> {
+  async createRule(payload: CreateRule): Promise<Rule> {
     const res = await client.post<Rule>("/api/rules/", payload);
     return res.data;
   },
 
-  async updateRule(payload: unknown): Promise<Rule> {
+  async updateRule(payload: UpdateRule): Promise<Rule> {
     const res = await client.put<Rule>("/api/rules/", payload);
     return res.data;
   },

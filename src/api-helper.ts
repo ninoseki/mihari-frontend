@@ -6,11 +6,13 @@ import {
   ArtifactWithTags,
   CommandOutput,
   Config,
+  CreateRule,
   IPInfo,
   Rule,
   Rules,
   RuleSearchParams,
   SearchParams,
+  UpdateRule,
 } from "@/types";
 
 export function generateGetAlertsTask(): Task<Alerts, [SearchParams]> {
@@ -105,14 +107,14 @@ export function generateRunRuleTask(): Task<void, [string]> {
   });
 }
 
-export function generateCreateRuleTask(): Task<Rule, [unknown]> {
-  return useAsyncTask<Rule, [unknown]>(async (_signal, payload) => {
+export function generateCreateRuleTask(): Task<Rule, [CreateRule]> {
+  return useAsyncTask<Rule, [CreateRule]>(async (_signal, payload) => {
     return await API.createRule(payload);
   });
 }
 
-export function generateUpdateRuleTask(): Task<Rule, [unknown]> {
-  return useAsyncTask<Rule, [unknown]>(async (_signal, payload) => {
+export function generateUpdateRuleTask(): Task<Rule, [UpdateRule]> {
+  return useAsyncTask<Rule, [UpdateRule]>(async (_signal, payload) => {
     return await API.updateRule(payload);
   });
 }
