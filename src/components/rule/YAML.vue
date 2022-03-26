@@ -1,5 +1,8 @@
 <template>
-  <pre ref="pre"><code class="language-yaml">{{ yaml }}</code></pre>
+  <pre
+    ref="pre"
+    class="line-numbers"
+  ><code class="language-yaml">{{ yaml }}</code></pre>
 </template>
 
 <script lang="ts">
@@ -9,8 +12,10 @@ import { defineComponent, onMounted, ref } from "vue";
 import Prism from "prismjs";
 
 import "prismjs/components/prism-yaml";
-import "prismjs/themes/prism-twilight.css";
 import "prismjs/plugins/custom-class/prism-custom-class";
+import "prismjs/plugins/line-numbers/prism-line-numbers.css";
+import "prismjs/plugins/line-numbers/prism-line-numbers";
+import "prismjs/themes/prism-twilight.css";
 
 export default defineComponent({
   name: "YAML",

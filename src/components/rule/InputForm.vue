@@ -4,6 +4,7 @@
       class="my-editor"
       v-model="yamlInput"
       :highlight="highlighter"
+      line-numbers
     ></PrismEditor>
   </div>
 </template>
@@ -18,8 +19,8 @@ import { PrismEditor } from "vue-prism-editor";
 import Prism from "prismjs";
 
 import "prismjs/components/prism-yaml";
-import "prismjs/themes/prism-twilight.css";
 import "prismjs/plugins/custom-class/prism-custom-class";
+import "prismjs/themes/prism-twilight.css";
 
 export default defineComponent({
   name: "RuleInputForm",
