@@ -47,6 +47,16 @@
     </div>
   </div>
 
+  <div v-if="runRuleTask.isRunning">
+    <hr />
+    <Loading></Loading>
+  </div>
+
+  <div v-if="runRuleTask.last?.error">
+    <hr />
+    <ErrorMessage :error="runRuleTask.last.error"></ErrorMessage>
+  </div>
+
   <hr />
 
   <div class="column">
@@ -62,6 +72,8 @@ import { useRouter } from "vue-router";
 
 import { generateDeleteRuleTask, generateRunRuleTask } from "@/api-helper";
 import Alerts from "@/components/alert/AlertsWithPagination.vue";
+import ErrorMessage from "@/components/ErrorMessage.vue";
+import Loading from "@/components/Loading.vue";
 import YAML from "@/components/rule/YAML.vue";
 import { Rule } from "@/types";
 
@@ -76,6 +88,8 @@ export default defineComponent({
   components: {
     YAML,
     Alerts,
+    Loading,
+    ErrorMessage,
   },
   setup(props) {
     const router = useRouter();
@@ -102,6 +116,7 @@ export default defineComponent({
     return {
       deleteRule,
       runRule,
+      runRuleTask,
     };
   },
 });
