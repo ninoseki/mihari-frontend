@@ -25,7 +25,6 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
 import { useRouter } from "vue-router";
-import YAML from "yaml";
 
 import { generateUpdateRuleTask } from "@/api-helper";
 import ErrorMessage from "@/components/ErrorMessage.vue";
@@ -56,10 +55,10 @@ export default defineComponent({
     };
 
     const edit = async () => {
-      const payload: unknown = YAML.parse(yaml.value);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (payload as any).id = props.rule.id;
-      const rule = await updateRuleTask.perform(payload);
+      const rule = await updateRuleTask.perform({
+        id: props.rule.id,
+        yaml: yaml.value,
+      });
 
       router.push({ name: "Rule", params: { id: rule.id } });
     };

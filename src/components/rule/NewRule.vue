@@ -25,7 +25,6 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
-import YAML from "yaml";
 
 import { generateCreateRuleTask } from "@/api-helper";
 import ErrorMessage from "@/components/ErrorMessage.vue";
@@ -50,8 +49,7 @@ export default defineComponent({
     };
 
     const create = async () => {
-      const payload: unknown = YAML.parse(yaml.value);
-      const rule = await createRuleTask.perform(payload);
+      const rule = await createRuleTask.perform({ yaml: yaml.value });
 
       router.push({ name: "Rule", params: { id: rule.id } });
     };

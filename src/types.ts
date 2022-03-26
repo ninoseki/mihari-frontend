@@ -163,14 +163,17 @@ export interface Link {
 export interface Rule {
   id: string;
   yaml: string;
-  title: string;
-  description: string;
-  queries: Query[];
-  tags: string[];
-  allowed_data_types: string[];
-  disallowed_data_values: string[];
-  ignore_old_artifacts: boolean;
-  ignore_threshold: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateRule {
+  yaml: string;
+}
+
+export interface UpdateRule {
+  id: string;
+  yaml: string;
 }
 
 export interface Query {
