@@ -305,6 +305,12 @@ paths:
         - application/json
       consumes:
         - application/json
+      parameters:
+        - name: ApiRules
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/putApiRules"
       responses:
         "200":
           description: Update a rule
@@ -320,6 +326,12 @@ paths:
         - application/json
       consumes:
         - application/json
+      parameters:
+        - name: ApiRules
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/postApiRules"
       responses:
         "201":
           description: Create a rule
@@ -656,6 +668,17 @@ definitions:
       - countryCode
       - loc
     description: Mihari_Entities_IPAddress model
+  putApiRules:
+    type: object
+    properties:
+      id:
+        type: string
+      yaml:
+        type: string
+    required:
+      - id
+      - yaml
+    description: Update a rule
   Mihari_Entities_Rule:
     type: object
     properties:
@@ -663,68 +686,26 @@ definitions:
         type: string
       yaml:
         type: string
-      title:
-        type: string
-      description:
-        type: string
-      queries:
-        type: array
-        items:
-          $ref: "#/definitions/Mihari_Entities_Query"
-      emitters:
-        type: array
-        items:
-          $ref: "#/definitions/Mihari_Entities_Emitter"
-      tags:
-        type: array
-        items:
-          type: string
-      allowedDtaTypes:
-        type: array
-        items:
-          type: string
-      disallowedDataValues:
-        type: array
-        items:
-          type: string
-      ignoreOldArtifacts:
-        type: boolean
-      ignoreThreshold:
-        type: integer
-        format: int32
       createdAt:
+        type: string
+        format: date-time
+      updatedAt:
         type: string
         format: date-time
     required:
       - id
       - yaml
-      - title
-      - description
-      - queries
-      - ignoreOldArtifacts
-      - ignoreThreshold
       - createdAt
+      - updatedAt
     description: Mihari_Entities_Rule model
-  Mihari_Entities_Query:
+  postApiRules:
     type: object
     properties:
-      analyzer:
-        type: string
-      query:
-        type: string
-      interval:
-        type: integer
-        format: int32
-    required:
-      - analyzer
-      - query
-  Mihari_Entities_Emitter:
-    type: object
-    properties:
-      emitter:
+      yaml:
         type: string
     required:
-      - emitter
+      - yaml
+    description: Create a rule
   Mihari_Entities_Sources:
     type: object
     properties:
