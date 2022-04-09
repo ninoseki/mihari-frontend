@@ -1,5 +1,15 @@
 <template>
   <div class="column">
+    <div v-if="runRuleTask.isRunning">
+      <Loading></Loading>
+      <hr />
+    </div>
+
+    <div v-if="runRuleTask.last?.error">
+      <ErrorMessage :error="runRuleTask.last.error"></ErrorMessage>
+      <hr />
+    </div>
+
     <h2 class="is-size-2 mb-4">Rule</h2>
 
     <h4 class="is-size-4">Information</h4>
@@ -47,16 +57,6 @@
     </div>
   </div>
 
-  <div v-if="runRuleTask.isRunning">
-    <hr />
-    <Loading></Loading>
-  </div>
-
-  <div v-if="runRuleTask.last?.error">
-    <hr />
-    <ErrorMessage :error="runRuleTask.last.error"></ErrorMessage>
-  </div>
-
   <hr />
 
   <div class="column">
@@ -91,7 +91,8 @@ export default defineComponent({
     Loading,
     ErrorMessage,
   },
-  setup(props) {
+  emits: ["refresh"],
+  setup(props, context) {
     const router = useRouter();
 
     const deleteRuleTask = generateDeleteRuleTask();
@@ -110,7 +111,7 @@ export default defineComponent({
 
     const runRule = async () => {
       await runRuleTask.perform(props.rule.id);
-      router.go(0);
+      context.emit("refresh");
     };
 
     return {

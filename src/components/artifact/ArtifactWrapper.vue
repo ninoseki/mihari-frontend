@@ -8,12 +8,13 @@
 
   <ArtifactComponent
     :artifact="getArtifactTask.last.value"
+    @refresh="refresh"
     v-if="getArtifactTask.last?.value"
   ></ArtifactComponent>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, watch } from "vue";
+import { defineComponent, onMounted, watchEffect } from "vue";
 
 import { generateGetArtifactTask } from "@/api-helper";
 import ArtifactComponent from "@/components/artifact/Artifact.vue";
@@ -40,16 +41,21 @@ export default defineComponent({
       await getArtifactTask.perform(props.id);
     };
 
+    const refresh = async () => {
+      await getArtifact();
+    };
+
     onMounted(async () => {
       await getArtifact();
     });
 
-    watch(props, async () => {
+    watchEffect(async () => {
       await getArtifact();
     });
 
     return {
       getArtifactTask,
+      refresh,
     };
   },
 });
