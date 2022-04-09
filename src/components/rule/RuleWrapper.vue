@@ -6,11 +6,15 @@
     :error="getRuleTask.last?.error"
   ></ErrorMessage>
 
-  <Rule :rule="getRuleTask.last.value" v-if="getRuleTask.last?.value"></Rule>
+  <Rule
+    :rule="getRuleTask.last.value"
+    @refresh="refresh"
+    v-if="getRuleTask.last?.value"
+  ></Rule>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, watchEffect } from "vue";
 
 import { generateGetRuleTask } from "@/api-helper";
 import ErrorMessage from "@/components/ErrorMessage.vue";
@@ -37,12 +41,21 @@ export default defineComponent({
       await getRuleTask.perform(props.id);
     };
 
+    const refresh = async () => {
+      await getRule();
+    };
+
     onMounted(async () => {
+      await getRule();
+    });
+
+    watchEffect(async () => {
       await getRule();
     });
 
     return {
       getRuleTask,
+      refresh,
     };
   },
 });

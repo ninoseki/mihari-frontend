@@ -1,5 +1,10 @@
 <template>
   <div class="column">
+    <div v-if="enrichArtifactTask.isRunning">
+      <Loading></Loading>
+      <hr />
+    </div>
+
     <h2 class="is-size-2 mb-4">Artifact</h2>
 
     <div class="columns">
@@ -95,7 +100,7 @@
             <div class="modal-background" @click="flipShowMetadata"></div>
             <div class="modal-card">
               <header class="modal-card-head">
-                <p class="modal-card-title">Meta</p>
+                <p class="modal-card-title">Metadata</p>
                 <button
                   class="delete"
                   aria-label="close"
@@ -171,6 +176,7 @@ import ReverseDnsNames from "@/components/artifact/ReverseDnsNames.vue";
 import Tags from "@/components/artifact/Tags.vue";
 import WhoisRecord from "@/components/artifact/WhoisRecord.vue";
 import Links from "@/components/link/Links.vue";
+import Loading from "@/components/Loading.vue";
 import { ArtifactWithTags, GCS } from "@/types";
 import { getGCSByCountryCode, getGCSByIPInfo } from "@/utils";
 
@@ -184,15 +190,17 @@ export default defineComponent({
   },
   components: {
     Alerts,
+    AS,
     DnsRecords,
     Links,
-    WhoisRecord,
-    Tags,
+    Loading,
     ReverseDnsNames,
-    AS,
+    Tags,
     VueJsonPretty,
+    WhoisRecord,
   },
-  setup(props) {
+  emits: ["refresh"],
+  setup(props, context) {
     const googleMapSrc = ref<string | undefined>(undefined);
     const countryCode = ref<string | undefined>(undefined);
     const showMetadata = ref(false);
@@ -238,7 +246,7 @@ export default defineComponent({
 
     const enrichArtifact = async () => {
       await enrichArtifactTask.perform(props.artifact.id);
-      router.go(0);
+      context.emit("refresh");
     };
 
     onMounted(async () => {
@@ -264,6 +272,7 @@ export default defineComponent({
 
     return {
       countryCode,
+      enrichArtifactTask,
       getAlertsTask,
       googleMapSrc,
       showMetadata,
