@@ -1,10 +1,8 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 import {
   Alerts,
   ArtifactWithTags,
-  CommandInput,
-  CommandOutput,
   Config,
   CreateRule,
   IPInfo,
@@ -98,16 +96,6 @@ export const API = {
 
   async deleteTag(name: string): Promise<void> {
     await client.delete(`/api/tags/${name}`);
-  },
-
-  async runCommand(command: string): Promise<CommandOutput> {
-    const res = await client.post<CommandInput, AxiosResponse<CommandOutput>>(
-      "/api/command",
-      {
-        command: command,
-      }
-    );
-    return res.data;
   },
 
   async getIPInfo(ipAddress: string): Promise<IPInfo> {
