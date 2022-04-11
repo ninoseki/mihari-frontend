@@ -4,7 +4,6 @@ import { API } from "@/api";
 import {
   Alerts,
   ArtifactWithTags,
-  CommandOutput,
   Config,
   CreateRule,
   IPInfo,
@@ -60,12 +59,6 @@ export function generateDeleteArtifactTask(): Task<void, [number]> {
 export function generateEnrichArtifactTask(): Task<void, [number]> {
   return useAsyncTask<void, [number]>(async (_signal, id) => {
     return await API.enrichArtifact(id);
-  });
-}
-
-export function generateRunCommandTask(): Task<CommandOutput, [string]> {
-  return useAsyncTask<CommandOutput, [string]>(async (_signal, command) => {
-    return await API.runCommand(command);
   });
 }
 

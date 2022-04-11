@@ -120,15 +120,6 @@ export interface SearchParams extends PaginationParams {
   reverseDnsName: string | undefined;
 }
 
-export interface CommandInput {
-  command: string;
-}
-
-export interface CommandOutput {
-  output: string;
-  success: boolean;
-}
-
 export interface IPInfo {
   ip: string;
   hostname: string | null;
