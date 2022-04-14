@@ -10,8 +10,6 @@ tags:
     description: Operations about alerts
   - name: artifacts
     description: Operations about artifacts
-  - name: command
-    description: Operations about commands
   - name: configs
     description: Operations about configs
   - name: ip_addresses
@@ -187,32 +185,6 @@ paths:
       tags:
         - artifacts
       operationId: getApiArtifactsIdEnrich
-  /api/command:
-    post:
-      summary: Run a command
-      description: Run a command
-      produces:
-        - application/json
-      consumes:
-        - application/json
-      parameters:
-        - name: ApiCommand
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/postApiCommand"
-      responses:
-        "201":
-          description: Run a command
-          schema:
-            $ref: "#/definitions/Mihari_Entities_CommandResult"
-        "400":
-          description: Bad request
-          schema:
-            $ref: "#/definitions/Mihari_Entities_Message"
-      tags:
-        - command
-      operationId: postApiCommand
   /api/configs:
     get:
       summary: Get configs
@@ -533,6 +505,14 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Mihari_Entities_DnsRecord"
+      cpes:
+        type: array
+        items:
+          $ref: "#/definitions/Mihari_Entities_CPE"
+      ports:
+        type: array
+        items:
+          $ref: "#/definitions/Mihari_Entities_Port"
     required:
       - id
       - data
@@ -597,6 +577,21 @@ definitions:
     required:
       - resource
       - value
+  Mihari_Entities_CPE:
+    type: object
+    properties:
+      cpe:
+        type: string
+    required:
+      - cpe
+  Mihari_Entities_Port:
+    type: object
+    properties:
+      port:
+        type: integer
+        format: int32
+    required:
+      - port
   Mihari_Entities_Tag:
     type: object
     properties:
@@ -604,25 +599,6 @@ definitions:
         type: string
     required:
       - name
-  postApiCommand:
-    type: object
-    properties:
-      command:
-        type: string
-    required:
-      - command
-    description: Run a command
-  Mihari_Entities_CommandResult:
-    type: object
-    properties:
-      output:
-        type: string
-      success:
-        type: boolean
-    required:
-      - output
-      - success
-    description: Mihari_Entities_CommandResult model
   Mihari_Entities_Config:
     type: object
     properties:
