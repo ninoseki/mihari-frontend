@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, watch } from "vue";
 
 import { generateGetRuleTask } from "@/api-helper";
 import ErrorMessage from "@/components/ErrorMessage.vue";
@@ -41,6 +41,10 @@ export default defineComponent({
     };
 
     onMounted(async () => {
+      await getRule();
+    });
+
+    watch(props, async () => {
       await getRule();
     });
 

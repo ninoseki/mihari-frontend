@@ -94,13 +94,13 @@ export default defineComponent({
       await search();
     };
 
-    watch(page, async () => {
-      nextTick(async () => await getRules());
+    onMounted(async () => {
+      getTagsTask.perform();
+      await getRules();
     });
 
-    onMounted(() => {
-      getTagsTask.perform();
-      getRules();
+    watch([page, tag], async () => {
+      nextTick(async () => await getRules());
     });
 
     return {

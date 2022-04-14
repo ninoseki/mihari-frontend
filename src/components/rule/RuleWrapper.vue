@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, watchEffect } from "vue";
+import { defineComponent, onMounted, watch } from "vue";
 
 import { generateGetRuleTask } from "@/api-helper";
 import ErrorMessage from "@/components/ErrorMessage.vue";
@@ -49,7 +49,7 @@ export default defineComponent({
       await getRule();
     });
 
-    watchEffect(async () => {
+    watch(props, async () => {
       await getRule();
     });
 

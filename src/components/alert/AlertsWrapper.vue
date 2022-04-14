@@ -113,15 +113,15 @@ export default defineComponent({
       await search();
     };
 
-    watch(page, async () => {
-      nextTick(async () => await getAlerts());
-    });
-
-    onMounted(() => {
+    onMounted(async () => {
       getTagsTask.perform();
       getSourcesTask.perform();
 
-      getAlerts();
+      await getAlerts();
+    });
+
+    watch([page, tag], async () => {
+      nextTick(async () => await getAlerts());
     });
 
     return {
