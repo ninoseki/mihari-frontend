@@ -113,34 +113,44 @@
             </div>
           </div>
         </div>
-
-        <div class="block" v-if="artifact.tags.length > 0">
-          <h4 class="is-size-4">Tags</h4>
-          <Tags :tags="artifact.tags"></Tags>
-        </div>
-
-        <div class="block" v-if="artifact.autonomousSystem">
-          <h4 class="is-size-4">AS</h4>
-          <AS :autonomousSystem="artifact.autonomousSystem"></AS>
-        </div>
-
-        <div class="block" v-if="artifact.reverseDnsNames">
-          <h4 class="is-size-4">Reverse DNS</h4>
-          <ReverseDnsNames
-            :reverseDnsNames="artifact.reverseDnsNames"
-          ></ReverseDnsNames>
-        </div>
-
-        <div class="block" v-if="artifact.dnsRecords">
-          <h4 class="is-size-4">DNS records</h4>
-          <DnsRecords :dnsRecords="artifact.dnsRecords"></DnsRecords>
-        </div>
-
-        <div class="block" v-if="artifact.whoisRecord">
-          <h4 class="is-size-4">Whois record</h4>
-          <WhoisRecord :whoisRecord="artifact.whoisRecord"></WhoisRecord>
-        </div>
       </div>
+    </div>
+
+    <div class="block" v-if="artifact.tags.length > 0">
+      <h4 class="is-size-4">Tags</h4>
+      <Tags :tags="artifact.tags"></Tags>
+    </div>
+
+    <div class="block" v-if="artifact.autonomousSystem">
+      <h4 class="is-size-4">AS</h4>
+      <AS :autonomousSystem="artifact.autonomousSystem"></AS>
+    </div>
+
+    <div class="block" v-if="artifact.reverseDnsNames">
+      <h4 class="is-size-4">Reverse DNS</h4>
+      <ReverseDnsNames
+        :reverseDnsNames="artifact.reverseDnsNames"
+      ></ReverseDnsNames>
+    </div>
+
+    <div class="block" v-if="artifact.dnsRecords">
+      <h4 class="is-size-4">DNS records</h4>
+      <DnsRecords :dnsRecords="artifact.dnsRecords"></DnsRecords>
+    </div>
+
+    <div class="block" v-if="artifact.cpes">
+      <h4 class="is-size-4">CPEs</h4>
+      <CPEs :cpes="artifact.cpes"></CPEs>
+    </div>
+
+    <div class="block" v-if="artifact.ports">
+      <h4 class="is-size-4">Ports</h4>
+      <Ports :ports="artifact.ports"></Ports>
+    </div>
+
+    <div class="block" v-if="artifact.whoisRecord">
+      <h4 class="is-size-4">Whois record</h4>
+      <WhoisRecord :whoisRecord="artifact.whoisRecord"></WhoisRecord>
     </div>
 
     <div class="block">
@@ -171,7 +181,9 @@ import {
 } from "@/api-helper";
 import Alerts from "@/components/alert/AlertsWithPagination.vue";
 import AS from "@/components/artifact/AS.vue";
+import CPEs from "@/components/artifact/CPEs.vue";
 import DnsRecords from "@/components/artifact/DnsRecords.vue";
+import Ports from "@/components/artifact/Ports.vue";
 import ReverseDnsNames from "@/components/artifact/ReverseDnsNames.vue";
 import Tags from "@/components/artifact/Tags.vue";
 import WhoisRecord from "@/components/artifact/WhoisRecord.vue";
@@ -198,6 +210,8 @@ export default defineComponent({
     Tags,
     VueJsonPretty,
     WhoisRecord,
+    CPEs,
+    Ports,
   },
   emits: ["refresh"],
   setup(props, context) {
