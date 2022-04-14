@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, watchEffect } from "vue";
+import { defineComponent, onMounted, watch } from "vue";
 
 import { generateGetArtifactTask } from "@/api-helper";
 import ArtifactComponent from "@/components/artifact/Artifact.vue";
@@ -49,7 +49,7 @@ export default defineComponent({
       await getArtifact();
     });
 
-    watchEffect(async () => {
+    watch(props, async () => {
       await getArtifact();
     });
 

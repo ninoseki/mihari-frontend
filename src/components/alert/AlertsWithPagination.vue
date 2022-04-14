@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, onMounted, ref, watchEffect } from "vue";
+import { defineComponent, nextTick, onMounted, ref, watch } from "vue";
 
 import { generateGetAlertsTask } from "@/api-helper";
 import Alerts from "@/components/alert/Alerts.vue";
@@ -81,7 +81,7 @@ export default defineComponent({
       await getAlerts();
     });
 
-    watchEffect(() => {
+    watch([props, page, tag], async () => {
       nextTick(async () => await getAlerts());
     });
 
