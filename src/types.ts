@@ -68,6 +68,14 @@ export interface ReverseDnsName {
   name: string;
 }
 
+export interface CPE {
+  cpe: string;
+}
+
+export interface Port {
+  port: string;
+}
+
 export interface Artifact {
   id: number;
   data: string;
@@ -82,6 +90,8 @@ export interface Artifact {
 
   dnsRecords: DnsRecord[] | null;
   reverseDnsNames: ReverseDnsName[] | null;
+  cpes: CPE[] | null;
+  ports: Port[] | null;
 }
 
 export interface ArtifactWithTags extends Artifact {

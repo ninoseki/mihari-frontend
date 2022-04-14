@@ -1,19 +1,14 @@
 <template>
-  <div class="field is-grouped">
-    <div class="control">
-      <div class="tags has-addons are-medium">
-        <span class="tag is-dark">ASN</span>
-        <router-link
-          class="tag"
-          :to="{
-            name: 'Alerts',
-            query: { asn: autonomousSystem.asn },
-          }"
-        >
-          {{ autonomousSystem.asn }}
-        </router-link>
-      </div>
-    </div>
+  <div class="tags are-medium">
+    <router-link
+      class="tag"
+      :to="{
+        name: 'Alerts',
+        query: { asn: autonomousSystem.asn },
+      }"
+    >
+      {{ autonomousSystem.asn }}
+    </router-link>
   </div>
 </template>
 
