@@ -26,7 +26,7 @@
     :total="rules.total"
     :pageSize="rules.pageSize"
   ></Pagination>
-  <p>({{ rules.total }} results in total, {{ rules.pageSize }} shown)</p>
+  <p>({{ rules.total }} results in total, {{ rules.rules.length }} shown)</p>
 </template>
 
 <script lang="ts">

@@ -12,13 +12,13 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.1.1",
-    "@vueuse/core": "^8.4.0",
-    "@vueuse/router": "^8.4.0",
+    "@vueuse/core": "^8.4.2",
+    "@vueuse/router": "^8.4.2",
     "axios": "^0.27.2",
     "bulma": "^0.9.3",
     "bulma-helpers": "^0.4.2",
     "core-js": "^3.22.4",
-    "dayjs": "^1.11.1",
+    "dayjs": "^1.11.2",
     "js-sha256": "^0.9.0",
     "regenerator-runtime": "^0.13.9",
     "truncate": "^3.0.0",
@@ -27,7 +27,7 @@
     "vue-concurrency": "2.2.1",
     "vue-json-pretty": "^2.0.6",
     "vue-prism-editor": "^2.0.0-alpha.2",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.15"
   },
   "devDependencies": {
     "@types/jest": "27.5.0",
