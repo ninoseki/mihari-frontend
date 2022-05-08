@@ -1,5 +1,8 @@
 <template>
-  <nav class="pagination" role="navigation" aria-label="pagination">
+  <article class="message is-warning" v-if="total === 0">
+    <div class="message-body">There is no result to show.</div>
+  </article>
+  <nav class="pagination" role="navigation" aria-label="pagination" v-else>
     <ul class="pagination-list" v-if="hasOnlyOnePage">
       <li>
         <a class="pagination-link mt-2 is-current" @click="updatePage(1)">1</a>
