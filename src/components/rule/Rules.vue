@@ -1,5 +1,5 @@
 <template>
-  <div class="table-container">
+  <div class="table-container" v-if="hasRules">
     <table class="table is-bordered is-fullwidth">
       <thead>
         <tr>
@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 
 import Pagination from "@/components/Pagination.vue";
 import YAML from "@/components/rule/YAML.vue";
@@ -49,7 +49,7 @@ export default defineComponent({
     Pagination,
   },
   emits: ["update-page", "refresh-page"],
-  setup(_, context) {
+  setup(props, context) {
     const scrollToTop = () => {
       window.scrollTo({
         top: 0,
@@ -66,7 +66,11 @@ export default defineComponent({
       context.emit("refresh-page");
     };
 
-    return { updatePage, refreshPage };
+    const hasRules = computed(() => {
+      return props.rules.rules.length > 0;
+    });
+
+    return { updatePage, refreshPage, hasRules };
   },
 });
 </script>
