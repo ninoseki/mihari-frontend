@@ -1,11 +1,11 @@
 <template>
   <div class="box mb-6">
-    <Form
-      ref="form"
+    <FormComponent
+      ref="form-"
       :tags="getTagsTask.last?.value || []"
       :page="page"
       :tag="tag"
-    ></Form>
+    ></FormComponent>
 
     <hr />
 
@@ -48,7 +48,7 @@ import { defineComponent, nextTick, onMounted, ref, watch } from "vue";
 import { generateGetRulesTask, generateGetTagsTask } from "@/api-helper";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
-import Form from "@/components/rule/Form.vue";
+import FormComponent from "@/components/rule/Form.vue";
 import Rules from "@/components/rule/Rules.vue";
 import { RuleSearchParams } from "@/types";
 
@@ -57,13 +57,13 @@ export default defineComponent({
   components: {
     Rules,
     Loading,
-    Form,
+    FormComponent,
     ErrorMessage,
   },
   setup() {
     const page = ref(1);
     const tag = ref<string | undefined>(undefined);
-    const form = ref<InstanceType<typeof Form>>();
+    const form = ref<InstanceType<typeof FormComponent>>();
 
     const getRulesTask = generateGetRulesTask();
     const getTagsTask = generateGetTagsTask();

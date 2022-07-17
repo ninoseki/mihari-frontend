@@ -1,12 +1,12 @@
 <template>
   <div class="box mb-6">
-    <Form
+    <FormComponent
       ref="form"
       :sources="getSourcesTask.last?.value || []"
       :tags="getTagsTask.last?.value || []"
       :page="page"
       :tag="tag"
-    ></Form>
+    ></FormComponent>
 
     <hr />
 
@@ -55,7 +55,7 @@ import {
   generateGetTagsTask,
 } from "@/api-helper";
 import AlertsComponent from "@/components/alert/Alerts.vue";
-import Form from "@/components/alert/Form.vue";
+import FormComponent from "@/components/alert/Form.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
 import { SearchParams } from "@/types";
@@ -64,14 +64,14 @@ export default defineComponent({
   name: "AlertsWrapper",
   components: {
     AlertsComponent,
-    Form,
+    FormComponent,
     Loading,
     ErrorMessage,
   },
   setup() {
     const page = ref(1);
     const tag = ref<string | undefined>(undefined);
-    const form = ref<InstanceType<typeof Form>>();
+    const form = ref<InstanceType<typeof FormComponent>>();
 
     const getAlertsTask = generateGetAlertsTask();
     const getTagsTask = generateGetTagsTask();
