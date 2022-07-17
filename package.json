@@ -56,7 +56,7 @@
     "redoc": "*",
     "redoc-cli": "^0.13.16",
     "sass": "^1.53.0",
-    "sass-loader": "12.6.0",
+    "sass-loader": "13.0.2",
     "ts-jest": "^27.1.5",
     "typescript": "~4.7.4"
   }
