@@ -1,7 +1,7 @@
 <template>
   <div class="box mb-6">
     <FormComponent
-      ref="form-"
+      ref="form"
       :tags="getTagsTask.last?.value || []"
       :page="page"
       :tag="tag"
