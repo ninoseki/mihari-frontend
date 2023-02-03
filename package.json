@@ -5,7 +5,6 @@
   "scripts": {
     "serve": "vite",
     "build": "npx redoc-cli build src/swagger.yaml -o public/redoc-static.html && vite build",
-    "postbuild": "mv dist/favicon.ico dist/static/favicon.ico",
     "test:unit": "jest",
     "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore --fix src --fix tests",
     "prepare": "husky install"
