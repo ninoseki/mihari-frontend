@@ -7,6 +7,7 @@ import {
   CreateRule,
   IPInfo,
   Rule,
+  RuleSet,
   Rules,
   RuleSearchParams,
   SearchParams,
@@ -40,9 +41,9 @@ export const API = {
     return res.data.tags;
   },
 
-  async getSources(): Promise<string[]> {
-    const res = await client.get<Sources>("/api/sources");
-    return res.data.sources;
+  async getRuleSet(): Promise<string[]> {
+    const res = await client.get<RuleSet>("/api/rules/ids");
+    return res.data.ruleIds;
   },
 
   async deleteAlert(id: number): Promise<void> {

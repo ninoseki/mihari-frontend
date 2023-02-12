@@ -38,9 +38,9 @@ export function generateDeleteTagTask(): Task<void, [string]> {
   });
 }
 
-export function generateGetSourcesTask(): Task<string[], []> {
+export function generateGetRuleSetTask(): Task<string[], []> {
   return useAsyncTask<string[], []>(async () => {
-    return await API.getSources();
+    return await API.getRuleSet();
   });
 }
 

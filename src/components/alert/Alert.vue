@@ -19,22 +19,10 @@
           </td>
         </tr>
         <tr>
-          <th><strong>Title</strong></th>
+          <th><strong>Rule</strong></th>
           <td>
-            {{ alert.title }}
-          </td>
-        </tr>
-        <tr>
-          <th><strong>Description</strong></th>
-          <td>
-            {{ alert.description }}
-          </td>
-        </tr>
-        <tr>
-          <th><strong>Source</strong></th>
-          <td>
-            <router-link :to="{ name: 'Rule', params: { id: alert.source } }">{{
-              alert.source
+            <router-link :to="{ name: 'Rule', params: { id: alert.ruleId } }">{{
+              alert.ruleId
             }}</router-link>
           </td>
         </tr>
@@ -92,7 +80,7 @@ export default defineComponent({
 
     const deleteAlert = async () => {
       const result = window.confirm(
-        `Are you sure you want to delete ${props.alert.title} (ID: ${props.alert.id})?`
+        `Are you sure you want to delete ${props.alert.id}?`
       );
 
       if (result) {
