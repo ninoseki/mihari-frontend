@@ -22,7 +22,7 @@ import { SearchParams } from "@/types";
 export default defineComponent({
   name: "AlertsWithPagination",
   props: {
-    source: {
+    ruleId: {
       type: String,
     },
     artifact: {
@@ -44,7 +44,7 @@ export default defineComponent({
         artifact: props.artifact,
         description: undefined,
         page: page.value,
-        source: props.source,
+        ruleId: props.ruleId,
         tag: undefined,
         title: undefined,
         toAt: undefined,

@@ -28,8 +28,8 @@ export interface Tags {
   tags: string[];
 }
 
-export interface Sources {
-  sources: string[];
+export interface RuleSet {
+  ruleIds: string[];
 }
 
 export interface DnsRecord {
@@ -100,9 +100,7 @@ export interface ArtifactWithTags extends Artifact {
 
 export interface Alert {
   id: number;
-  title: string;
-  description: string | null;
-  source: string;
+  ruleId: string;
   createdAt: string;
 
   tags: Tag[];
@@ -120,7 +118,7 @@ export interface PaginationParams {
 export interface SearchParams extends PaginationParams {
   artifact: string | undefined;
   description: string | undefined;
-  source: string | undefined;
+  ruleId: string | undefined;
   tag: string | undefined;
   title: string | undefined;
   fromAt: string | undefined;

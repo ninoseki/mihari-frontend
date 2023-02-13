@@ -34,16 +34,16 @@
     <div class="column">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
-          <label class="label">Source</label>
+          <label class="label">Rule</label>
         </div>
         <div class="field-body">
           <div class="field">
             <div class="control">
               <div class="select">
-                <select v-model="source">
+                <select v-model="ruleId">
                   <option></option>
-                  <option v-for="source_ in sources" :key="source_">
-                    {{ source_ }}
+                  <option v-for="ruleId_ in ruleSet" :key="ruleId_">
+                    {{ ruleId_ }}
                   </option>
                 </select>
               </div>
@@ -139,7 +139,7 @@ export default defineComponent({
       type: Array as PropType<string[]>,
       required: true,
     },
-    sources: {
+    ruleSet: {
       type: Array as PropType<string[]>,
       required: true,
     },
@@ -159,7 +159,7 @@ export default defineComponent({
     const description = ref<string | undefined>(undefined);
     const fromAt = ref<string | undefined>(undefined);
     const tagInput = ref<string | undefined>(props.tag);
-    const source = ref<string | undefined>(undefined);
+    const ruleId = ref<string | undefined>(undefined);
     const title = ref<string | undefined>(undefined);
     const toAt = ref<string | undefined>(undefined);
     const asn = ref<number | undefined>(undefined);
@@ -191,7 +191,7 @@ export default defineComponent({
         artifact: artifact.value === "" ? undefined : artifact.value,
         description: description.value === "" ? undefined : description.value,
         page: props.page,
-        source: source.value === "" ? undefined : source.value,
+        ruleId: ruleId.value === "" ? undefined : ruleId.value,
         tag: tagInput.value === "" ? undefined : tagInput.value,
         title: title.value === "" ? undefined : title.value,
         toAt: toAt.value === "" ? undefined : toAt.value,
@@ -216,7 +216,7 @@ export default defineComponent({
       description,
       fromAt,
       getSearchParams,
-      source,
+      ruleId,
       title,
       toAt,
       tagInput,

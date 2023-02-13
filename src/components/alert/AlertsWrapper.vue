@@ -2,7 +2,7 @@
   <div class="box mb-6">
     <FormComponent
       ref="form"
-      :sources="getSourcesTask.last?.value || []"
+      :ruleSet="getRuleSetTask.last?.value || []"
       :tags="getTagsTask.last?.value || []"
       :page="page"
       :tag="tag"
@@ -51,7 +51,7 @@ import { defineComponent, nextTick, onMounted, ref, watch } from "vue";
 
 import {
   generateGetAlertsTask,
-  generateGetSourcesTask,
+  generateGetRuleSetTask,
   generateGetTagsTask,
 } from "@/api-helper";
 import AlertsComponent from "@/components/alert/Alerts.vue";
@@ -75,7 +75,7 @@ export default defineComponent({
 
     const getAlertsTask = generateGetAlertsTask();
     const getTagsTask = generateGetTagsTask();
-    const getSourcesTask = generateGetSourcesTask();
+    const getRuleSetTask = generateGetRuleSetTask();
 
     const getAlerts = async () => {
       const params = form.value?.getSearchParams() as SearchParams;
@@ -115,7 +115,7 @@ export default defineComponent({
 
     onMounted(async () => {
       getTagsTask.perform();
-      getSourcesTask.perform();
+      getRuleSetTask.perform();
 
       await getAlerts();
     });
@@ -126,7 +126,7 @@ export default defineComponent({
 
     return {
       getAlertsTask,
-      getSourcesTask,
+      getRuleSetTask,
       getTagsTask,
       refreshPage,
       search,
