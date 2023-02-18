@@ -1,36 +1,29 @@
 <template>
   <div v-if="hasRules">
-    <div class="box" v-for="rule in rules.rules" :key="rule.id">
-      <table class="table is-fullwidth is-completely-borderless">
-        <tr>
-          <th>ID</th>
-          <td>
-            <router-link :to="{ name: 'Rule', params: { id: rule.id } }">{{
-              rule.id
-            }}</router-link>
-          </td>
-        </tr>
-        <tr>
-          <th>Title</th>
-          <td>
-            {{ rule.title }}
-          </td>
-        </tr>
-        <tr>
-          <th>Description</th>
-          <td>
-            {{ rule.description }}
-          </td>
-        </tr>
-        <tr v-if="rule.tags.length > 0">
-          <th>Tags</th>
-          <td>
-            <Tags :tags="rule.tags" @update-tag="updateTag"></Tags>
-          </td>
-        </tr>
-      </table>
-      <p class="help">Created at: {{ rule.createdAt }}</p>
-    </div>
+    <table class="table is-fullwidth">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Tags</th>
+      </tr>
+      <tr v-for="rule in rules.rules" :key="rule.id">
+        <td>
+          <router-link :to="{ name: 'Rule', params: { id: rule.id } }">{{
+            rule.id
+          }}</router-link>
+        </td>
+        <td>
+          {{ rule.title }}
+        </td>
+        <td>
+          {{ rule.description }}
+        </td>
+        <td>
+          <Tags :tags="rule.tags" @update-tag="updateTag"></Tags>
+        </td>
+      </tr>
+    </table>
   </div>
   <Pagination
     :currentPage="rules.currentPage"
