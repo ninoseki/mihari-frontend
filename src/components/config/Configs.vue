@@ -6,8 +6,8 @@
           <tr>
             <th>Name</th>
             <th>Type</th>
-            <th>Status</th>
-            <th>Key-Value(s)</th>
+            <th>Configured</th>
+            <th>Key-value(s)</th>
           </tr>
         </thead>
         <tbody>
@@ -16,28 +16,28 @@
               {{ config.name }}
             </td>
             <td>
-              {{ config.status.type }}
+              {{ config.type }}
             </td>
             <td>
               <button
                 class="button is-success is-small ml-1"
-                v-if="config.status.isConfigured"
+                v-if="config.isConfigured"
               >
                 <span class="icon is-small">
                   <i class="fas fa-check"></i>
                 </span>
-                <span>Set</span>
+                <span>Yes</span>
               </button>
               <button class="button is-warning is-small ml-1" v-else>
                 <span class="icon is-small">
                   <i class="fas fa-exclamation"></i>
                 </span>
-                <span>Not set</span>
+                <span>No</span>
               </button>
             </td>
             <td>
               <ul>
-                <li v-for="(kv, index) in config.status.values" :key="index">
+                <li v-for="(kv, index) in config.values" :key="index">
                   <strong> {{ kv.key }} </strong>: {{ kv.value || "N/A" }}
                 </li>
               </ul>
