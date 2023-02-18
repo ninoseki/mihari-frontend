@@ -1,7 +1,7 @@
 <template>
   <div class="tags are-medium">
     <router-link
-      class="tag is-info"
+      class="tag is-info is-light"
       v-for="tag in tags"
       :key="tag"
       :to="{

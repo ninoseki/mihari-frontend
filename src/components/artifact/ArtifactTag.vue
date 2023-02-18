@@ -6,7 +6,7 @@
       v-on:mouseleave="hideDeleteButton"
     >
       <router-link
-        class="tag"
+        class="tag is-link is-light"
         :to="{ name: 'Artifact', params: { id: artifact.id } }"
         >{{ artifact.data }}</router-link
       >

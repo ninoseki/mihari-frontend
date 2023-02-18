@@ -5,7 +5,9 @@
       v-on:mouseover="showDeleteButton"
       v-on:mouseleave="hideDeleteButton"
     >
-      <span class="tag is-info" @click="updateTag">{{ tag.name }}</span>
+      <span class="tag is-info is-light" @click="updateTag">{{
+        tag.name
+      }}</span>
       <a
         class="tag is-delete"
         v-if="isDeleteButtonEnabled"

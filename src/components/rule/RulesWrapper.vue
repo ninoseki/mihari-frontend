@@ -38,6 +38,7 @@
       v-if="getRulesTask.last?.value"
       @refresh-page="refreshPage"
       @update-page="updatePage"
+      @update-tag="updateTag"
     ></Rules>
   </div>
 </template>
@@ -88,6 +89,16 @@ export default defineComponent({
       await getRules();
     };
 
+    const updateTag = (newTag: string | undefined) => {
+      if (tag.value === newTag) {
+        tag.value = undefined;
+      } else {
+        tag.value = newTag;
+      }
+
+      nextTick(async () => await search());
+    };
+
     const refreshPage = async () => {
       // it is just an alias of search
       // this function will be invoked when a rule is deleted
@@ -112,6 +123,7 @@ export default defineComponent({
       refreshPage,
       search,
       updatePage,
+      updateTag,
     };
   },
 });

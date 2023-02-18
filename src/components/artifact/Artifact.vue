@@ -13,7 +13,7 @@
         v-if="googleMapSrc !== undefined || urlscanLiveshotSrc !== undefined"
       >
         <div v-if="googleMapSrc">
-          <h4 class="is-size-4">
+          <h4 class="is-size-4 mb-2">
             Geolocation
             <span class="has-text-grey">{{
               countryCode || artifact.geolocation?.countryCode
@@ -28,7 +28,7 @@
         </div>
 
         <div v-if="urlscanLiveshotSrc">
-          <h4 class="is-size-4">
+          <h4 class="is-size-4 mb-2">
             Live screenshot
             <span class="has-text-grey">Hover to expand</span>
           </h4>
@@ -38,61 +38,64 @@
 
       <div class="column">
         <div class="block">
-          <h4 class="is-size-4">Information</h4>
-          <div class="table-container">
-            <table class="table is-bordered is-fullwidth">
-              <tr>
-                <th>ID</th>
-                <td>
-                  {{ artifact.id }}
-                  <span class="buttons is-pulled-right">
-                    <button
-                      class="button is-primary is-light is-small"
-                      @click="enrichArtifact"
-                    >
-                      <span>Enrich</span>
-                      <span class="icon is-small">
-                        <i class="fas fa-lightbulb"></i>
-                      </span>
-                    </button>
+          <h4 class="is-size-4 mb-2">Information</h4>
 
-                    <button
-                      class="button is-info is-light is-small"
-                      @click="flipShowMetadata"
-                      v-if="artifact.metadata"
-                    >
-                      <span>Metadata</span>
-                      <span class="icon is-small">
-                        <i class="fas fa-info-circle"></i>
-                      </span>
-                    </button>
+          <table class="table is-fullwidth is-completely-borderless">
+            <tr>
+              <th>ID</th>
+              <td>
+                {{ artifact.id }}
+                <span class="buttons is-pulled-right">
+                  <button
+                    class="button is-primary is-light is-small"
+                    @click="enrichArtifact"
+                  >
+                    <span>Enrich</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-lightbulb"></i>
+                    </span>
+                  </button>
 
-                    <button
-                      class="button is-light is-small"
-                      @click="deleteArtifact"
-                    >
-                      <span>Delete</span>
-                      <span class="icon is-small">
-                        <i class="fas fa-times"></i>
-                      </span>
-                    </button>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <th>Data type</th>
-                <td>{{ artifact.dataType }}</td>
-              </tr>
-              <tr>
-                <th>Data</th>
-                <td>{{ artifact.data }}</td>
-              </tr>
-              <tr>
-                <th>Source</th>
-                <td>{{ artifact.source }}</td>
-              </tr>
-            </table>
-          </div>
+                  <button
+                    class="button is-info is-light is-small"
+                    @click="flipShowMetadata"
+                    v-if="artifact.metadata"
+                  >
+                    <span>Metadata</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-info-circle"></i>
+                    </span>
+                  </button>
+
+                  <button
+                    class="button is-light is-small"
+                    @click="deleteArtifact"
+                  >
+                    <span>Delete</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-times"></i>
+                    </span>
+                  </button>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>Data type</th>
+              <td>{{ artifact.dataType }}</td>
+            </tr>
+            <tr>
+              <th>Data</th>
+              <td>{{ artifact.data }}</td>
+            </tr>
+            <tr>
+              <th>Source</th>
+              <td>{{ artifact.source }}</td>
+            </tr>
+            <tr v-if="artifact.tags.length > 0">
+              <th>Tags</th>
+              <td><Tags :tags="artifact.tags"></Tags></td>
+            </tr>
+          </table>
         </div>
 
         <div v-if="artifact.metadata && showMetadata">
@@ -116,40 +119,35 @@
       </div>
     </div>
 
-    <div class="block" v-if="artifact.tags.length > 0">
-      <h4 class="is-size-4">Tags</h4>
-      <Tags :tags="artifact.tags"></Tags>
-    </div>
-
     <div class="block" v-if="artifact.autonomousSystem">
-      <h4 class="is-size-4">AS</h4>
+      <h4 class="is-size-4 mb-2">AS</h4>
       <AS :autonomousSystem="artifact.autonomousSystem"></AS>
     </div>
 
     <div class="block" v-if="artifact.reverseDnsNames">
-      <h4 class="is-size-4">Reverse DNS</h4>
+      <h4 class="is-size-4 mb-2">Reverse DNS</h4>
       <ReverseDnsNames
         :reverseDnsNames="artifact.reverseDnsNames"
       ></ReverseDnsNames>
     </div>
 
     <div class="block" v-if="artifact.dnsRecords">
-      <h4 class="is-size-4">DNS records</h4>
+      <h4 class="is-size-4 mb-2">DNS records</h4>
       <DnsRecords :dnsRecords="artifact.dnsRecords"></DnsRecords>
     </div>
 
     <div class="block" v-if="artifact.cpes">
-      <h4 class="is-size-4">CPEs</h4>
+      <h4 class="is-size-4 mb-2">CPEs</h4>
       <CPEs :cpes="artifact.cpes"></CPEs>
     </div>
 
     <div class="block" v-if="artifact.ports">
-      <h4 class="is-size-4">Ports</h4>
+      <h4 class="is-size-4 mb-2">Ports</h4>
       <Ports :ports="artifact.ports"></Ports>
     </div>
 
     <div class="block" v-if="artifact.whoisRecord">
-      <h4 class="is-size-4">Whois record</h4>
+      <h4 class="is-size-4 mb-2">Whois record</h4>
       <WhoisRecord :whoisRecord="artifact.whoisRecord"></WhoisRecord>
     </div>
 

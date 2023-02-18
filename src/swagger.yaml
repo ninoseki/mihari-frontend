@@ -103,7 +103,7 @@ paths:
           schema:
             type: array
             items:
-              "$ref": "#/definitions/Mihari_Entities_Alert"
+              "$ref": "#/definitions/Mihari_Entities_AlertsWithPagination"
         "404":
           description: Not found
           schema:
@@ -338,7 +338,7 @@ paths:
           schema:
             type: array
             items:
-              "$ref": "#/definitions/Mihari_Entities_Rule"
+              "$ref": "#/definitions/Mihari_Entities_RulesWithPagination"
         "404":
           description: Not found
           schema:
@@ -424,6 +424,28 @@ definitions:
     required:
       - message
     description: Mihari_Entities_Message model
+  Mihari_Entities_AlertsWithPagination:
+    type: object
+    properties:
+      alerts:
+        type: array
+        items:
+          "$ref": "#/definitions/Mihari_Entities_Alert"
+      total:
+        type: integer
+        format: int32
+      currentPage:
+        type: integer
+        format: int32
+      pageSize:
+        type: integer
+        format: int32
+    required:
+      - alerts
+      - total
+      - currentPage
+      - pageSize
+    description: Mihari_Entities_AlertsWithPagination model
   Mihari_Entities_Alert:
     type: object
     properties:
@@ -448,7 +470,6 @@ definitions:
       - ruleId
       - createdAt
       - tags
-    description: Mihari_Entities_Alert model
   Mihari_Entities_BaseArtifact:
     type: object
     properties:
@@ -659,6 +680,10 @@ definitions:
     properties:
       id:
         type: string
+      title:
+        type: string
+      description:
+        type: string
       yaml:
         type: string
       createdAt:
@@ -667,11 +692,18 @@ definitions:
       updatedAt:
         type: string
         format: date-time
+      tags:
+        type: array
+        items:
+          "$ref": "#/definitions/Mihari_Entities_Tag"
     required:
       - id
+      - title
+      - description
       - yaml
       - createdAt
       - updatedAt
+      - tags
     description: Mihari_Entities_Rule model
   postApiRules:
     type: object
@@ -681,6 +713,28 @@ definitions:
     required:
       - yaml
     description: Create a rule
+  Mihari_Entities_RulesWithPagination:
+    type: object
+    properties:
+      rules:
+        type: array
+        items:
+          "$ref": "#/definitions/Mihari_Entities_Rule"
+      total:
+        type: integer
+        format: int32
+      currentPage:
+        type: integer
+        format: int32
+      pageSize:
+        type: integer
+        format: int32
+    required:
+      - rules
+      - total
+      - currentPage
+      - pageSize
+    description: Mihari_Entities_RulesWithPagination model
   Mihari_Entities_RuleIDs:
     type: object
     properties:
