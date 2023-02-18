@@ -1,52 +1,43 @@
 <template>
-  <div class="table-container">
-    <table class="table is-bordered is-fullwidth">
-      <tbody>
-        <tr>
-          <th><strong>ID</strong></th>
-          <td>
-            {{ alert.id }}
-
-            <button
-              class="button is-light is-small is-pulled-right"
-              @click="deleteAlert"
-            >
-              <span>Delete</span>
-              <span class="icon is-small">
-                <i class="fas fa-times"></i>
-              </span>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th><strong>Rule</strong></th>
-          <td>
-            <router-link :to="{ name: 'Rule', params: { id: alert.ruleId } }">{{
-              alert.ruleId
-            }}</router-link>
-          </td>
-        </tr>
-        <tr>
-          <th><strong>Artifacts</strong></th>
-          <td>
-            <Artifacts :artifacts="alert.artifacts"></Artifacts>
-          </td>
-        </tr>
-        <tr>
-          <th><strong>Tags</strong></th>
-          <td>
-            <Tags :tags="alert.tags" @update-tag="updateTag"></Tags>
-          </td>
-        </tr>
-        <tr>
-          <th><strong>Created at</strong></th>
-          <td>
-            {{ getLocalDatetime(alert.createdAt) }}
-            ({{ getHumanizedRelativeTime(alert.createdAt) }})
-          </td>
-        </tr>
-      </tbody>
+  <div class="box">
+    <table class="table is-fullwidth is-completely-borderless">
+      <tr>
+        <th>ID</th>
+        <td>
+          {{ alert.id }}
+          <button
+            class="button is-light is-small is-pulled-right"
+            @click="deleteAlert"
+          >
+            <span>Delete</span>
+            <span class="icon is-small">
+              <i class="fas fa-times"></i>
+            </span>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <th>Rule</th>
+        <td>
+          <router-link :to="{ name: 'Rule', params: { id: alert.ruleId } }">{{
+            alert.ruleId
+          }}</router-link>
+        </td>
+      </tr>
+      <tr>
+        <th>Artifacts</th>
+        <td>
+          <Artifacts :artifacts="alert.artifacts"></Artifacts>
+        </td>
+      </tr>
+      <tr v-if="alert.tags.length > 0">
+        <th>Tags</th>
+        <td>
+          <Tags :tags="alert.tags" @update-tag="updateTag"></Tags>
+        </td>
+      </tr>
     </table>
+    <p class="help">Created at: {{ alert.createdAt }}</p>
   </div>
 </template>
 

@@ -12,49 +12,33 @@
 
     <h2 class="is-size-2 mb-4">Rule</h2>
 
-    <h4 class="is-size-4">Information</h4>
-    <div class="table-container">
-      <table class="table is-bordered is-fullwidth">
-        <tr>
-          <th>ID</th>
-          <td>
-            {{ rule.id }}
-            <span class="buttons is-pulled-right">
-              <button
-                class="button is-primary is-light is-small"
-                @click="runRule"
-              >
-                <span>Run</span>
-                <span class="icon is-small">
-                  <i class="fas fa-arrow-right"></i>
-                </span>
-              </button>
-              <router-link
-                class="button is-info is-light is-small"
-                :to="{ name: 'EditRule', params: { id: rule.id } }"
-              >
-                <span>Edit</span>
-                <span class="icon is-small">
-                  <i class="fas fa-edit"></i>
-                </span>
-              </router-link>
-              <button class="button is-light is-small" @click="deleteRule">
-                <span>Delete</span>
-                <span class="icon is-small">
-                  <i class="fas fa-times"></i>
-                </span>
-              </button>
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <th>YAML</th>
-          <td>
-            <YAML :yaml="rule.yaml"></YAML>
-          </td>
-        </tr>
-      </table>
-    </div>
+    <p class="is-clearfix">
+      <span class="buttons is-pulled-right">
+        <button class="button is-primary is-light is-small" @click="runRule">
+          <span>Run</span>
+          <span class="icon is-small">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+        </button>
+        <router-link
+          class="button is-info is-light is-small"
+          :to="{ name: 'EditRule', params: { id: rule.id } }"
+        >
+          <span>Edit</span>
+          <span class="icon is-small">
+            <i class="fas fa-edit"></i>
+          </span>
+        </router-link>
+        <button class="button is-light is-small" @click="deleteRule">
+          <span>Delete</span>
+          <span class="icon is-small">
+            <i class="fas fa-times"></i>
+          </span>
+        </button>
+      </span>
+    </p>
+
+    <YAML :yaml="rule.yaml"></YAML>
   </div>
 
   <hr />

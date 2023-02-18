@@ -161,9 +161,12 @@ export interface Link {
 
 export interface Rule {
   id: string;
+  title: string;
+  description: string;
   yaml: string;
   createdAt: string;
   updatedAt: string;
+  tags: Tag[];
 }
 
 export interface CreateRule {

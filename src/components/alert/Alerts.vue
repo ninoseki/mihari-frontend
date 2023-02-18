@@ -13,7 +13,9 @@
     :pageSize="alerts.pageSize"
     @update-page="updatePage"
   ></Pagination>
-  <p>({{ alerts.total }} results in total, {{ alerts.alerts.length }} shown)</p>
+  <p class="help">
+    ({{ alerts.total }} results in total, {{ alerts.alerts.length }} shown)
+  </p>
 </template>
 
 <script lang="ts">

@@ -29,7 +29,7 @@ import { useRouter } from "vue-router";
 import { generateCreateRuleTask } from "@/api-helper";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import InputForm from "@/components/rule/InputForm.vue";
-import { RULE_TEMPLATE } from "@/rule";
+import { getRuleTemplate } from "@/rule";
 
 export default defineComponent({
   name: "NewRule",
@@ -40,7 +40,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
 
-    const yaml = ref(RULE_TEMPLATE);
+    const yaml = ref(getRuleTemplate());
 
     const createRuleTask = generateCreateRuleTask();
 
