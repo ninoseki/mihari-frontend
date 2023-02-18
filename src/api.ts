@@ -11,7 +11,6 @@ import {
   RuleSearchParams,
   RuleSet,
   SearchParams,
-  Sources,
   Tags,
   UpdateRule,
 } from "@/types";

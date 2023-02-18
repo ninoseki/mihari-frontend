@@ -4,20 +4,16 @@ export interface Pagination {
   pageSize: number;
 }
 
-export interface ConfigStatusValue {
+export interface ConfigValue {
   key: string;
   value: string | null;
 }
 
-export interface ConfigStatus {
-  isConfigured: boolean;
-  values: ConfigStatusValue[];
-  type: string;
-}
-
 export interface Config {
   name: string;
-  status: ConfigStatus;
+  isConfigured: boolean;
+  values: ConfigValue[];
+  type: string;
 }
 
 export interface Tag {
