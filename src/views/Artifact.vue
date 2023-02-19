@@ -20,7 +20,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const artifactId = ref<number>(parseInt(props.id));
+    const artifactId = ref<string>(props.id);
 
     const updateTitle = () => {
       useTitle(`Artifact:${artifactId.value} - Mihari`);
@@ -33,7 +33,7 @@ export default defineComponent({
     watch(
       () => props.id,
       () => {
-        artifactId.value = parseInt(props.id);
+        artifactId.value = props.id;
         updateTitle();
       }
     );

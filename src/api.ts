@@ -45,21 +45,21 @@ export const API = {
     return res.data.ruleIds;
   },
 
-  async deleteAlert(id: number): Promise<void> {
+  async deleteAlert(id: string): Promise<void> {
     await client.delete(`/api/alerts/${id}`);
   },
 
-  async getArtifact(id: number): Promise<ArtifactWithTags> {
+  async getArtifact(id: string): Promise<ArtifactWithTags> {
     const res = await client.get(`/api/artifacts/${id}`);
     return res.data;
   },
 
-  async enrichArtifact(id: number): Promise<void> {
+  async enrichArtifact(id: string): Promise<void> {
     await client.get(`/api/artifacts/${id}/enrich`);
     return;
   },
 
-  async deleteArtifact(id: number): Promise<void> {
+  async deleteArtifact(id: string): Promise<void> {
     await client.delete(`/api/artifacts/${id}`);
   },
 

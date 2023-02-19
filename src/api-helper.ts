@@ -20,8 +20,8 @@ export function generateGetAlertsTask(): Task<Alerts, [SearchParams]> {
   });
 }
 
-export function generateDeleteAlertTask(): Task<void, [number]> {
-  return useAsyncTask<void, [number]>(async (_signal, id) => {
+export function generateDeleteAlertTask(): Task<void, [string]> {
+  return useAsyncTask<void, [string]>(async (_signal, id) => {
     return await API.deleteAlert(id);
   });
 }
@@ -44,20 +44,20 @@ export function generateGetRuleSetTask(): Task<string[], []> {
   });
 }
 
-export function generateGetArtifactTask(): Task<ArtifactWithTags, [number]> {
-  return useAsyncTask<ArtifactWithTags, [number]>(async (_signal, id) => {
+export function generateGetArtifactTask(): Task<ArtifactWithTags, [string]> {
+  return useAsyncTask<ArtifactWithTags, [string]>(async (_signal, id) => {
     return await API.getArtifact(id);
   });
 }
 
-export function generateDeleteArtifactTask(): Task<void, [number]> {
-  return useAsyncTask<void, [number]>(async (_signal, id) => {
+export function generateDeleteArtifactTask(): Task<void, [string]> {
+  return useAsyncTask<void, [string]>(async (_signal, id) => {
     return await API.deleteArtifact(id);
   });
 }
 
-export function generateEnrichArtifactTask(): Task<void, [number]> {
-  return useAsyncTask<void, [number]>(async (_signal, id) => {
+export function generateEnrichArtifactTask(): Task<void, [string]> {
+  return useAsyncTask<void, [string]>(async (_signal, id) => {
     return await API.enrichArtifact(id);
   });
 }
