@@ -450,8 +450,8 @@ definitions:
     type: object
     properties:
       id:
-        type: integer
-        format: int32
+        type: string
+        description: String representation of the ID
       ruleId:
         type: string
       createdAt:
@@ -474,8 +474,8 @@ definitions:
     type: object
     properties:
       id:
-        type: integer
-        format: int32
+        type: string
+        description: String representation of the ID
       data:
         type: string
       dataType:
@@ -504,8 +504,8 @@ definitions:
     type: object
     properties:
       id:
-        type: integer
-        format: int32
+        type: string
+        description: String representation of the ID
       data:
         type: string
       dataType:
