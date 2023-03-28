@@ -29,6 +29,7 @@
     :currentPage="rules.currentPage"
     :total="rules.total"
     :pageSize="rules.pageSize"
+    @update-page="updatePage"
   ></Pagination>
   <p class="help">
     ({{ rules.total }} results in total, {{ rules.rules.length }} shown)
