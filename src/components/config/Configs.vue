@@ -38,7 +38,9 @@
             <td>
               <ul>
                 <li v-for="(kv, index) in config.values" :key="index">
-                  <strong> {{ kv.key }} </strong>: {{ kv.value || "N/A" }}
+                  <strong> {{ kv.key }} </strong>:
+                  <code v-if="kv.value">{{ kv.value }}</code>
+                  <span v-else>N/A</span>
                 </li>
               </ul>
             </td>
