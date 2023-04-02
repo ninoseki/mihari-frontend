@@ -3,37 +3,6 @@
     <div class="column">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
-          <label class="label">Title</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <p class="control">
-              <input class="input" type="text" v-model="title" />
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="column">
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">Description</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <p class="control">
-              <input class="input" type="text" v-model="description" />
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="columns">
-    <div class="column">
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
           <label class="label">Rule</label>
         </div>
         <div class="field-body">
@@ -129,7 +98,7 @@
 import { defineComponent, PropType, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
-import { SearchParams } from "@/types";
+import { AlertSearchParams } from "@/types";
 import { normalizeQueryParam } from "@/utils";
 
 export default defineComponent({
@@ -156,11 +125,9 @@ export default defineComponent({
     const route = useRoute();
 
     const artifact = ref<string | undefined>(undefined);
-    const description = ref<string | undefined>(undefined);
     const fromAt = ref<string | undefined>(undefined);
     const tagInput = ref<string | undefined>(props.tag);
     const ruleId = ref<string | undefined>(undefined);
-    const title = ref<string | undefined>(undefined);
     const toAt = ref<string | undefined>(undefined);
     const asn = ref<number | undefined>(undefined);
     const dnsRecord = ref<string | undefined>(undefined);
@@ -184,22 +151,16 @@ export default defineComponent({
       }
     };
 
-    const getSearchParams = (): SearchParams => {
+    const getSearchParams = (): AlertSearchParams => {
       updateByQueryParams();
 
-      const params: SearchParams = {
+      const params: AlertSearchParams = {
         artifact: artifact.value === "" ? undefined : artifact.value,
-        description: description.value === "" ? undefined : description.value,
         page: props.page,
         ruleId: ruleId.value === "" ? undefined : ruleId.value,
         tag: tagInput.value === "" ? undefined : tagInput.value,
-        title: title.value === "" ? undefined : title.value,
         toAt: toAt.value === "" ? undefined : toAt.value,
         fromAt: fromAt.value === "" ? undefined : fromAt.value,
-        asn: asn.value,
-        reverseDnsName:
-          reverseDnsName.value === "" ? undefined : reverseDnsName.value,
-        dnsRecord: dnsRecord.value === "" ? undefined : dnsRecord.value,
       };
       return params;
     };
@@ -213,11 +174,9 @@ export default defineComponent({
 
     return {
       artifact,
-      description,
       fromAt,
       getSearchParams,
       ruleId,
-      title,
       toAt,
       tagInput,
     };

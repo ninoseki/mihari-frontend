@@ -2,6 +2,7 @@ import axios from "axios";
 
 import {
   Alerts,
+  AlertSearchParams,
   ArtifactWithTags,
   Config,
   CreateRule,
@@ -10,7 +11,6 @@ import {
   Rules,
   RuleSearchParams,
   RuleSet,
-  SearchParams,
   Tags,
   UpdateRule,
 } from "@/types";
@@ -27,7 +27,7 @@ export const API = {
     return res.data;
   },
 
-  async getAlerts(params: SearchParams): Promise<Alerts> {
+  async getAlerts(params: AlertSearchParams): Promise<Alerts> {
     params.page = params.page || 1;
     const res = await client.get<Alerts>("/api/alerts", {
       params: params,

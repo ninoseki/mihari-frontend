@@ -3,6 +3,7 @@ import { Task, useAsyncTask } from "vue-concurrency";
 import { API } from "@/api";
 import {
   Alerts,
+  AlertSearchParams,
   ArtifactWithTags,
   Config,
   CreateRule,
@@ -10,12 +11,11 @@ import {
   Rule,
   Rules,
   RuleSearchParams,
-  SearchParams,
   UpdateRule,
 } from "@/types";
 
-export function generateGetAlertsTask(): Task<Alerts, [SearchParams]> {
-  return useAsyncTask<Alerts, [SearchParams]>(async (_signal, params) => {
+export function generateGetAlertsTask(): Task<Alerts, [AlertSearchParams]> {
+  return useAsyncTask<Alerts, [AlertSearchParams]>(async (_signal, params) => {
     return await API.getAlerts(params);
   });
 }
