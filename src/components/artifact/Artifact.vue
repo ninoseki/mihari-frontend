@@ -152,6 +152,7 @@
     </div>
 
     <div class="block">
+      <h4 class="is-size-4 mb-2">Links</h4>
       <Links :data="artifact.data" :type="artifact.dataType"></Links>
     </div>
   </div>

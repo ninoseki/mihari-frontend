@@ -53,13 +53,16 @@ paths:
           name: page
           type: integer
           format: int32
+          default: 1
+          required: false
+        - in: query
+          name: limit
+          type: integer
+          format: int32
+          default: 10
           required: false
         - in: query
           name: artifact
-          type: string
-          required: false
-        - in: query
-          name: description
           type: string
           required: false
         - in: query
@@ -71,10 +74,6 @@ paths:
           type: string
           required: false
         - in: query
-          name: title
-          type: string
-          required: false
-        - in: query
           name: fromAt
           type: string
           format: date-time
@@ -83,19 +82,6 @@ paths:
           name: toAt
           type: string
           format: date-time
-          required: false
-        - in: query
-          name: asn
-          type: integer
-          format: int32
-          required: false
-        - in: query
-          name: dnsRecord
-          type: string
-          required: false
-        - in: query
-          name: reverseDnsName
-          type: string
           required: false
       responses:
         "200":
@@ -309,6 +295,13 @@ paths:
           name: page
           type: integer
           format: int32
+          default: 1
+          required: false
+        - in: query
+          name: limit
+          type: integer
+          format: int32
+          default: 10
           required: false
         - in: query
           name: title
@@ -486,8 +479,6 @@ definitions:
         type: array
         items:
           type: string
-      metadata:
-        type: object
     required:
       - id
       - data

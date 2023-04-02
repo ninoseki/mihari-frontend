@@ -17,7 +17,7 @@ import { defineComponent, nextTick, onMounted, ref, watch } from "vue";
 import { generateGetAlertsTask } from "@/api-helper";
 import Alerts from "@/components/alert/Alerts.vue";
 import Loading from "@/components/Loading.vue";
-import { SearchParams } from "@/types";
+import { AlertSearchParams } from "@/types";
 
 export default defineComponent({
   name: "AlertsWithPagination",
@@ -40,18 +40,13 @@ export default defineComponent({
     const getAlertsTask = generateGetAlertsTask();
 
     const getAlerts = async () => {
-      const params: SearchParams = {
+      const params: AlertSearchParams = {
         artifact: props.artifact,
-        description: undefined,
         page: page.value,
         ruleId: props.ruleId,
-        tag: undefined,
-        title: undefined,
+        tag: tag.value,
         toAt: undefined,
         fromAt: undefined,
-        asn: undefined,
-        dnsRecord: undefined,
-        reverseDnsName: undefined,
       };
       return await getAlertsTask.perform(params);
     };

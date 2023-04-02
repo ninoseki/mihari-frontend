@@ -58,7 +58,7 @@ import AlertsComponent from "@/components/alert/Alerts.vue";
 import FormComponent from "@/components/alert/Form.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Loading from "@/components/Loading.vue";
-import { SearchParams } from "@/types";
+import { AlertSearchParams } from "@/types";
 
 export default defineComponent({
   name: "AlertsWrapper",
@@ -78,7 +78,7 @@ export default defineComponent({
     const getRuleSetTask = generateGetRuleSetTask();
 
     const getAlerts = async () => {
-      const params = form.value?.getSearchParams() as SearchParams;
+      const params = form.value?.getSearchParams() as AlertSearchParams;
       return await getAlertsTask.perform(params);
     };
 

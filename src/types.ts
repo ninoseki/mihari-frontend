@@ -111,17 +111,12 @@ export interface PaginationParams {
   page: number | undefined;
 }
 
-export interface SearchParams extends PaginationParams {
+export interface AlertSearchParams extends PaginationParams {
   artifact: string | undefined;
-  description: string | undefined;
   ruleId: string | undefined;
   tag: string | undefined;
-  title: string | undefined;
   fromAt: string | undefined;
   toAt: string | undefined;
-  asn: number | undefined;
-  dnsRecord: string | undefined;
-  reverseDnsName: string | undefined;
 }
 
 export interface IPInfo {
